@@ -1,0 +1,110 @@
+﻿@using Data.Model.APIWeb
+@using Data.Utils
+@model UserDetailOutputModel
+
+<div id="modalRole" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-user-secret" aria-hidden="false"></i> Sửa tài khoản</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <label>Tài khoản</label>
+                        <input class="form-control" id="txtPhoneUserEdit" placeholder="Nhập tài khoản" value="@Model.Phone"/>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <label>Tên người dùng</label>
+                        <input class="form-control" id="txtNameUserEdit" placeholder="Nhập tên người dùng" value="@Model.UserName"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary px-3" onclick="updateRole(@Model.UserID)">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div id="modalRole" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-user-secret" aria-hidden="false"></i> Phân quyền</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-12 text-center">
+                        <h4 class="text-primary">@Model.UserName</h4>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                    @{
+                        if (Model.Role == 2)
+                        {
+                            <div class="radio mt-2">
+                    <label class="cursor-pointer">
+                        <input value="2" checked type="radio" name="roleOrder" class="mr-2 cursor-pointer">Chỉ xem danh sách đơn hàng
+                    </label>
+                </div>
+                <div class="radio mt-3">
+                    <label class="cursor-pointer">
+                        <input value="3" type="radio" name="roleOrder" class="mr-2 cursor-pointer">Được chỉnh sửa đơn hàng
+                    </label>
+                </div>
+                            <p>
+                                <input checked value="2" type="radio" id="test1" name="radio-group">
+                                <label for="test1">Chỉ xem danh sách đơn hàng</label>
+                            </p>
+                            <p>
+                                <input value="3" type="radio" id="test2" name="radio-group">
+                                <label for="test2">Được chỉnh sửa đơn hàng</label>
+                            </p>
+                        }
+                        else
+                        {
+                            <div class="radio mt-2">
+                    <label class="cursor-pointer">
+                        <input value="2" type="radio" name="roleOrder" class="mr-2 cursor-pointer">Chỉ xem danh sách đơn hàng
+                    </label>
+                </div>
+                <div class="radio mt-3">
+                    <label class="cursor-pointer">
+                        <input value="3" checked type="radio" name="roleOrder" class="mr-2 cursor-pointer">Được chỉnh sửa đơn hàng
+                    </label>
+                </div>
+                            <p>
+                                <input value="2" type="radio" id="test1" name="radio-group">
+                                <label for="test1">Chỉ xem danh sách đơn hàng</label>
+                            </p>
+                            <p>
+                                <input checked value="3" type="radio" id="test2" name="radio-group">
+                                <label for="test2">Được chỉnh sửa đơn hàng</label>
+                            </p>
+                        }
+                    }
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary px-3" onclick="updateRole(@Model.UserID)">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+@*<script>
+    $(document).ready(function () {
+        $('input[name=roleOrder]:checked').val(@Model.Role);
+    })
+</script>*@

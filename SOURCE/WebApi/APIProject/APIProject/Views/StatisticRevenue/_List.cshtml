@@ -1,0 +1,88 @@
+﻿@using Data.DB
+@using Data.Model.APIWeb
+@using PagedList.Mvc
+@using Data.Utils
+@model  PagedList.IPagedList<StatisticRevenueOutputModel>
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="text-bold">Doanh số: <span class="text-danger" id="revenue">@String.Format("{0:0,0 vnđ}", @ViewBag.Revenue)</span></h5>
+            @*<h5 class="text-bold">Doanh số: <span class="text-danger" id="revenue"></span></h5>*@
+        </div>
+        <div class="col-md-4">
+            <h5 class="text-bold">Điểm thu: <span class="text-danger" id="revenuePoint">@String.Format("{0:0,0 }", @ViewBag.Point)</span></h5>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-hover table-bordered " id="">
+            <thead class="bg-thead text-center text-white">
+                <tr>
+                    <th>STT</th>
+                    <th>Mã đơn hàng</th>
+                    <th>Khách hàng</th>
+                    <th>Đại lý</th>
+                    <th>Sản phẩm</th>
+                    <th>Giá khuyến mãi</th>
+                    <th>Giá đại lý</th>
+                    <th>Trạng thái</th>
+                    <th class="widthCreatedDate">Ngày tạo</th>
+                </tr>
+            </thead>
+            <tbody class="text-center" id="">
+                @{
+                    int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                    foreach (var dt in Model)
+                    {
+                        <tr>
+                            <td>@stt</td>
+                            <td>@dt.order.Code</td>
+                            <td>@dt.CustomerName</td>
+                            <td>@dt.AgentName</td>
+                            <td>@dt.item.Name</td>
+                            <td>@String.Format("{0:0,0 vnđ}", @dt.item.DiscountPrice)</td>
+                            <td>@String.Format("{0:0,0 vnđ}", @dt.item.AgentPrice)</td>
+                            @{
+                                if (dt.order.Status == SystemParam.TYPE_NOTI_NEW_ORDER)
+                                {
+                                    <td class="text-primary">Mới</td>
+                                }
+                                else if (dt.order.Status == SystemParam.TYPE_NOTI_ORDER_CANCEL)
+                                {
+                                    <td class="text-danger">Đã hủy</td>
+                                }
+                                else if (dt.order.Status == SystemParam.TYPE_NOTI_ORDER_CUSSCESS)
+                                {
+                                    <td class="text-success">Đã hoàn thành</td>
+                                }
+                                else if (dt.order.Status == SystemParam.TYPE_NOTI_CONFIRM_ORDER)
+                                {
+                                    <td class="text-warning">Chờ xác nhận</td>
+                                }
+                                else if (dt.order.Status == SystemParam.TYPE_NOTI_ORDER_ADMIN)
+                                {
+                                    <td class="text-danger text">ORDER ADMIN</td>
+                                }
+                            }
+                            <td>@dt.order.CreateDate.ToString("dd/MM/yyyy")</td>
+                        </tr>
+                        stt++;
+                    }
+
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+<div class="col-md-12">
+    <div class="row float-right">
+        @Html.PagedListPager(Model, Page => Url.Action("Search", "StatisticRevenue", new { Page = Page, obj = ViewBag.obj, FromDate = ViewBag.fd, ToDate = ViewBag.td, AgentID =ViewBag.agentId }),
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+        {
+            HttpMethod = "GET",
+            UpdateTargetId = "list"
+        })
+        )
+    </div>
+</div>
+
+

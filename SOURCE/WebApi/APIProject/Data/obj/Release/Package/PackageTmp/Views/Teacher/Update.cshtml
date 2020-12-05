@@ -1,0 +1,231 @@
+﻿
+
+@{
+       ViewBag.Title = "Create";
+       Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Data.Models.WebModels.Teacher
+@model GetTeacherModels
+<div class="breadcrumb-holder">
+    <div class="container-fluid">
+
+        <span class="h2 pt-3 pb-3 pl-0 "><i class="fa fa-user"></i>Cập nhập thông tin giáo viên</span>
+
+    </div>
+</div>
+<section class="dashboard-counts pt-4">
+    <div class="container-fluid">
+        <div class="col-lg-12">
+
+            <form id="Form_Edit_Teacher" name="form_edit_teacher">
+                <div class="card">
+
+                    <div class="card-header">
+                        
+                        <button type="button" class="btn btn-large btn-danger btn_header mr-2 pull-right btn_Parent" onclick="window.location ='/teacher/index'"><i class="fa fa-trash-o" aria-hidden="true" onclick="window.location='/teacher/index'"></i> Thoát</button>
+                        <button type="button" class="btn btn-large btn-primary btn_header mr-2 pull-right " onclick="window.location ='/teacher/index'"><i class="fa fa-trash-o" aria-hidden="true" onclick="window.location='/teacher/index'"></i> Reset mật khẩu</button>
+                        <button type="button" class="btn btn-large btn-info btn_header mr-2 pull-right btn_Parent " onclick="EditTeacher(@ViewBag.PAGE_LIST,@ViewBag.LIST_COUNT)"><i class="fa fa-trash-o" aria-hidden="true"></i> Cập nhập </button>
+
+
+                    </div>
+
+                    <div class="modal-body row">
+                        <input type="hidden" class="form-control text_seach seach_parent textinput" value="@Model.ID" name="ID" id="" ng-required="true" ng-maxlength="200">
+                        <div class="col-lg-6 mt-3">
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <!--Tên của giáo viên-->
+                                    <div class="input-group mb-2 col-12 input-group-sm mt-4">
+
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Tên Giáo Viên</span>
+                                        </div>
+                                        <input type="text" class="form-control text_seach seach_parent textinput" value="@Model.NAME" name="NAME" id="txt_edit_name_teacher" ng-required="true" ng-maxlength="200">
+                                    </div>
+                                    <!--Ngày sinh của giáo viên-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Ngày sinh</span>
+                                        </div>
+                                        <input type="text" class="form-control text_seach seach_parent datepicker_teacher textinput col-9" value="@Model.GET_STRING_BIRTHDAY()" name="BIRTHDAY" id="txt_edit_birthday_teacher" ng-required="true">
+                                    </div>
+                                    <!--Giới tính của giáo viên-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Giới tính</span>
+                                        </div>
+                                        @{
+                                            if (Model.SEX == 0)
+                                            {
+                                                <label class="radio-inline mr-5 ml-5">
+                                                    <input type="radio" name="SEX" value="1" id="txt_edit_teacher_sex_male"> Nam
+                                                </label>
+                                                <label class="radio-inline ml-5">
+                                                    <input type="radio" name="SEX" value="0" id="txt_edit_teacher_sex_male" checked> Nữ
+                                                </label>
+                                            }
+                                            else
+                                            {
+                                                <label class="radio-inline mr-5 ml-5">
+                                                    <input type="radio" name="SEX" value="1" id="txt_edit_teacher_sex_male" checked> Nam
+                                                </label>
+                                                <label class="radio-inline ml-5">
+                                                    <input type="radio" name="SEX" value="0" id="txt_edit_teacher_sex_male"> Nữ
+                                                </label>
+                                            }
+                                        }
+
+                                    </div>
+                                    <!--Địa chỉ mail của giáo viên-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Email </span>
+                                        </div>
+                                        <input type="email" value="@Model.EMAIL" class="form-control text_seach seach_teacher textinput" name="EMAIL" id="txt_edit_email_teacher" ng-required="true" ng-maxlength="200">
+                                    </div>
+
+                                    <!--Địa chỉ của giáo viên-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Địa chỉ </span>
+                                        </div>
+                                        <input type="text" value="@Model.ADDRESS" class="form-control text_seach seach_teacher textinput" name="ADDRESS" id="txt_edit_address_teacher" ng-required="true" ng-maxlength="200">
+                                    </div>
+                                    <!--Số chứng minh nhân dân của giáo viên-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Số CMND </span>
+                                        </div>
+                                        <input type="number" value="@Model.PERSONID_CODE" class="form-control text_seach seach_teacher textinput" name="PERSONID_CODE" id="txt_edit_personid_teacher" ng-required="true" ng-maxlength="30">
+                                    </div>
+                                    <!--Sổ hộ khẩu của giáo viên-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Hộ khẩu </span>
+                                        </div>
+                                        <input type="text" value="@Model.HOME_ADDRESS" class="form-control text_seach seach_teacher textinput" name="HOME_ADDRESS" id="txt_edit_home_address_teacher" ng-required="true" ng-maxlength="200">
+                                    </div>
+
+                                    <!--Số điện thoại của giáo viên-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Số điện thoại </span>
+                                        </div>
+                                        <input type="number" value="@Model.PHONE" class="form-control text_seach seach_teacher textinput" name="PHONE" id="txt_edit_phone_teacher" ng-required="true" ng-maxlength="30">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mt-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <!--Môn học cần giảng dạy-->
+                                    <div class="input-group mb-2 col-12 input-group-sm mt-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Môn giảng dạy</span>
+                                        </div>
+                                        <select class="form-control text_seach seach_parent seach_parent Select_subject textinput" id="txt_edit_subject_id_teacher" name="SUBJECT_ID">
+                                            <option value="0">----lựa chọn----</option>
+                                            <option value="@Model.SUBJECT_ID" selected>@Model.SUBJECT_NAME</option>
+                                        </select>
+                                    </div>
+                                    <!--Trạng thái của giáo viên -->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Trạng thái</span>
+                                        </div>
+                                        <select class="form-control text_seach seach_parent seach_parent textinput" id="txt_edit_sattus_teacher" name="STATUS">
+
+                                            @{
+                                                if (Model.STATUS == 0)
+                                                {
+                                                    <option>----lựa chọn----</option>
+                                                    <option value="0" selected>Giáo viên thử việc</option>
+                                                    <option value="1">Giáo viên chính thức</option>
+                                                    <option value="2">Hêt hạn hợp đồng</option>
+                                                }
+                                                else if (Model.STATUS == 1)
+                                                {
+                                                    <option>----lựa chọn----</option>
+                                                    <option value="0">Giáo viên thử việc</option>
+                                                    <option value="1" selected>Giáo viên chính thức</option>
+                                                    <option value="2">Hêt hạn hợp đồng</option>
+                                                }
+                                                else if (Model.STATUS == 2)
+                                                {
+                                                    <option>----lựa chọn----</option>
+                                                    <option value="0">Giáo viên thử việc</option>
+                                                    <option value="1">Giáo viên chính thức</option>
+                                                    <option value="2" selected>Hêt hạn hợp đồng</option>
+                                                }
+                                                else
+                                                {
+                                                    <option selected>----lựa chọn----</option>
+                                                    <option value="0">Giáo viên thử việc</option>
+                                                    <option value="1">Giáo viên chính thức</option>
+                                                    <option value="2">Hêt hạn hợp đồng</option>
+                                                }
+                                            }
+
+
+
+                                        </select>
+
+                                    </div>
+
+                                    <!--Kinh nghiệm của giáo viên-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Kinh nghiệm</span>
+                                        </div>
+
+                                        <input type="text" value="@Model.EXP_NOTE" class="form-control text_seach seach_parent textinput" name="EXP_NOTE" id="txt_edit_exp_node_teacher" ng-required="true" ng-maxlength="200">
+                                    </div>
+                                    <!--Ngày làm việc chính thức của giáo viên-->
+                                    <div class="input-group mb-2 col-12 input-group-sm  col-md-12 ">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px ; float:left">Ngày chính thức </span>
+                                        </div>
+                                        <input type="text" value="@Model.GET_STRING_DATE_CONTRACT()" class="form-control text_seach seach_teacher datepicker_teacher textinput col-9" name="DATE_CONTRACT" id="txt_edit_date_contact_teacher" ng-required="true">
+                                    </div>
+                                    <!--Ngày thừ việc cua giáo viên -->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Ngày thử việc</span>
+                                        </div>
+                                        <input type="text" value="@Model.GET_STRING_DATE_TRIAL()" class="form-control text_seach seach_teacher datepicker_teacher textinput  col-9" name="DATE_TRIAL" id="txt_edit_date_trial_teacher" ng-required="true">
+                                    </div>
+
+                                    <!--Thông tin chú thích của giáo viên-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">NOTE </span>
+                                        </div>
+                                        <textarea rows="4" cols="50" class="co-12 textinput" style="width:100%" id="txt_edit_node_teacher_teacher" name="NOTE">@Html.Raw(Model.NOTE)</textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script type="text/javascript">
+
+    var app = angular.module("my_app_edit_teacher", []);
+    app.controller('ctrl_edit_teacher', function ($scope) {
+    });
+</script>

@@ -1,0 +1,88 @@
+﻿@using Data.Model.APIWeb
+@using Data.Utils
+@model CreateCardWebInputModel
+
+<div class="modal fade" id="showEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-credit-card"></i> Sửa thẻ cào</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="frmShowEdit">
+                <div class="modal-body">
+                    <div class="row pb-4">
+                        <input id="txtID" name="ID" value="@Model.ID" type="hidden" class="form-control" />
+                        <div class="col-md-12 col-sm-12 col-12" >
+                            <label>Nhà mạng<span class="text-danger"> *</span></label>
+                            <select class="form-control" id="cmbTelecomType" name="TelecomType" itemprop="2" >
+                                <option value="1">Viettel</option>
+                                <option value="2">Mobiphone</option>
+                                <option value="3">Vinaphone</option>
+                                <option value="4">VietnamMobile</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pb-4">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Mệnh giá<span class="text-danger"> *</span></label>
+                            <select class="form-control" id="cmbCardType" name="CardType">
+                                <option value="500000">500.000</option>
+                                <option value="200000">200.000</option>
+                                <option value="100000">100.000</option>
+                                <option value="50000">50.000</option>
+                                <option value="20000">20.000</option>
+                                <option value="10000">10.000</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pb-4">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Mã thẻ cào<span class="text-danger"> *</span></label>
+                            <input type="text" class="form-control" id="txtCardCode" name="CardCode" value="@Model.CardCode" placeholder="Nhập mã thẻ cào...">                            
+                        </div>
+                    </div>
+                    <div class="row pb-4">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Số Seri<span class="text-danger"> *</span></label>
+                            <input type="text" class="form-control" id="txtSeriNumber" name="SeriNumber" value="@Model.SeriNumber" placeholder="Nhập số seri...">                           
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Ngày bắt đầu<span class="text-danger"> *</span></label>
+                            <input type="text" class="form-control relative-icon-calendar-warranty date-edit" value="@Model.StartDate" id="dtpStartDateEdit" name="StartDate" placeholder="Chọn ngày bát đầu...">                            
+                            <i class="fa fa-calendar absolute-icon-calendar-warranty"></i>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Ngày hết hạn<span class="text-danger"> *</span></label>
+                            <input type="text" class="form-control relative-icon-calendar-warranty date-edit" value="@Model.ExprireDate" id="dtpExprireDateEdit" name="ExprireDate" placeholder="Chọn ngày hết hạn...">
+                            <i class="fa fa-calendar absolute-icon-calendar-warranty"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary px-3" onclick="SaveEdit(@Model.ID)">Lưu</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+
+<script>
+    //alert('hêlo');
+    $(document).ready(function () {
+        $('.date-edit').datepicker({
+            dateFormat: "dd/mm/yy"
+        });
+        $("#showEdit #cmbTelecomType").val(@Model.TelecomType);
+        $('#showEdit #cmbCardType').val(@Model.CardType);
+    });
+</script>

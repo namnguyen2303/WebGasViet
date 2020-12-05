@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Data.DB
+@using Data.Utils
+
+
+<div class="row mt-3">
+    <div class="col-md-12 col-sm-12">
+        <h3 class="">
+            <i class="fa fa-bitcoin"></i>
+            <span>Đơn hàng</span>
+        </h3>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-2 col-sm-12">
+        <select class="form-control" id="slAgent">
+            @{
+                <option class="text-black-50">Đại lý</option>
+                foreach (var a in (List<Customer>)ViewBag.ListAgent) {
+                    <option value="@a.ID">@a.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-md-2 col-sm-12">
+        <select class="form-control" id="slCustomer">
+            @{
+                <option class="text-black-50">Khách hàng</option>
+                foreach (var c in (List<Customer>)ViewBag.ListCustomer) {
+                    <option value="@c.ID">@c.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-md-2 col-sm-12">
+        <select class="form-control" id="slStatus">
+            <option>Trạng thái</option>
+            <option value="@SystemParam.TYPE_NOTI_ORDER_ADMIN">ORDER ADMIN</option>
+            <option value="@SystemParam.TYPE_NOTI_CONFIRM_ORDER">Xác nhận</option>
+            <option value="@SystemParam.TYPE_NOTI_ORDER_CUSSCESS">Đã hoàn thành</option>
+            <option value="@SystemParam.TYPE_NOTI_ORDER_CANCEL">Hủy</option>
+        </select>
+    </div>
+    <div class="col-md-3 col-sm-12">
+        <input class="form-control relative-icon-calendar date" placeholder="Từ ngày " id="txtFromDate" />
+        <i class="fa fa-calendar absolute-icon-calendar"></i>
+    </div>
+
+    <div class="col-md-3 col-sm-12">
+        <input class="form-control relative-icon-calendar date" placeholder="Đến ngày " id="txtToDate" />
+        <i class="fa fa-calendar absolute-icon-calendar"></i>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-4">
+        <input class="form-control" id="orderCode" placeholder="Nhập mã đơn hàng hoặc tên khách hàng"/>
+    </div>
+    <div class="col-md-3 offset-md-5 offset-sm-0 col-sm-12">
+        <button class="btn btn-primary btn-block" id="btnSearchOrder" onclick="searchOrder()">Tìm kiếm</button>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12 col-sm-12" id="list">
+        @{
+            Html.RenderAction("Search", "Order", new { Page = 1 });
+        }
+    </div>
+</div>
+
+<div id="fillModal"></div>
+
+<script>
+    $(document).ready(function () {
+        $("#txtFromDate").on('keyup', function () {
+            if ($("#txtFromDate").val() == '')
+                $("#btnSearchOrder").click();
+        });
+
+        $("#txtToDate").on('keyup', function () {
+            if ($("#txtToDate").val() == '')
+                $("#btnSearchOrder").click();
+        });
+
+        $("#txtCusPhone").on('keyup', function () {
+            if ($("#txtCusPhone").val() == '')
+                $("#btnSearchOrder").click();
+        });
+
+        $("#slStatus").on('change', function (e) {
+            $("#btnSearchOrder").click();
+        });
+    })
+</script>
+@*search cusName autocompalete*@
+<script>
+    $("#orderCode").autocomplete({
+        source: function (request, response) {
+            var name = $("#orderCode").val();
+            $.ajax({
+                type: "POST",
+                url: "/Order/SearchCusName",
+                data: { Name: name },
+                success: response,
+                dataType: 'json'
+            });
+        }
+    });
+
+</script>

@@ -1,0 +1,93 @@
+﻿@using Data.Model.APIWeb
+@using Data.Utils
+@using PagedList.Mvc
+@model  PagedList.IPagedList<RequestDetailWebOutputModel>
+<table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md">
+    <thead class="text-center text-white bg-thead">
+        <tr>
+            <th>STT</th>
+            <th>Mã yêu cầu</th>
+            <th>Loại yêu cầu</th>
+            <th>Khách hàng</th>
+            <th>Trạng thái</th>
+            <th>Ngày yêu cầu</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+
+        @{
+            if (Model.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="7">Không có dữ liệu.</td>
+                </tr>
+            }
+            else
+            {
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var data in Model)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@data.RequestCode</td>
+                        @{
+                            switch (data.TypeGift)
+                            {
+                                case SystemParam.TYPE_REQUEST_GIFT:
+                                    <td>@SystemParam.TYPE_REQUEST_GIFT_STRING</td>
+                                    break;
+                                case SystemParam.TYPE_REQUEST_VOUCHER:
+                                    <td>@SystemParam.TYPE_REQUEST_VOUCHER_STRING</td>
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        <td>@data.CustomerName</td>
+                        @{
+                            switch (data.Status)
+                            {
+                                case SystemParam.STATUS_REQUEST_ACCEPTED:
+                                    <td class="text-success">@SystemParam.STATUS_REQUEST_ACCEPTED_STRING</td>
+                                    break;
+                                case SystemParam.STATUS_REQUEST_PENDING:
+                                    <td class="text-warning text-bold">@SystemParam.STATUS_REQUEST_PENDING_STRING</td>
+                                    break;
+                                case SystemParam.STATUS_REQUEST_CANCEL:
+                                    <td>@SystemParam.STATUS_REQUEST_CANCEL_STRING</td>
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        <td>@data.CreateDateStr</td>
+                        <td>
+                            <a data-toggle="tooltip" data-placement="top" title="Chi tiết." class="cursor-pointer showModalDetail" onclick="getRequestDetail(@data.ID);">
+                                <i class="btnEdit fa fa-fw fa-edit"></i>
+                            </a>
+                            @*<a data-toggle="tooltip" data-placement="top" title="Xóa yêu cầu." class="cursor-pointer" onclick="deleteRequest(@data.ID);">
+                                    <i class="btnDelete fa fa-fw fa-trash-o"></i>
+                                </a>*@
+                        </td>
+                    </tr>
+                    stt++;
+                }
+            }
+        }
+
+    </tbody>
+</table>
+<input type="hidden" id="txtPageCurrent" value="@ViewBag.PageCurrent" class="txtPageCurrent" />
+<div class="col-md-12">
+    <div class="row float-right">
+        @*phân trang*@
+        @Html.PagedListPager(Model, Page => Url.Action("Search", new { Page, Status = ViewBag.Status, Type = ViewBag.Type, RequestCode = ViewBag.RequestCode, FromDate = ViewBag.FromDate, ToDate = ViewBag.ToDate }),
+     PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+     {
+         HttpMethod = "GET",
+         UpdateTargetId = "tableRequest"
+     })
+     )
+    </div>
+</div>

@@ -1,0 +1,83 @@
+﻿
+@using Data.Model.APIWeb
+@using Data.Utils
+@using PagedList.Mvc
+@model PagedList.IPagedList<ListShopOutputModel>
+
+
+<table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md">
+    <thead class="text-center text-white bg-thead">
+        <tr>
+            <th>STT</th>
+            <th>Tên cửa hàng</th>
+            <th>Tên liên hệ</th>
+            <th>Số điện thoại</th>
+            <th>Tỉnh thành</th>
+            <th>Quận huyện</th>
+            <th>Địa chỉ</th>
+            <th class="widthCreatedDate">Ngày tạo</th>
+            @*<th>Ảnh</th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @{
+            if (Model.Count <= 0)
+            {
+                <tr>
+                    <td colspan="10">Không có dữ liệu.</td>
+                </tr>
+            }
+            else
+            {
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var data in Model)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@data.Name </td>
+                        <td>@data.ContactName</td>
+                        <td>@data.ContactPhone</td>
+                        <td>@data.Province</td>
+                        <td>@data.District</td>
+                        <td>@data.Address</td>
+                        <td>@data.GetStringCreateDate</td>
+                        @*<td>
+                            @if (data.ImageUrl != null && data.ImageUrl.Count() > 0)
+                            {
+                                <img src="@data.ImageUrl[0]" width="120" height="80" style="margin:10px 20px;" class="row mt-1 ml-3" />
+                            }
+                            else
+                            {
+                                <img src="~/Content/images/no-image-icon-13.png" width="120" height="80" style="margin:10px 20px;" class="row mt-1 ml-3" />
+                            }
+
+                        </td>*@
+                        <td class="width2btn">
+                            <a data-toggle="tooltip" data-placement="top" title="Sửa cửa hàng " class="cursor-pointer" onclick="loadModalEditShop(@data.ID);">
+                                <i class="btnEdit fa fa-fw fa-edit"></i>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Xóa cửa hàng." class="cursor-pointer" onclick="DeleteShop(@data.ID)">
+                                <i class="btnDelete fa fa-fw fa-trash-o"></i>
+
+                            </a>
+                        </td>
+                    </tr>
+                    stt++;
+                }
+            }
+        }
+    </tbody>
+</table>
+<div class="col-md-12">
+    <div class="row float-right">
+        @*phân trang*@
+        @Html.PagedListPager(Model, Page => Url.Action("Search", new { Page, ShopName = ViewBag.ShopName, ProvinceID = ViewBag.ProvinceID }),
+     PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+     {
+         HttpMethod = "GET",
+         UpdateTargetId = "TableShop"
+     })
+     )
+    </div>
+</div>

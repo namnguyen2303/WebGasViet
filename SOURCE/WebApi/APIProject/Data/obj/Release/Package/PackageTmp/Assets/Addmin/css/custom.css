@@ -1,0 +1,175 @@
+/* your styles go here */
+
+/* your styles go here */
+
+.text_seach {
+    padding: 2px 12px;
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 18px;
+    height: auto;
+}
+p.label_Name {
+    border: 1px solid #cccccc;
+    height: auto;
+    padding-left: 5px;
+    padding: 3px;
+}
+
+.btn_header {
+    padding: 5px;
+    padding-left: 26px;
+}
+
+.container-fluid {
+    padding: 4px;
+}
+
+.dashboard-header {
+    background: #f1f6fb !important;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.section-padding {
+    padding: 1rem 0;
+}
+
+.row.mb-2.seach-User {
+    margin-left: 6px;
+}
+
+.modal-backdrop.show{
+    display:none
+}
+
+input.input-material ~ label.active {
+    font-size: 0.8rem;
+    top: -15px !important;
+    color: #33b35a;
+}
+
+.login-page .form-inner, .register-page .form-inner {
+    padding: 51px 75px !important;
+    background: #fff;
+    -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+ .h6 {
+    font-size: 0.8rem !important;
+}
+
+ .btn_Parent {
+    width: 143px;
+}
+
+ .section-padding {
+    padding: 0.1rem 0;
+}
+
+ .seach_parent {
+    height: 37px !important;
+    border-radius: 0px;
+}
+
+ .card-body {
+    padding-top: 2px !important;
+    padding: 1.25rem;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.modal-header {
+    background: #5cc6a2;
+}
+
+.modal-body.row {
+    margin: 0px;
+    background: #f4f7fa;
+}
+div#Max1 {
+    padding-right: 0px;
+}
+div#Max2 {
+    padding-right: 0px;
+}
+#Max{
+     padding-right: 0px;
+}
+
+textarea#txt_add_node_parent {
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+    color: #6c757d;
+}
+
+
+textarea#txt_update_status_in_absent_of_add_min {
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+    color: #6c757d;
+}
+
+
+
+
+
+.inputWithIcon input[type="text"] {
+  padding-left: 40px;
+}
+
+.inputWithIcon {
+  position: relative;
+}
+
+.inputWithIcon i {
+  position: absolute;
+  left: 0;
+  top: -1px;
+  padding: 9px 7px;
+  color: #fff;
+  transition: 0.3s;
+}
+
+
+
+.inputWithIcon.inputIconBg i {
+  background-color: #aaa;
+  color: #fff;
+  padding: 9px 4px;
+  border-radius: 4px 0 0 4px;
+}
+
+tr:hover {
+    background-color: #bebdbf !important;
+    color: white;
+}
+
+.card-header.header_add_Class {
+    padding-top: 9px !important;
+    padding-bottom: 9px !important;
+    padding-right: 10px !important;
+}
+
+.textinput {
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+    color: #869099;
+}
+
+.page_count {
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+}
+
+.card-header {
+    padding: 1rem 0.25rem !important;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}

@@ -1,0 +1,108 @@
+﻿@using Data.Model.APIWeb
+@using PagedList.Mvc
+@using Data.Utils
+@model  PagedList.IPagedList<CardDetailOutputModel>
+
+<table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md">
+    <thead class="text-center text-white bg-thead">
+        <tr>
+            <th>STT</th>
+            <th>Mã thẻ cào</th>
+            <th>Số seri</th>
+            <th>Mệnh giá</th>
+            <th>Nhà mạng</th>
+            <th>Trạng thái</th>
+            <th>Người đổi</th>
+            <th>Ngày thêm</th>
+            <th><input type="hidden" id="txtIDdelete" /></th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @{
+            if (Model.Count <= 0)
+            {
+                <tr>
+                    <td colspan="9">Không có dữ liệu.</td>
+                </tr>
+            }
+            else
+            {
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var data in Model)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@Util.EnCode(data.CardCode)</td>
+                        <td>@data.SeriNumber</td>
+                        <td>@String.Format("{0:n0}", data.CardTypeStr)</td>
+                        @{
+                            if (@data.TelecomTypeStr.Equals(1))
+                            {
+                                <td>Viettel</td>
+                            }
+                            else if (@data.TelecomTypeStr.Equals(2))
+                            {
+                                <td>Mobiphone</td>
+                            }
+                            else if (@data.TelecomTypeStr.Equals(3))
+                            {
+                                <td>Vinaphone</td>
+                            }
+                            else if (@data.TelecomTypeStr.Equals(4))
+                            {
+                                <td>Vietnamobile</td>
+                            }
+                        }
+                        @{
+                            if (@data.Status.Equals(1))
+                            {
+                                <td class="text-success">Đã đổi</td>
+                            }
+                            else if (@data.Status.Equals(2))
+                            {
+                                <td>Chưa đổi</td>
+                            }
+                            else if (@data.Status.Equals(3))
+                            {
+                                <td>Lỗi</td>
+                            }
+                        }
+                        <td class="text-success">@data.CustomerActiveName</td>
+                        <td>@data.CreateDateStr</td>
+                        <td class="width2btn">
+                            <a data-toggle="" data-target="" data-placement="top" title="Chỉnh sửa thông tin." class="cursor-pointer showEdit" onclick="editCard(@data.CardID, @data.Status)">
+                                <i class="btnEdit fa fa-fw fa-edit"></i>
+                            </a>
+                            <a data-toggle="" data-placement="top" title="Xóa thẻ cào." class="cursor-pointer" data-target="" onclick="deleteCard(@data.CardID)">
+                                <i class="btnDelete fa fa-fw fa-trash-o"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    stt++;
+                }
+            }
+        }
+
+    </tbody>
+</table>
+
+<!-- start modal -->
+<!--End modal-->
+
+
+<div class="col-md-12">
+    <div class="row float-right">
+        @*phân trang*@
+        @Html.PagedListPager(Model, Page => Url.Action("Search","Card", new { Page=Page, Seri = ViewBag.Seri, FromDate = ViewBag.FromDate, ToDate = ViewBag.ToDate, Status = ViewBag.Status }),
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+        {
+            HttpMethod = "GET",
+            UpdateTargetId = "tableCard"
+        })
+        )
+    </div>
+
+</div>
+
+
+

@@ -1,0 +1,58 @@
+﻿
+@using Data.Models.WebModels.User
+@using PagedList.Mvc
+@model  PagedList.IPagedList<GetUserModels>
+
+
+
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr style="background-color:#636363; color:white">
+                    <th >STT</th>
+                    <th>Tên tài khoản</th>
+                    <th>Email</th>
+                    <th>Chức vụ</th>
+                    <th>Ngày tạo</th>
+                    <th style="width:120px">Chức năng</th>
+                </tr>
+            </thead>
+            <tbody >
+                @{
+
+                    int i = ViewBag.STT;
+
+                    foreach (var data in Model)
+                    {
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>@data.USER_NAME</td>
+                            <td>@data.EMAIL</td>
+                            <td>@data.GetStringRole()</td>
+                            <td>@data.GetStringCreateDate()</td>
+                            <td>
+                                <a class="btn btn-primary btn-sm" onclick="GetUserById(@data.ID)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                <a class="btn btn-danger btn-sm" onclick="ShowFromDeleteUser(@data.ID)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+
+            </tbody>
+           
+
+        </table>
+        <div class="_page offset-1 offset-md-3 mt-2">
+            @Html.PagedListPager(Model, Page => Url.Action("Seach", new { Page, UserName = ViewBag.UserName }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+           {
+               HttpMethod = "GET",
+               UpdateTargetId = "Table_User"
+           }
+
+               ))
+        </div>
+    </div>
+</div>
+

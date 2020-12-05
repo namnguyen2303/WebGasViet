@@ -1,0 +1,98 @@
+﻿@using Data.Model.APIWeb
+@using Data.Utils
+@using PagedList.Mvc
+@model PagedList.IPagedList<ListHistoryOutputModel>
+
+<table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md">
+    <thead class="text-center text-white bg-thead">
+        <tr>
+            @*<th>STT</th>
+                <th>Mã giao dịch</th>
+                <th>Loại giao dịch</th>
+                <th>Khách hàng</th>
+                <th>SĐT</th>
+                <th>Số điểm</th>
+                <th>Số dư</th>
+                <th>Ngày giao dịch</th>
+                <th></th>*@
+            <th>STT</th>
+            <th>Mã giao dịch</th>
+            <th>Đại lý</th>
+            <th>Số điểm</th>
+            <th>Ghi chú</th>
+            <th class="widthCreatedDate">Ngày tạo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @{
+            if (Model.Count <= 0) {
+                <tr>
+                    <td colspan="10">Không có dữ liệu.</td>
+                </tr>
+            } else {
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var data in Model) {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@data.AddPointCode</td>
+                        <td>@data.Agent</td>
+                        <td>@String.Format("{0:n0}", data.Point)</td>
+                        <td>@data.Comment</td>
+                        <td class="widthCreatedDate">@data.CraeteDate.ToString("dd/MM/yyyy")</td>
+                        <td class="width2btn">
+                            <a data-toggle="tooltip" data-placement="top" title="Xem chi tiết." class="cursor-pointer showModalPoint" onclick="getPointDetail(@data.ID);">
+                                <i class="btnView fa fa-fw fa-eye"></i>
+                            </a>
+                            @*<a data-toggle="tooltip" data-placement="top" title="Cộng điểm" class="cursor-pointer showModalPoint" onclick="showAddPonitAgent(@data.ID);">
+                                <i class="btnView fa fa-fw fa-plus text-success"></i>
+                            </a>*@
+                        </td>
+                    </tr>
+                    stt++;
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<div class="col-md-12">
+    <div class="row float-right">
+        @*phân trang*@
+        @Html.PagedListPager(Model, Page => Url.Action("Search", new { Page, Type = ViewBag.Type, KeySearch = ViewBag.KeySearch, fromDate = ViewBag.fromDate, toDate = ViewBag.toDate,CusID = ViewBag.CusID }),
+     PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() {
+         HttpMethod = "GET",
+         UpdateTargetId = "tablePoint"
+     })
+     )
+    </div>
+</div>
+
+<!--modal add point-->
+
+<div class="modal fade" id="addPointAgent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-fw fa-shopping-cart"></i>Thêm sản phẩm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form_create_item" name="form_create_item">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <div class="row pb-3">
+                            <label class="col-md-4 mt-1">Cộng điểm</label>
+                            <input class="col-md-8 form-control" id="pointAddAgent" placeholder="Nhập số điểm muốn cộng" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="addPointAgent()"><i class="fa fa-plus mr-2"></i>Cộng điểm</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times mr-2"></i>Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>

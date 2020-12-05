@@ -1,0 +1,61 @@
+﻿@using Data.Models.WebModels.Absent
+@using PagedList.Mvc
+@model  PagedList.IPagedList<GetListAbsentModels>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr class="" style="background-color:#636363; color:white">
+            <th>STT</th>
+            <th>Tên lớp học</th>
+            <th>Lịch học</th>
+            <th>Tên giáo viên</th>
+            <th>Ngày giờ điểm danh</th>
+            <th>Cơ sở</th>
+            <th>Trạng thái</th>
+            <th>Ngày tạo</th>
+            <th>Ghi chú</th>
+            <th>Sửa</th>
+        </tr>
+    </thead>
+    <tbody id="find-tables">
+        @{
+
+            int i = ViewBag.ABSENT_STT;
+
+            foreach (var data in Model)
+            {
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>@data.CLASS_NAME </td>
+                    <td>@data.GET_STRING_DATE_CLASS()</td>
+                    <td>@data.TEACHER_NAME</td>
+                    <td>@data.GET_STRING_CREATEDATE()</td>
+                    <td>@data.BRANCH_NAME</td>
+                    <td>@data.GET_STRING_STATUS()</td>
+                    <td>@data.GET_STRING_MODIFIER_DATE()</td>
+                    <td>@data.GET_SUBSTRING_NODE()</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" onclick="window.location='/Absent/updateAddMin?id=@data.ID&Page=@ViewBag.ABSENT_PAGE&Count=@ViewBag.ABSENT_COUNT'"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+                i++;
+
+            }
+        }
+
+    </tbody>
+
+    
+</table>
+<input type="hidden" id="txt_page_list_teacher" value="@ViewBag.ABSENT_PAGE" class="txt_page_list_absent" />
+<div class="_page offset-1 offset-md-3 mt-2">
+    @Html.PagedListPager(Model, Page => Url.Action("Seach", new { Page, Count = ViewBag.ABSENT_COUNT, BRANCH_ID = ViewBag.ABSENT_BRANCH_ID, CLASS_ID = ViewBag.ABSENT_CLASS_ID, END_DATE = ViewBag.ABSENT_END_DATE, START_DATE = ViewBag.ABSENT_START_DATE, STATUS = ViewBag.ABSENT_STATUS, TEACHER_NAME = ViewBag.ABSENT_TEACHER_NAME }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "Table_Absent"
+}
+
+   ))
+</div>
+
+

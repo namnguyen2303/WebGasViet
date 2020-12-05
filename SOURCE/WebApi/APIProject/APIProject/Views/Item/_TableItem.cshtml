@@ -1,0 +1,131 @@
+﻿@using Data.DB;
+@using Data.Model.APIWeb
+@using Data.Utils
+@using PagedList.Mvc
+@model PagedList.IPagedList<ListItemOutputModel>
+
+<table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md">
+    <thead class="text-center text-white bg-thead">
+        <tr>
+            <th>STT</th>
+            <th>Mã sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Trạng thái</th>
+            <th>Thương hiệu</th>
+            <th>Xuất xứ</th>
+            <th>Bảo hành</th>
+            <th>Giá niêm yết</th>
+            <th>Giá đại lý</th>
+            <th>Giá sau khuyến mãi</th>
+            <th>Số điểm bị trừ</th>
+            @*<th>Mô tả</th>*@
+            <th class="widthCreatedDate">Ngày tạo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @{
+            if (Model.Count <= 0)
+            {
+                <tr>
+                    <td colspan="10">Không có dữ liệu.</td>
+                </tr>
+            }
+            else
+            {
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var data in Model)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@data.Code </td>
+                        <td>@data.Name</td>
+                        @{ 
+                            if(data.Status == 0) {
+                                <td class="text-danger font-weight-bold">Ngừng hoạt động</td>
+                            } else if(data.Status == 1){
+                                <td class="text-success font-weight-bold">Đang hoạt động</td>
+                            }
+                        }
+                        <td>@data.Brand</td>    
+                        <td>@data.MadeIn</td>
+                        <td>@data.Warranty</td> 
+                        <td>@String.Format("{0:n0}", data.Price)</td>
+                        <td>@String.Format("{0:n0}", data.AgentPrice)</td>
+                        <td>@String.Format("{0:n0}", data.DiscountPrice)</td>
+                        @*<td class="more">
+                            @data.Description
+                        </td>*@
+                    <td>@String.Format("{0:n0}", data.Point)</td>
+                        <td>@data.CreateDate.ToString("dd/MM/yyyy")</td>
+                        <td class="width2btn">
+                            <a data-toggle="tooltip" data-placement="top" title="Sửa sản phẩm" class="cursor-pointer" onclick="LoadItem(@data.ID)">
+                                <i class="btnEdit fa fa-fw fa-edit"></i>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Xóa sản phẩm." class="cursor-pointer" onclick="DeleteItem(@data.ID)">
+                                <i class="btnDelete fa fa-fw fa-trash-o"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    stt++;
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<div class="col-md-12">
+    <div class="row float-right">
+        @*phân trang*@
+        @Html.PagedListPager(Model, Page => Url.Action("Search", new { Page, fromDate = ViewBag.fromDate, toDate = ViewBag.toDate, ItemName = ViewBag.ItemName , Status =ViewBag.Status, category = ViewBag.Category }),
+     PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+     {
+         HttpMethod = "GET",
+         UpdateTargetId = "tableItem"
+     })
+     )
+    </div>
+</div>
+
+<script>
+    window.onload = readMore;
+
+    function readMore() {
+        if (document.readyState === 'complete') {
+            console.log("hello world");
+            $(document).ready(function() {
+	            var showChar = 100;
+	            var ellipsestext = "...";
+	            var moretext = "more";
+	            var lesstext = "less";
+	            $('.more').each(function() {
+		            var content = $(this).html();
+
+		            if(content.length > showChar) {
+
+			            var c = content.substr(0, showChar);
+			            var h = content.substr(showChar-1, content.length - showChar);
+
+			            var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+
+			            $(this).html(html);
+		            }
+
+	            });
+
+	            $(".morelink").click(function(){
+		            if($(this).hasClass("less")) {
+			            $(this).removeClass("less");
+			            $(this).html(moretext);
+		            } else {
+			            $(this).addClass("less");
+			            $(this).html(lesstext);
+		            }
+		            $(this).parent().prev().toggle();
+		            $(this).prev().toggle();
+		            return false;
+	            });
+            });        
+        }
+    }
+</script>

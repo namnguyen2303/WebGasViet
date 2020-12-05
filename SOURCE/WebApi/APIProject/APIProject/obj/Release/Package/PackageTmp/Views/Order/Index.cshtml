@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    <div class="row mt-3">
+        <div class="col-md-12 col-sm-12">
+            <h3 class="">
+                <i class="fa fa-bitcoin"></i>
+                 Quản lý đơn hàng
+            </h3>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-3 col-sm-12">
+            <select class="form-control" id="slStatus">
+                <option>Tất Cả</option>
+                <option value="0">Chờ</option>
+                <option value="1">Xác nhận</option>
+                <option value="2">Đã thanh toán</option>
+                <option value="3">Hủy</option>
+            </select>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <input class="form-control relative-icon-calendar date" placeholder="Từ ngày " id="txtFromDate" />
+            <i class="fa fa-calendar absolute-icon-calendar"></i>
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+            <input class="form-control relative-icon-calendar date" placeholder="Đến ngày " id="txtToDate" />
+            <i class="fa fa-calendar absolute-icon-calendar"></i>
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+            <input class="form-control" placeholder="Nhập số điện thoại" id="txtCusPhone" />
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-3 offset-md-9 offset-sm-0 col-sm-12">
+            <button class="btn btn-primary btn-block" id="btnSearchOrder" onclick="searchOrder()">Tìm kiếm</button>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12 col-sm-12" id="list">
+            @{ 
+                Html.RenderAction("Search", "Order", new { Page = 1 });
+            }
+        </div>
+    </div>
+<script>
+    $(document).ready(function () {
+        $("#txtFromDate").on('keyup', function () {
+            if ($("#txtFromDate").val() == '')
+                $("#btnSearchOrder").click();
+        });
+
+        $("#txtToDate").on('keyup', function () {
+            if ($("#txtToDate").val() == '')
+                $("#btnSearchOrder").click();
+        });
+
+        $("#txtCusPhone").on('keyup', function () {
+            if ($("#txtCusPhone").val() == '')
+                $("#btnSearchOrder").click();
+        });
+
+        $("#slStatus").on('change', function (e) {
+            $("#btnSearchOrder").click();
+        });
+    })
+</script>
+

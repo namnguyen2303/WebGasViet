@@ -1,0 +1,89 @@
+﻿@using Data.DB
+@using Data.Model.APIWeb
+@using PagedList.Mvc
+@using PagedList
+@model IPagedList<ListRequestOutputModel>
+
+<div class="col-md-12">
+    <table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md">
+        <thead class="text-center text-white bg-thead">
+            <tr>
+                <th class="width-stt">STT</th>
+                <th>Hình thức</th>
+                <th>Số điểm</th>
+                <th>Giá trị phần quà</th>
+                <th>Ngày đổi điểm</th>
+                <th>Trạng thái</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @{
+                if (Model.Count() <= 0)
+                {
+                    <tr>
+                        <td colspan="10">Không có dữ liệu.</td>
+                    </tr>
+                }
+                else
+                {
+                    int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                    foreach (var data in Model)
+                    {
+                        <tr>
+                            <td>@stt</td>
+                            @{
+                                if (@data.Type == 1)
+                                {
+                                    <td>Đổi Quà</td>
+                                }
+                                else if (@data.Type == 2)
+                                {
+                                    <td>Đổi Voucher</td>
+                                }
+                                else
+                                {
+                                    <td>Đổi Thẻ Cào</td>
+                                }
+                            }
+                            <td>@data.Point</td>
+                            <td>@String.Format("{0:0,0 vnđ}", @data.Price)</td>
+                            <td>@data.CreateDate.Value.ToString("dd/MM/yyyy hh:mm")</td>
+                            @{
+                                if (@data.Status == 0)
+                                {
+                                    <td class="text-primary">Chờ</td>
+                                }
+                                else if (@data.Status == 1)
+                                {
+                                    <td class="text-success">Hoàn Thành</td>
+                                }
+                                else if (@data.Status == 2)
+                                {
+                                    <td class="text-warning">Hủy Và Cộng</td>
+                                }
+                                else if (@data.Status == 3)
+                                {
+                                    <td class="text-danger">Hủy</td>
+                                }
+                            }
+                        </tr>
+                        stt++;
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+<div class="col-md-12">
+    <div class="row float-right mr-1">
+        @*phân trang*@
+        @Html.PagedListPager(
+            Model,
+            page => Url.Action("SearchReQuest", "Customer", new { Page = page, FromDate = ViewBag.FromDateRQ, ToDate = ViewBag.ToDateRQ, cusID = ViewBag.cusID }),
+            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "ListRequest" })
+            )
+    </div>
+</div>

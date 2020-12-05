@@ -1,0 +1,76 @@
+﻿
+@using Data.Models.WebModels.Parent
+@using PagedList.Mvc
+@model  PagedList.IPagedList<GetParentModels>
+
+
+
+@*Bản dữ liệu của học sinh*@ 
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr class="" style="background-color:#636363; color:white">
+                    <th>STT</th>
+                    <th>Tên học sinh</th>
+                    <th>Tên phụ huynh</th>
+                    <th>Ngày sinh</th>
+                    <th>Giới tính</th>
+                    <th>Diện thoại</th>
+                    <th>Địa chỉ</th>
+                    <th>trường học</th>
+                    <th>Ngày tạo</th>
+                    <th>Ghi chú</th>
+                    <th style="width:120px">Chức năng</th>
+                    <th style="width:50px">
+                        <input type="checkbox" name="CheckBookAll" id="CheckBookAll" value="" />
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="ListStudent" >
+                @{
+
+                    int i = ViewBag.STT;
+
+                    foreach (var data in Model)
+                    {
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>@data.STUDENT_NAME</td>
+                            <td>@data.NAME</td>
+                            <td>@data.GetStringBirthday()</td>
+                            <td>@data.GetStringSex()</td>
+                            <td>@data.STUDENT_PHONE</td>
+                            <td>@data.ADDRESS</td>
+                            <td>@data.STUDENT_SCHOOL_NAME</td>
+                            <td>@data.GetStringCreateDate()</td>
+                            <td>@data.NOTE</td>
+                            <td>
+                                <a class="btn btn-primary btn-sm" onclick="window.location='/parent/Update?id=@data.ID'"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                <a class="btn btn-danger btn-sm" onclick="ShowFromDeleteParent(@data.ID)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                            </td>
+                            <td>
+                                <input type="checkbox" class="ParentCheckbox" value="@data.ID" name="StudentId" />
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+
+            </tbody>
+
+
+        </table>
+        <div class="_page offset-1 offset-md-3 mt-2">
+      @*phân trang*@ 
+            @Html.PagedListPager(Model, Page => Url.Action("Seach", new { Page, NAME = ViewBag.STUDENT_NAME , STUDENT_PHONE = ViewBag.STUDENT_PHONE,STUDENT_NAME = ViewBag.STUDENT_NAME, CREATED_DATE = ViewBag.CREATED_DATE,STATUS = ViewBag.STATUS } ), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+       {
+           HttpMethod = "GET",
+           UpdateTargetId = "Table_Parent"
+       }
+
+               ))
+        </div>
+    </div>
+</div>
+

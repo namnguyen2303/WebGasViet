@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="breadcrumb-holder">
+    <div class="container-fluid">
+        <span class="h2 pt-3 pb-3 pl-0 "><i class="fa fa-comments-o"></i> Ý kiến đề xuất</span>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row col-12 mt-2 offset-1">
+        <div class="col-2 text-center mt-2">
+            <label>Từ ngày</label>
+        </div>
+        <div class="col-3">
+            <input type="text" class="form-control" name="FromDate" id="dtFromDate" />
+        </div>
+        <div class="col-2 text-center mt-2">
+            <label>Đến ngày</label>
+        </div>
+        <div class="col-3">
+            <input type="text" class="form-control" name="ToDate" id="dtToDate" />
+        </div>
+    </div>
+    <div class="row col-12 mt-3 offset-1">
+        <div class="col-2 text-center mt-2">
+            <label>Tên học sinh</label>
+        </div>
+        <div class="col-3">
+            <input type="text" class="form-control" name="" id="" />
+        </div>
+        <div class="col-2 text-center mt-2">
+            <label>Loại ý kiến</label>
+        </div>
+        <div class="col-3">
+            <select class="form-control" id=" ">
+                <option>a</option>
+            </select>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-2 offset-5">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Thêm mới</button>
+        </div>
+    </div>
+    <div class="row mt-4">
+        @*<div class="row col-12" id="Table_Review">
+                @{
+                    Html.RenderAction("Seach", new { Page = 1, ID = 0 });
+                }
+            </div>*@
+    </div>
+</div>

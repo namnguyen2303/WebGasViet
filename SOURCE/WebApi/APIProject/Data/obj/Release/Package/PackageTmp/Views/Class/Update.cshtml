@@ -1,0 +1,313 @@
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Data.Models.WebModels.Class
+@model EditClassModels
+
+<div class="breadcrumb-holder">
+    <div class="container-fluid">
+        <span class="h2 pt-3 pb-3 pl-0"><i class="fa fa-map-marker"></i> Cập nhập thông tin lớp học</span>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="row d-flex align-items-md-stretch">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header " style="background-color:#636363; color:white">
+                    <span style="font-weight:bold">Thông tin lớp học</span>
+                </div>
+                <div class="card-body mt-3">
+                    <div class="row mt">
+                        <form id="Form_edit_Class">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="row mb-2 seach-User">
+                                    <div class="row col-lg-12">
+                                        <div class="col-md-12 row">
+
+
+                                            <!--Tên của lớp học-->
+                                            <div class="input-group mb-2 col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 input-group-sm">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" style="width:119px">Tên Lớp Học</span>
+                                                    <input type="hidden" value="@Model.ID" class="form-control text_seach seach_parent" name="ID" id="txt_edit_Id_class">
+                                                </div>
+                                                <input type="text" value="@Model.NAME" class="form-control text_seach seach_parent" name="NAME" id="txt_edit_name_class">
+                                            </div>
+
+                                            <!--Số buổi học trên tuần-->
+                                            <div class="input-group mb-2 col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4  input-group-sm">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" style="width:119px">Số buổi/Tuần </span>
+                                                </div>
+                                                <select class="form-control text_seach text_seach seach_parent" id="txt_edit_day_per_week_class" name="DAY_PER_WEEK">
+                                                    <option value="0">--lựa chọn--</option>
+                                                    <option value="@Model.DAY_PER_WEEK" selected="selected">@Model.GET_STRING_DAY_PER_WEEK()</option>
+                                                    <option value="1">1 buổi</option>
+                                                    <option value="2">2 buổi</option>
+                                                    <option value="3">3 buổi</option>
+                                                    <option value="4">4 buổi</option>
+                                                    <option value="5">5 buổi</option>
+                                                    <option value="6">6 buổi</option>
+                                                    <option value="7">7 buổi</option>
+
+                                                </select>
+
+                                            </div>
+
+                                            <!--Ngày bắt đầu học-->
+                                            <div class="input-group mb-2 col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4  input-group-sm">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" style="width:119px">Ngày bắt đầu</span>
+                                                </div>
+                                                <input type="text" value="@Model.GET_STRING_STARTDATE()" class="form-control text_seach text_seach seach_parent" name="START_DATE" id="txt_edit_start_date_class">
+                                            </div>
+
+                                            <!--Ngày kết thúc học-->
+                                            <div class="input-group mb-2 col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4  input-group-sm">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" style="width:119px">Ngày kết thúc</span>
+                                                </div>
+                                                <input type="text" value="@Model.GET_STRING_END_DATE()" class="form-control text_seach text_seach seach_parent" name="END_DATE" id="txt_edit_end_date_class">
+                                            </div>
+
+
+                                            <!--lựa chọn cơ sở cho lớ học -->
+                                            <div class="input-group mb-2 col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 input-group-sm">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" style="width:119px">Cơ Sở</span>
+                                                </div>
+                                                <select class="form-control text_seach text_seach seach_parent Select_branch" id="txt_edit_branch_class" name="BRANCH_ID" onchange="LoadSelectRoomByBranch(this)" > 
+                                                    <option value="@Model.BRANCH_ID">@Model.BRANCH_NAME</option>
+                                                    
+                                                </select>
+                                            </div>
+
+                                            <!--lựa chọn giáo viên chính cho lớp học -->
+                                            <div class="input-group mb-2 col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4  input-group-sm">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" style="width:119px">Giáo viên chính</span>
+                                                </div>
+
+                                                <select class="form-control text_seach text_seach seach_parent Select_Teacher" id="txt_edit_teacher_main_parent" name="TEACHER_ID" onchange="TeacherChangedEditClass(this)">
+                                                    <option value="@Model.TEACHER_ID">@Model.TEACHER_NAME</option>
+                                                </select>
+
+                                            </div>
+
+                                            <div class="input-group mb-2 col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4  input-group-sm">
+
+                                                <span class="input-group-text" style="width:119px">Lớp phụ đạo</span>
+                                                @{
+                                                    if (Model.TUTOR_CLASS == 1)
+                                                    {
+                                                        <input type="checkbox" class="form-control text_seach seach_parent" value="1" style="width:80px" name="TUTOR_CLASS" id="txt_edit_tutor_class" checked>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" class="form-control text_seach seach_parent" value="1" style="width:80px" name="TUTOR_CLASS" id="txt_edit_tutor_class" >
+                                                    }
+                                                }
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row d-flex align-items-md-stretch">
+        <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <div class="card-header header_add_Class" style="background-color:#636363; color:white">
+                    <span style="font-weight:bold">Thông tin lịch học</span>
+                    <button type="submit" class="btn btn-large btn-primary btn_header mr-2 mt-0 mb-0 pull-right btn_Parent" id="btn_edit_schedule_class" onclick="AddScheduleClass()"><i class="fa fa-plus-square"></i> Thêm mới</button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped" id="table_edit_class_schedule">
+                            <thead>
+                                <tr>
+                                    <th style="width:20%">
+                                        <!--Chọn thứ trong thứ học của class-->
+                                        <select class="form-control form-control-sm " id="txt_edit_day_in_edit_class_schedule">
+                                            <option>--lựa chọn--</option>
+                                            <option value="2">Thứ 2</option>
+                                            <option value="3">Thứ 3</option>
+                                            <option value="4">Thứ 4</option>
+                                            <option value="5">Thứ 5</option>
+                                            <option value="6">Thứ 6</option>
+                                            <option value="7">Thứ 7</option>
+                                            <option value="8">Chủ nhật</option>
+                                        </select>
+                                    </th>
+                                    <th style="width:20%">
+                                        <input type="text" class="form-control form-control-sm time-picker" name="" id="txt_edit_time_start_schedule">
+                                    </th>
+                                    <th style="width:20%">
+                                        <input type="text" class="form-control form-control-sm time-picker" name="" id="txt_edit_time_end_schedule">
+                                    </th>
+
+                                    <!--Danh sách phòng học của lớp học-->
+                                    <th style="width:30%">
+                                        <select class="form-control form-control-sm Select_room" id="txt_edit_room_in_edit_class_schedule">
+                                            <option value="0">--lựa chọn--</option>
+                                        </select>
+                                    </th>
+
+                                    <th style="width:50px">
+
+                                    </th>
+                                </tr>
+                                <tr>
+
+                                    <th>Thứ</th>
+                                    <th>Giờ bắt đầu</th>
+                                    <th>Ngày kết thúc </th>
+                                    <th>Phòng học</th>
+
+                                    <th style="width:50px">
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="edit_data_table_tbody_class_schedule">
+                                @{
+                                    Html.RenderAction("GetScheduleClass", new { ID = Model.ID });
+                                }
+
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <div class="card-header header_add_Class" style="background-color:#636363; color:white">
+
+
+                    <span style="font-weight:bold">Thông tin giáo viên</span>
+                    <button type="submit" class="btn btn-large btn-primary btn_header mr-2 mt-0 mb-0 pull-right btn_Parent" id="btn_edit_teacher_class" onclick="AddTeacherClass()"><i class="fa fa-plus-square"></i>  Thêm mới</button>
+
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped" id="txt_edit_table_teacher_class">
+                            <thead>
+                                <tr>
+                                    <!--Tên của giáo viên -->
+                                    <th style="width:30%;">
+                                        <select class="form-control form-control-sm Select_Teacher" id="txt_edit_teacher_in_edit_class" name="STATUS">
+                                            <option value="0">--lựa chọn--</option>
+                                        </select>
+                                    </th>
+                                    <!--Bậc lương của giáo viên-->
+                                    <th style="width:20%">
+                                        <select class="form-control form-control-sm Select_SalaryLevel" id="txt_edit_salary_level_in_edit_class" name="STATUS">
+                                            <option value="0">--lựa chọn--</option>
+                                        </select>
+                                    </th>
+
+                                    <!--Ngày bắt đầu dạy học của giáo viên-->
+                                    <th style="width:20%">
+                                        <input type="text" class="form-control form-control-sm datetimepicker" name="" id="txt_edit_start_date_class_teacher">
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <th>Tên giáo viên</th>
+                                    <th>Bậc lương</th>
+                                    <th>Ngày bắt đầu </th>
+                                    <th>Ngày kêt thúc</th>
+                                    <th style="width:50px">
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="data_tbody_class_teacher_edit">
+                                @{
+                                    Html.RenderAction("GetTeacherClass", new { ID = Model.ID });
+                                }
+                            </tbody>
+                           
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row d-flex align-items-md-stretch">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header " style="background-color:#636363; color:white">
+                <h4>Danh sách học sinh </h4>
+            </div>
+            <div class="card-body">
+                <!--thông tin của học viên cần edit vào danh sách -->
+                <div class="input-group mb-2 col-7  input-group-sm offset-3 mt-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width:140px">Tên học sinh/SĐT </span>
+                    </div>
+                    <input type="text" class="form-control text_seach seach_parent" name="" value="" id="txt_seach_edit_student_in_class">
+                </div>
+
+                <!--Danh sách học viên -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="table_edit_student_class">
+                        <thead>
+                            <tr class="" style="background-color:#636363; color:white">
+                                <th>STT</th>
+                                <th style="width:13%">Tên học sinh</th>
+                                <th style="width:13%">Tên phụ huynh</th>
+                                <th style="width:10%">Số điện thoại</th>
+                                <th style="width:10%">Ngày bắt đầu</th>
+                                <th style="width:10%">Ngày kết thúc</th>
+                                <th style="width:10%">Học phí/Buổi</th>
+                                <th style="width:10%">Trạng Thai</th>
+                                <th>Ghi chú</th>
+                                <th style="width:60px">Xóa</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="edit_data_table_class_student">
+
+                            @{
+                                Html.RenderAction("GetStudentClass", new { ID = Model.ID });
+                            }
+                            
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-send col-md-4 col-12 col-sm-12 offset-5">
+    <button type="submit" class="btn btn-large btn-primary btn_header mr-2" onclick="EditClass(@Model.ID)"><i class="fa fa-save"></i> Lưu</button>
+    <button type="submit" class="btn btn-large btn-info btn_header"><i class="fa fa-sign-out"></i>Hủy</button>
+</div>
+
+

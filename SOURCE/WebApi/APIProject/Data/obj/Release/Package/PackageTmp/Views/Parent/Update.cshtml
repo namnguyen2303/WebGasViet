@@ -1,0 +1,289 @@
+﻿
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Data.Models.WebModels.Parent
+@model GetParentModels
+<div class="breadcrumb-holder">
+    <div class="container-fluid">
+
+        <span class="h2 pt-3 pb-3 pl-0 "><i class="fa fa-user"></i> Thêm mới thông tin học sinh</span>
+
+    </div>
+</div>
+<section class="dashboard-counts pt-4">
+    <div class="container-fluid">
+        <div class="col-lg-12">
+
+            <form id="Form_Edit_Parent" ng-app="my_app_Edit_parent" ng-controller="ctrl_Edit_parent" name="form_Edit_parent">
+                <div class="card">
+                    <div class="card-header">
+                        <button type="button" class="btn btn-large btn-danger btn_header mr-2 pull-right btn_Parent" onclick="DeleteListParent()"><i class="fa fa-trash-o" aria-hidden="true" onclick="window.location='/parent/index'"></i>Thoát</button>
+                        <button type="button" class="btn btn-large btn-primary btn_header mr-2 pull-right " onclick="ShowModelResetPass()"><i class="fa fa-trash-o" aria-hidden="true" onclick=""></i>Reset mật khẩu</button>
+                        <div class="inputWithIcon pull-right " onclick="EditParent()">
+                            <input type="button" ng-disabled="form_Edit_parent.NAME.$dirty && form_Edit_parent.NAME.$invalid||
+                                   form_add_parent.EMAIL.$dirty && form_add_parent.EMAIL.$invalid||
+                                   form_add_parent.ADDRESS.$dirty && form_add_parent.ADDRESS.$invalid||
+                                   form_add_parent.PHONE.$dirty && form_add_parent.PHONE.$invalid||
+                                   form_add_parent.NOTE_SUBJECT.$dirty && form_add_parent.NOTE_SUBJECT.$invalid||
+                                   form_add_parent.STUDENT_PHONE.$dirty && form_add_parent.STUDENT_PHONE.$invalid||
+                                   form_add_parent.STUDENT_SEX.$dirty && form_add_parent.STUDENT_SEX.$invalid||
+                                   form_add_parent.STUDENT_BIRTHDAY.$dirty && form_add_parent.STUDENT_BIRTHDAY.$invalid||
+                                   form_add_parent.STUDENT_SCHOOL_NAME.$dirty && form_add_parent.STUDENT_SCHOOL_NAME.$invalid||
+                                   form_add_parent.STUDENT_NAME.$dirty && form_add_parent.STUDENT_NAME.$invalid
+                             " class="btn btn-large btn-info btn_header mr-2 " value="Lưu học viên" onclick="EditParent()">
+                            <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-body row">
+
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header d-flex align-items-center">
+                                    <h4>Thông tin của phụ huynh</h4>
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <input type="hidden" class="form-control text_seach seach_parent textinput" value="@Model.ID" name="ID" id="txtEditIidParent">
+                                        <span style="color:red" ng-show="form_Edit_parent.NAME.$dirty && form_Edit_parent.NAME.$invalid">
+                                            <span ng-show="form_Edit_parent.NAME.$error.required">Tên phụ huynh không được để trống</span>
+                                            <span ng-show="form_Edit_parent.NAME.$error.maxlength">Tên phụ huynh có độ dài vượt quá giới hạn cho phép</span>
+                                        </span>
+                                    </div>
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Tên phụ huynh</span>
+                                        </div>
+                                        <input type="text" class="form-control text_seach seach_parent textinput" value="@Model.NAME" name="NAME" id="txt_Edit_name_parent" ng-required="true" ng-maxlength="200">
+                                    </div>
+
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_Edit_parent.ADDRESS.$dirty && form_Edit_parent.ADDRESS.$invalid">
+                                            <span ng-show="form_Edit_parent.ADDRESS.$error.required">địa chỉ của phụ huynh không được phép để trống</span>
+                                            <span ng-show="form_Edit_parent.ADDRESS.$error.maxlength">địa chỉ phụ huynh có độ dài vượi quá giới hạn cho phép</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Địa chỉ phụ huynh</span>
+                                        </div>
+                                        <input type="text" class="form-control text_seach seach_parent textinput" value="@Model.ADDRESS" name="ADDRESS" id="txt_Edit_address_parent" ng-required="true" ng-maxlength="200">
+                                    </div>
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_Edit_parent.PHONE.$dirty && form_Edit_parent.PHONE.$invalid">
+                                            <span ng-show="form_Edit_parent.PHONE.$error.required">Số điện thoại của phụ huynh không được phép để trống</span>
+                                            <span ng-show="form_Edit_parent.PHONE.$error.maxlength">số điện thoại của phụ huynh có độ dài vượt quá giới hạn cho phép</span>
+                                        </span>
+                                    </div>
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Điện thoại phụ huynh</span>
+                                        </div>
+                                        <input type="number" class="form-control text_seach seach_parent textinput" value="@Model.PHONE" name="PHONE" id="txt_Edit_phone_parent" ng-required="true" ng-maxlength="30">
+                                    </div>
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_Edit_parent.EMAIL.$dirty && form_Edit_parent.EMAIL.$invalid">
+                                            <span ng-show="form_Edit_parent.EMAIL.$error.required">địa chỉ email của phụ huynh không được để trống</span>
+                                            <span ng-show="form_Edit_parent.EMAIL.$error.maxlength">địa chỉ email có độ dài vượt quá giới hạn</span>
+                                            <span ng-show="form_Edit_parent.EMAIL.$error.email">địa chỉ email của phụ huynh không hợp lệ</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Email </span>
+                                        </div>
+                                        <input type="email" class="form-control text_seach seach_parent textinput" name="EMAIL" value="@Model.EMAIL" id="txt_Edit_email_parent" ng-required="true" ng-maxlength="200">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header d-flex align-items-center">
+                                    <h4>Thông tin của học sinh</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_Edit_parent.STUDENT_NAME.$dirty && form_Edit_parent.STUDENT_NAME.$invalid">
+                                            <span ng-show="form_Edit_parent.STUDENT_NAME.$error.required">Tên của học sinh không được phép đẻ trống</span>
+                                            <span ng-show="form_Edit_parent.STUDENT_NAME.$error.maxlength">Tên của học sinh có độ dài vượt quá giới hạn</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Tên học sinh</span>
+                                        </div>
+                                        <input type="text" class="form-control text_seach seach_parent textinput" value="@Model.STUDENT_NAME" name="STUDENT_NAME" id="txt_Edit_name_student_parent" ng-required="true" ng-maxlength="200">
+                                    </div>
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_Edit_parent.STUDENT_SCHOOL_NAME.$dirty && form_Edit_parent.STUDENT_SCHOOL_NAME.$invalid">
+                                            <span ng-show="form_Edit_parent.STUDENT_SCHOOL_NAME.$error.required">Trường củ học sinh không được phép để trống</span>
+                                            <span ng-show="form_Edit_parent.STUDENT_SCHOOL_NAME.$error.maxlength">Tên trường của học viên có độ dài vượt quá giới hạn</span>
+                                        </span>
+                                    </div>
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Trường học</span>
+                                        </div>
+                                        <input type="text" class="form-control text_seach seach_parent textinput" value="@Model.STUDENT_SCHOOL_NAME" name="STUDENT_SCHOOL_NAME" id="txt_Edit_school_student_parent" ng-required="true" ng-maxlength="200">
+                                    </div>
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_Edit_parent.STUDENT_BIRTHDAY.$dirty && form_Edit_parent.STUDENT_BIRTHDAY.$invalid">
+                                            <span ng-show="form_Edit_parent.STUDENT_BIRTHDAY.$error.required">Ngày sinh của học viên không được phép để trống</span>
+                                            <span ng-show="form_Edit_parent.STUDENT_BIRTHDAY.$error.date">ngày sinh của học viên có định dạng không đúng</span>
+                                        </span>
+                                    </div>
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Ngày sinh</span>
+                                        </div>
+                                        <input type="text" class="form-control text_seach seach_parent   col-9 textinput" value="@Model.GetStringCreateDate()" name="STUDENT_BIRTHDAY" id="datetimepicker1" ng-required="true">
+                                    </div>
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_Edit_parent.STUDENT_SEX.$dirty && form_Edit_parent.STUDENT_SEX.$invalid">
+                                            <span ng-show="form_Edit_parent.STUDENT_SEX.$error.required">Giới tính của học viên không được để trống</span>
+                                        </span>
+                                    </div>
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Giới tính</span>
+                                        </div>
+                                        @{
+                                            if (Model.STUDENT_SEX == 1)
+                                            {
+                                                <label class="radio-inline mr-5 ml-5">
+                                                    <input type="radio" name="STUDENT_SEX" value="1" id="txt_Edit_student_sex_male" ng-required="true" checked>Nam
+                                                </label>
+                                                <label class="radio-inline ml-5">
+                                                    <input type="radio" name="STUDENT_SEX" value="0" id="txt_Edit_student_sex_female" ng-required="true">Nữ
+                                                </label>
+                                            }
+                                            else
+                                            {
+                                                <label class="radio-inline mr-5 ml-5">
+                                                    <input type="radio" name="STUDENT_SEX" value="1" id="txt_Edit_student_sex_male" ng-required="true">Nam
+                                                </label>
+                                                <label class="radio-inline ml-5">
+                                                    <input type="radio" name="STUDENT_SEX" value="0" id="txt_Edit_student_sex_female" ng-required="true" checked>Nữ
+                                                </label>
+                                            }
+
+                                        }
+
+                                    </div>
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_Edit_parent.STUDENT_PHONE.$dirty && form_Edit_parent.STUDENT_PHONE.$invalid">
+                                            <span ng-show="form_Edit_parent.STUDENT_PHONE.$error.required">số điện thoại của học sinh không được phép để trống</span>
+                                            <span ng-show="form_Edit_parent.STUDENT_PHONE.$error.maxlength">số điện thoại của học viên có độ dài vượt quá giới hạn</span>
+                                        </span>
+                                    </div>
+                                    <div class="input-group mb-2 col-12 input-group-sm  col-md-12">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px ; float:left">Điện thoại</span>
+                                        </div>
+                                        <input type="number" value="@Model.STUDENT_PHONE" class="form-control text_seach seach_parent textinput" name="STUDENT_PHONE" id="txt_Edit_phone_student_parent" ng-required="true" ng-maxlength="30">
+                                    </div>
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_Edit_parent.NOTE_SUBJECT.$dirty && form_Edit_parent.NOTE_SUBJECT.$invalid">
+                                            <span ng-show="form_Edit_parent.NOTE_SUBJECT.$error.required">Tên môn học không được phép để trống</span>
+                                            <span ng-show="form_Edit_parent.NOTE_SUBJECT.$error.maxlength">Tên môn học có độ dài vượt quá giới hạn cho phép</span>
+                                        </span>
+                                    </div>
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Đăng ký môn học</span>
+                                        </div>
+                                        <input type="text" value="@Model.NOTE_SUBJECT" class="form-control text_seach seach_parent textinput" name="NOTE_SUBJECT" id="txt_Edit_node_subject_student_parent" ng-required="true" ng-maxlength="200">
+                                    </div>
+                                    <div class="row co-12 col-md-12">
+                                        <div class="input-group mb-2 col-6 input-group-sm" id="Max1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" style="width:160px">Điểm lần 1</span>
+                                            </div>
+                                            <input type="number" value="@Model.MARK1" class="form-control text_seach seach_parent textinput" name="MARK1" id="txt_Edit_max1_student_parent">
+                                        </div>
+                                        <div class="input-group mb-2 col-6 input-group-sm" id="Max2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" style="width:160px">Điểm lần 2</span>
+                                            </div>
+                                            <input type="number" value="@Model.MARK2" class="form-control text_seach seach_parent textinput" name="MARK2" id="txt_Edit_max2_student_parent">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Ghi chú</span>
+                                        </div>
+                                        <textarea rows="4" cols="50" class="co-12 textinput" style="width:100%" id="txt_Edit_node_parent" name="NOTE">@Html.Raw(Model.NOTE)</textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script type="text/javascript">
+
+    var app = angular.module("my_app_Edit_parent", []);
+    app.controller('ctrl_Edit_parent', function ($scope) {
+    });
+
+    
+    function ShowModelResetPass() {
+        $("#Modal_EditPassParent").show(); 
+    }
+
+    function CloseModelsResetPass() {
+        $("#Modal_EditPassParent").hide(); 
+    } 
+</script>
+
+<!-- Modal cập nhập thông tin người dùng -->
+<div class="modal " id="Modal_EditPassParent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info ">
+                <h5 class="modal-title" style="color:white;font-weight:bold;" id="exampleModalLabel">Reset lại mật khẩu cho phụ huynh</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="CloseModelsResetPass()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn reset lại mật khẩu
+               
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="CloseModelsResetPass()"><i class="fa fa-times"></i> Hủy</button>
+                <button type="button" class="btn btn-primary" onclick="ResetPassword_parent()"><i class="fa fa-save"></i> Reset</button>
+            </div>
+        </div>
+    </div>
+</div>

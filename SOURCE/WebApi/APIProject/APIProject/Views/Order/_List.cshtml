@@ -1,0 +1,119 @@
+﻿@using Data.DB
+@using Data.Model.APIWeb
+@using PagedList.Mvc
+@using Data.Utils
+@model  PagedList.IPagedList<OrderOutputModel>
+
+<table class="table table-light table-hover table-bordered " id="">
+    <thead class="bg-thead text-center text-white">
+        <tr>
+            @*<th>STT</th>
+            <th>Mã đơn hàng</th>
+            <th>Người mua</th>
+            <th>Đối tượng</th>
+            <th>Số điện thoại</th>
+            <th>Tổng tiền</th>
+            <th class="widthCreatedDate">Ngày tạo</th>
+            <th>Trạng thái</th>
+            @{ 
+                if (ViewBag.Role == SystemParam.ROLE_ADMIN || ViewBag.Role == SystemParam.ROLE_USER_ORDER)
+                {
+                    <th></th>
+                }
+            }*@
+            <th>STT</th>
+            <th>Mã đơn hàng</th>
+            <th>Khách hàng</th>
+            <th>Đại lý</th>
+            <th>Số điện thoại</th>
+            <th>Sản phẩm</th>
+            <th>Số lượng Sản phẩm</th>
+            <th>Điểm thu</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th class="widthCreatedDate">Ngày đặt</th>
+            @{ 
+                if(ViewBag.Role == SystemParam.ROLE_ADMIN || ViewBag.Role == SystemParam.ROLE_USER_ORDER) {
+                    <th></th>
+                }
+            }
+        </tr>
+    </thead>
+    <tbody class="text-center" id="">
+        @{
+            if (Model.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="11">Không có dữ liệu.</td>
+                </tr>
+            }
+            else
+            {
+
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var dt in Model) {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@dt.Code</td>
+                        <td>@dt.BuyerName</td>
+                        <td>@dt.AgentName</td>
+                        <td>@dt.BuyerPhone</td>
+                        <td>@dt.ItemName</td>
+                        <td>@dt.QTY</td>
+                        <td>@dt.Point</td>
+                        <td>@String.Format("{0:0,0 vnđ}", @dt.TotalPrice)</td>
+                        @{
+                            if (@dt.Status == SystemParam.TYPE_NOTI_CONFIRM_ORDER)
+                            {
+                                <td class="text-primary">Xác nhận</td>
+                            }
+                            else if (@dt.Status == SystemParam.TYPE_NOTI_ORDER_CUSSCESS)
+                            {
+                                <td class="text-success">Đã thanh toán</td>
+                            }
+                            else if (@dt.Status == SystemParam.TYPE_NOTI_ORDER_CANCEL)
+                            {
+                                <td class="text-danger">Hủy</td>
+                            } else if(dt.Status == SystemParam.TYPE_NOTI_ORDER_ADMIN) {
+                                <td class="text-danger">ORDER ADMIN</td>
+                            } else {
+                                <td>@dt.Status</td>
+                            }
+                        } 
+                        <td>@dt.CreateDate.ToString("dd/MM/yyyy")</td>
+                        @{
+                            if (ViewBag.Role == SystemParam.ROLE_ADMIN || ViewBag.Role == SystemParam.ROLE_USER_ORDER)
+                            {
+                                <td class="width2btn" id="tdUserOrder">
+                                    <a title="Xem chi tiết" class="cursor-pointer" onclick="showEditOrder(@dt.OrderID);">
+                                        <i class="btnEdit fa fa-fw fa-eye"></i>
+                                    </a>
+                                    <a data-toggle="" data-placement="top" title="Xóa đơn hàng." class="cursor-pointer" data-target="" onclick="deleteOrder(@dt.OrderID)">
+                                        <i class="btnDelete fa fa-fw fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            }
+                        }
+                    </tr>
+                    stt++;
+                }
+            }
+        }
+
+    </tbody>
+</table>
+
+<div class="col-md-12">
+    <div class="row float-right">
+        @Html.PagedListPager(Model, Page => Url.Action("Search", "Order", new { Page = Page, Agent = ViewBag.Agent, Customer = ViewBag.Customer, Status = ViewBag.Tus, FromDate = ViewBag.fd, ToDate = ViewBag.td }),
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+        {
+            HttpMethod = "GET",
+            UpdateTargetId = "list"
+        })
+        )
+    </div>
+</div>
+
+
+

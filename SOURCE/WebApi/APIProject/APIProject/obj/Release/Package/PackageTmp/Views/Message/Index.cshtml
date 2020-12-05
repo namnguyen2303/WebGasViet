@@ -1,0 +1,69 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row mx-0 mt-3 mb-3">
+    <div class="col-md-3 offset-md-0 col-sm-10 offset-sm-1 col-10 offset-1 bg-chat px-3 py-3" style="overflow-y: scroll;scrollbar-width: none;">
+        <div class="col-md-12 px-0 mb-2">
+            <input type="text" id="inp_search" class="form-control bg-search-chat position-relative" placeholder="Tìm kiếm" />
+            <i class="fa fa-search absolute-icon-search-chat"></i>
+        </div>
+        <div id="div_last_msg"></div>
+        
+    </div>
+    <div class="col-md-9 offset-md-0 col-sm-10 offset-sm-1 col-10 offset-1 bg-white text-dark">
+        <div class="row">
+            <div class="col-md-12 text-center pt-3">
+                <h6 class="m-b-0" id="name">Dekko Messenger</h6>
+                @*<small class="text-secondary">Đang hoạt động</small>*@
+                <div class="row border-form mt-3"></div>
+            </div>
+        </div>
+        <div id="chatContent" style="height:300px; overflow-y: scroll; scrollbar-width: none;">
+
+        </div>
+
+        <div class="row border-form mt-1"></div>
+        <div class="row div-message">
+            <img id="imgNews" src="#" class="hide col-md-12 px-0 img-message" alt="your image" />
+            <div class="overlay hide" id="ic_remove">
+                <a class="icon">
+                    <i class="fa fa-close"></i>
+                </a>
+            </div>
+
+            <div class="col-md-9">
+                <textarea rows="3" placeholder="Aa" class="form-control input-chat" id="txtMessage"></textarea>
+            </div>
+            <div class="col-md-3">
+                <i data-toggle="tooltip" data-placement="top" title="Gửi tin nhắn" class="fa fa-paper-plane-o ic-send-message cursor-pointer" id="ic_send"></i>
+                <i class="fa fa-file-image-o fileinput-button ic-image-message"><input type="file" accept="image/*" name="files[]" id="imgInp"></i>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div><button class="btn btn-danger col-md-3 offset-md-0 col-sm-10 offset-sm-1 col-10 offset-1" id="btn_del_img">Xóa toàn bộ ảnh</button></div>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-storage.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+<script src="~/Scripts/chat.js"></script>
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyBsJ_4ZwEKatgqkf61fyy0--b42CqYe95o",
+        authDomain: "winds-12268.firebaseapp.com",
+        databaseURL: "https://winds-12268.firebaseio.com",
+        projectId: "winds-12268",
+        storageBucket: "winds-12268.appspot.com",
+        messagingSenderId: "777141683282",
+        appId: "1:777141683282:web:24f32047966cd0ee"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+</script>

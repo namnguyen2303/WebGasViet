@@ -1,0 +1,42 @@
+﻿@using Data.DB
+@using Data.Model.APIWeb
+
+
+
+<div class="modal fade" id="editRank" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-credit-card" aria-hidden="true"></i> Chỉnh Sửa Xếp Hạng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="frmEditRank">
+                <div class="modal-body">
+                    <div class="row mt-1">
+                        <label class="col-md-4">Điểm Khởi Đầu</label>
+                        <div class="col-md-8"><input class="form-control" type="text" id="txtMinPointEdit" value="@ViewBag.MinPoint" placeholder="Điểm Khởi Đầu" /></div>
+                    </div>
+                    <div class="row mt-1">
+                        <label class="col-md-4">Điểm Kết Thúc Thứ Hạng</label>
+                        <div class="col-md-8">
+                            <input class="form-control" id="txtMaxPointEdit" value="@ViewBag.MaxPoint" type="text" placeholder="Điểm Kết Thúc Thứ Hạng" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-1 mb-1">
+                        <label class="col-md-4">Ghi chú</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" id="txtDesEdit" rows="3" placeholder="Nhập ghi chú...">@ViewBag.Des</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary px-3" onclick="saveEditRank(@ViewBag.RankID)">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

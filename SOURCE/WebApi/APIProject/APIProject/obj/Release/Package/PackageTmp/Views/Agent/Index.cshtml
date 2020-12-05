@@ -1,0 +1,167 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row mt-3">
+    <div class="col-md-4 col-sm-12">
+        <h3 class="">
+            <i class="fa fa-money"></i>
+            Quản lý đại lý
+        </h3>
+    </div>
+
+    @*<div class="col-md-3 col-sm-12">
+        <button class="btn  btn-success btn-block" onclick="window.location = 'exportFormImport'">
+            <i class="fa fa-download"></i>
+            Tải mẫu Import
+        </button>
+    </div>
+    <div class="col-md-3 col-sm-12">
+        <button class="btn  btn-success btn-block" data-target="#mdImport" data-toggle="modal" id="btnImport">
+            <i class="fa fa-upload"></i>
+            Import đại lý
+        </button>
+    </div>
+
+    <div class="col-md-3 col-sm-12">
+        <button class="btn btn-warning text-danger btn-block" data-toggle="modal" data-target="#mdAdd" onclick="">
+            <i class="fa fa-plus"></i>
+            Thêm mã đại lý
+        </button>
+    </div>*@
+
+
+    <div class="col-md-8 col-sm-8 col-12 text-right">
+        <button class="btn btn-outline-success" onclick="window.location = 'exportFormImport'">
+            <i class="fa fa-download"></i>
+            Tải mẫu Import
+        </button>
+        <button class="btn btn-success" data-target="#mdImport" data-toggle="modal" id="btnImport">
+            <i class="fa fa-upload"></i>
+            Import đại lý
+        </button>
+        <button class="btn btn-dekko text-danger" data-toggle="modal" data-target="#mdAdd" onclick="">
+            <i class="fa fa-plus"></i>
+            Thêm đại lý
+        </button>
+    </div>
+
+</div>
+
+    <div class="row mt-3">
+        <div class="col-md-3 col-sm-12">
+            <input type="text" class="form-control" id="txtCode" placeholder="Mã đại lý" />
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+            <select class="form-control" id="slStatus">
+                <option>Tất cả</option>
+                <option value="0">Chưa kích hoạt</option>
+                <option value="1">Đã kích hoạt</option>
+            </select>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <input class="form-control relative-icon-calendar date" placeholder="Từ ngày" id="txtFromDate" />
+            <i class="fa fa-calendar absolute-icon-calendar"></i>
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+            <input class="form-control relative-icon-calendar date" placeholder="Đến ngày" id="txtToDate" />
+            <i class="fa fa-calendar absolute-icon-calendar"></i>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-3 col-sm-12 offset-md-9">
+            <button class="btn btn-primary btn-block" id="btnSearchAgent" onclick="searchAgent()">
+                <i class="fa fa-search"></i>
+                <span class="ml-2">Tìm kiếm</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12 col-sm-12" id="list">
+            @{
+                Html.RenderAction("Search", "Agent", new { Page = 1 });
+            }
+        </div>
+    </div>
+
+
+
+<div class="modal fade" id="mdImport" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Import đại lý</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="">
+                <form method="post" id="frmImport" enctype="multipart/form-data">
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" name="txtFile" class="custom-file-input" id="txtFile"
+                                           aria-describedby="inputGroupFileAddon01">
+                                    <label class="custom-file-label" for="inputGroupFile01">Chọn File</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" onclick="ImportAgent()">Import</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        </div>
+                    </div>
+                </form>
+                <script>
+                        $('#mdImport #txtFile').on('change', function () {
+                            //get the file name
+                            var fileName = $(this).val();
+                            //replace the "Choose a file" label
+                            $(this).next('#mdImport .custom-file-label').html(fileName);
+                        });
+                </script>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#btnImport').on('click', function () {
+            $('#mdImport .custom-file-label').html("Chọn File");
+        });
+
+        $("#txtFromDate").on('keyup', function () {
+            if ($("#txtFromDate").val() == '')
+                $("#btnSearchAgent").click();
+        });
+
+        $("#txtToDate").on('keyup', function () {
+            if ($("#txtToDate").val() == '')
+                $("#btnSearchAgent").click();
+        });
+
+        $("#txtCode").on('keyup', function () {
+            if ($("#txtCode").val() == '')
+                $("#btnSearchAgent").click();
+        });
+
+        $("#slStatus").on('change', function (e) {
+            $("#btnSearchAgent").click();
+        });
+    })
+</script>

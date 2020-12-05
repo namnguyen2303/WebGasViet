@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "SentMessenger";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumb-holder">
+    <div class="container-fluid">
+        <span class="h2 pt-3 pb-3 pl-0 "><i class="fa fa-inbox"></i> Danh sách tin nhắn</span>
+    </div>
+</div>
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-2 offset-1">
+            <span class="mt-2">Loại thông báo</span>
+        </div>
+        <div class="col-3">
+            <select class="form-control" name="" id="">
+                <option>Nhắc lịch đóng học phí</option>
+                <option>Nợ học phí</option>
+            </select>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <table class="table table-striped text-center">
+            <thead class="bg-secondary text-light">
+                <tr>
+                    <th>Tên học sinh</th>
+                    <th>Nội dung</th>
+                    <th>Tất cả <input type="checkbox" style="width:20px;height:20px;" name=" " id=" " /></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>a</td>
+                    <td>a</td>
+                    <td>a</td>
+                </tr>
+                <tr>
+                    <td>a</td>
+                    <td>a</td>
+                    <td>a</td>
+                </tr>
+                <tr>
+                    <td>a</td>
+                    <td>a</td>
+                    <td>a</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row mt-4">
+        <div class="col-2 offset-3">
+            <button type="submit" class="btn btn-info"><i class="fa fa-paper-plane"></i> Gửi tin nhắn</button>
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-success"><i class="fa fa-book"></i> Lưu & chưa gửi</button>
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-danger"><i class="fa fa-sign-out"></i>Hủy</button>
+        </div>
+    </div>
+</div>

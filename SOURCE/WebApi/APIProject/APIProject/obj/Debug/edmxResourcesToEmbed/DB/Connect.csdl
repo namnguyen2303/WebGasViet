@@ -1,0 +1,660 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DEKKOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AgencyCode">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerID" Type="Int32" Nullable="false" />
+    <Property Name="UserCreateID" Type="Int32" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__AgencyCod__Custo__5535A963" FromRole="AgencyCode" ToRole="Customer" />
+    <NavigationProperty Name="User" Relationship="Self.FK__AgencyCod__UserC__5629CD9C" FromRole="AgencyCode" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Batch">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BatchName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="BatchCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Price" Type="Int64" Nullable="false" />
+    <Property Name="QTY" Type="Int32" Nullable="false" />
+    <Property Name="Point" Type="Int32" Nullable="false" />
+    <Property Name="CreateUserID" Type="Int32" Nullable="false" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK__Batch__CreateUse__060DEAE8" FromRole="Batch" ToRole="Users" />
+    <NavigationProperty Name="Products" Relationship="Self.FK__Product__BatchID__1B0907CE" FromRole="Batch" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Card">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreateUserID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerActiveID" Type="Int32" />
+    <Property Name="Code" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Seri" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TelecomType" Type="Int32" Nullable="false" />
+    <Property Name="CardType" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ExpireDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ActiveDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK__Card__CreateUser__20C1E124" FromRole="Card" ToRole="Users" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Card__CustomerAc__21B6055D" FromRole="Card" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="CategoryNew">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="News" Relationship="Self.FK__News__CategoryID__3E52440B" FromRole="CategoryNews" ToRole="News" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Tocken" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Role" Type="Int32" Nullable="false" />
+    <Property Name="Sex" Type="Int32" Nullable="false" />
+    <Property Name="AvatarUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProvinceCode" Type="Int32" Nullable="false" />
+    <Property Name="DistrictCode" Type="Int32" Nullable="false" />
+    <Property Name="Point" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastLoginDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="ExpireTocken" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AgencyCodes" Relationship="Self.FK__AgencyCod__Custo__5535A963" FromRole="Customer" ToRole="AgencyCode" />
+    <NavigationProperty Name="Cards" Relationship="Self.FK__Card__CustomerAc__21B6055D" FromRole="Customer" ToRole="Card" />
+    <NavigationProperty Name="District" Relationship="Self.FK__Customer__Distri__15502E78" FromRole="Customer" ToRole="District" />
+    <NavigationProperty Name="Province" Relationship="Self.FK__Customer__Provin__145C0A3F" FromRole="Customer" ToRole="Province" />
+    <NavigationProperty Name="MembersPointHistories" Relationship="Self.FK__MembersPo__Custo__300424B4" FromRole="Customer" ToRole="MembersPointHistory" />
+    <NavigationProperty Name="Messages" Relationship="Self.FK__Message__Custome__4AB81AF0" FromRole="Customer" ToRole="Message" />
+    <NavigationProperty Name="Notifications" Relationship="Self.FK__Notificat__Custo__4F7CD00D" FromRole="Customer" ToRole="Notification" />
+    <NavigationProperty Name="Products" Relationship="Self.FK__Product__Custome__1BFD2C07" FromRole="Customer" ToRole="Product" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK__Request__Custome__440B1D61" FromRole="Customer" ToRole="Request" />
+    <NavigationProperty Name="WarrantyCards" Relationship="Self.FK__WarrantyC__Custo__2B3F6F97" FromRole="Customer" ToRole="WarrantyCard" />
+  </EntityType>
+  <EntityType Name="District">
+    <Key>
+      <PropertyRef Name="Code" />
+    </Key>
+    <Property Name="Code" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Type" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProvinceCode" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK__Customer__Distri__15502E78" FromRole="District" ToRole="Customer" />
+    <NavigationProperty Name="Province" Relationship="Self.FK__District__Provin__0EA330E9" FromRole="District" ToRole="Province" />
+  </EntityType>
+  <EntityType Name="Gift">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="Point" Type="Int32" Nullable="false" />
+    <Property Name="UrlImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateUserID" Type="Int32" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="FromDate" Type="DateTime" Precision="3" />
+    <Property Name="ToDate" Type="DateTime" Precision="3" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK__Gift__CreateUser__34C8D9D1" FromRole="Gift" ToRole="Users" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK__Request__GiftID__44FF419A" FromRole="Gift" ToRole="Request" />
+  </EntityType>
+  <EntityType Name="MembersPointHistory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="Point" Type="Int32" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="AddPointCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TypeAdd" Type="Int32" Nullable="false" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__MembersPo__Custo__300424B4" FromRole="MembersPointHistory" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerID" Type="Int32" Nullable="false" />
+    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Viewed" Type="Int32" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Message__Custome__4AB81AF0" FromRole="Message" ToRole="Customer" />
+    <NavigationProperty Name="User" Relationship="Self.FK__Message__UserID__49C3F6B7" FromRole="Message" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="News">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreateUserID" Type="Int32" Nullable="false" />
+    <Property Name="CategoryID" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UrtImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="TypeSend" Type="Int32" Nullable="false" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CategoryNew" Relationship="Self.FK__News__CategoryID__3E52440B" FromRole="News" ToRole="CategoryNews" />
+    <NavigationProperty Name="User" Relationship="Self.FK__News__CreateUser__3D5E1FD2" FromRole="News" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Notification">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerID" Type="Int32" Nullable="false" />
+    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Viewed" Type="Int32" Nullable="false" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Notificat__Custo__4F7CD00D" FromRole="Notification" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BatchID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerActiveID" Type="Int32" />
+    <Property Name="ProductCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ActiveDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Batch" Relationship="Self.FK__Product__BatchID__1B0907CE" FromRole="Product" ToRole="Batch" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Product__Custome__1BFD2C07" FromRole="Product" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="Province">
+    <Key>
+      <PropertyRef Name="Code" />
+    </Key>
+    <Property Name="Code" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Type" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK__Customer__Provin__145C0A3F" FromRole="Province" ToRole="Customer" />
+    <NavigationProperty Name="Districts" Relationship="Self.FK__District__Provin__0EA330E9" FromRole="Province" ToRole="District" />
+  </EntityType>
+  <EntityType Name="Request">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserModifiedID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerID" Type="Int32" Nullable="false" />
+    <Property Name="GiftID" Type="Int32" Nullable="false" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Point" Type="Int32" Nullable="false" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Request__Custome__440B1D61" FromRole="Request" ToRole="Customer" />
+    <NavigationProperty Name="Gift" Relationship="Self.FK__Request__GiftID__44FF419A" FromRole="Request" ToRole="Gift" />
+    <NavigationProperty Name="User" Relationship="Self.FK__Request__UserMod__4316F928" FromRole="Request" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Role" Type="Int32" Nullable="false" />
+    <Property Name="PassWord" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tocken" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AgencyCodes" Relationship="Self.FK__AgencyCod__UserC__5629CD9C" FromRole="Users" ToRole="AgencyCode" />
+    <NavigationProperty Name="Batches" Relationship="Self.FK__Batch__CreateUse__060DEAE8" FromRole="Users" ToRole="Batch" />
+    <NavigationProperty Name="Cards" Relationship="Self.FK__Card__CreateUser__20C1E124" FromRole="Users" ToRole="Card" />
+    <NavigationProperty Name="Gifts" Relationship="Self.FK__Gift__CreateUser__34C8D9D1" FromRole="Users" ToRole="Gift" />
+    <NavigationProperty Name="Messages" Relationship="Self.FK__Message__UserID__49C3F6B7" FromRole="Users" ToRole="Message" />
+    <NavigationProperty Name="News" Relationship="Self.FK__News__CreateUser__3D5E1FD2" FromRole="Users" ToRole="News" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK__Request__UserMod__4316F928" FromRole="Users" ToRole="Request" />
+    <NavigationProperty Name="Warranties" Relationship="Self.FK__Warranty__Create__267ABA7A" FromRole="Users" ToRole="Warranty" />
+  </EntityType>
+  <EntityType Name="Warranty">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreateUserID" Type="Int32" Nullable="false" />
+    <Property Name="WarrantyCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="QTY" Type="Int32" Nullable="false" />
+    <Property Name="Point" Type="Int32" Nullable="false" />
+    <Property Name="ExpireDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK__Warranty__Create__267ABA7A" FromRole="Warranty" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="WarrantyCard">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerActiveID" Type="Int32" />
+    <Property Name="WarrantyCardCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="ActiveDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__WarrantyC__Custo__2B3F6F97" FromRole="WarrantyCard" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="Config">
+    <Key>
+      <PropertyRef Name="MaxPointPerDay" />
+      <PropertyRef Name="MinPointPerDay" />
+    </Key>
+    <Property Name="MaxPointPerDay" Type="Int32" Nullable="false" />
+    <Property Name="MinPointPerDay" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__AgencyCod__Custo__5535A963">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="AgencyCode" Type="Self.AgencyCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AgencyCode">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__AgencyCod__UserC__5629CD9C">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="AgencyCode" Type="Self.AgencyCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="AgencyCode">
+        <PropertyRef Name="UserCreateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Batch__CreateUse__060DEAE8">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Batch" Type="Self.Batch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Batch">
+        <PropertyRef Name="CreateUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Product__BatchID__1B0907CE">
+    <End Role="Batch" Type="Self.Batch" Multiplicity="1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batch">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="BatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Card__CreateUser__20C1E124">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Card" Type="Self.Card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Card">
+        <PropertyRef Name="CreateUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Card__CustomerAc__21B6055D">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Card" Type="Self.Card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Card">
+        <PropertyRef Name="CustomerActiveID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__News__CategoryID__3E52440B">
+    <End Role="CategoryNews" Type="Self.CategoryNew" Multiplicity="1" />
+    <End Role="News" Type="Self.News" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoryNews">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="News">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customer__Distri__15502E78">
+    <End Role="District" Type="Self.District" Multiplicity="1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="DistrictCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customer__Provin__145C0A3F">
+    <End Role="Province" Type="Self.Province" Multiplicity="1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Province">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="ProvinceCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MembersPo__Custo__300424B4">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="MembersPointHistory" Type="Self.MembersPointHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MembersPointHistory">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Message__Custome__4AB81AF0">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Message" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Notificat__Custo__4F7CD00D">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Notification">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Product__Custome__1BFD2C07">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CustomerActiveID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Request__Custome__440B1D61">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Request" Type="Self.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__WarrantyC__Custo__2B3F6F97">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="WarrantyCard" Type="Self.WarrantyCard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WarrantyCard">
+        <PropertyRef Name="CustomerActiveID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__District__Provin__0EA330E9">
+    <End Role="Province" Type="Self.Province" Multiplicity="1" />
+    <End Role="District" Type="Self.District" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Province">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="District">
+        <PropertyRef Name="ProvinceCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Gift__CreateUser__34C8D9D1">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Gift" Type="Self.Gift" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Gift">
+        <PropertyRef Name="CreateUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Request__GiftID__44FF419A">
+    <End Role="Gift" Type="Self.Gift" Multiplicity="1" />
+    <End Role="Request" Type="Self.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gift">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="GiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Message__UserID__49C3F6B7">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Message" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__News__CreateUser__3D5E1FD2">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="News" Type="Self.News" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="News">
+        <PropertyRef Name="CreateUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Request__UserMod__4316F928">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Request" Type="Self.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="UserModifiedID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Warranty__Create__267ABA7A">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Warranty" Type="Self.Warranty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Warranty">
+        <PropertyRef Name="CreateUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Connect" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AgencyCodes" EntityType="Self.AgencyCode" />
+    <EntitySet Name="Batches" EntityType="Self.Batch" />
+    <EntitySet Name="Cards" EntityType="Self.Card" />
+    <EntitySet Name="CategoryNews" EntityType="Self.CategoryNew" />
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="Districts" EntityType="Self.District" />
+    <EntitySet Name="Gifts" EntityType="Self.Gift" />
+    <EntitySet Name="MembersPointHistories" EntityType="Self.MembersPointHistory" />
+    <EntitySet Name="Messages" EntityType="Self.Message" />
+    <EntitySet Name="News" EntityType="Self.News" />
+    <EntitySet Name="Notifications" EntityType="Self.Notification" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="Provinces" EntityType="Self.Province" />
+    <EntitySet Name="Requests" EntityType="Self.Request" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="Warranties" EntityType="Self.Warranty" />
+    <EntitySet Name="WarrantyCards" EntityType="Self.WarrantyCard" />
+    <EntitySet Name="Configs" EntityType="Self.Config" />
+    <AssociationSet Name="FK__AgencyCod__Custo__5535A963" Association="Self.FK__AgencyCod__Custo__5535A963">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="AgencyCode" EntitySet="AgencyCodes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__AgencyCod__UserC__5629CD9C" Association="Self.FK__AgencyCod__UserC__5629CD9C">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="AgencyCode" EntitySet="AgencyCodes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Batch__CreateUse__060DEAE8" Association="Self.FK__Batch__CreateUse__060DEAE8">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Batch" EntitySet="Batches" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Product__BatchID__1B0907CE" Association="Self.FK__Product__BatchID__1B0907CE">
+      <End Role="Batch" EntitySet="Batches" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Card__CreateUser__20C1E124" Association="Self.FK__Card__CreateUser__20C1E124">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Card" EntitySet="Cards" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Card__CustomerAc__21B6055D" Association="Self.FK__Card__CustomerAc__21B6055D">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Card" EntitySet="Cards" />
+    </AssociationSet>
+    <AssociationSet Name="FK__News__CategoryID__3E52440B" Association="Self.FK__News__CategoryID__3E52440B">
+      <End Role="CategoryNews" EntitySet="CategoryNews" />
+      <End Role="News" EntitySet="News" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customer__Distri__15502E78" Association="Self.FK__Customer__Distri__15502E78">
+      <End Role="District" EntitySet="Districts" />
+      <End Role="Customer" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customer__Provin__145C0A3F" Association="Self.FK__Customer__Provin__145C0A3F">
+      <End Role="Province" EntitySet="Provinces" />
+      <End Role="Customer" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MembersPo__Custo__300424B4" Association="Self.FK__MembersPo__Custo__300424B4">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="MembersPointHistory" EntitySet="MembersPointHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Message__Custome__4AB81AF0" Association="Self.FK__Message__Custome__4AB81AF0">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Notificat__Custo__4F7CD00D" Association="Self.FK__Notificat__Custo__4F7CD00D">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Notification" EntitySet="Notifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Product__Custome__1BFD2C07" Association="Self.FK__Product__Custome__1BFD2C07">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Request__Custome__440B1D61" Association="Self.FK__Request__Custome__440B1D61">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK__WarrantyC__Custo__2B3F6F97" Association="Self.FK__WarrantyC__Custo__2B3F6F97">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="WarrantyCard" EntitySet="WarrantyCards" />
+    </AssociationSet>
+    <AssociationSet Name="FK__District__Provin__0EA330E9" Association="Self.FK__District__Provin__0EA330E9">
+      <End Role="Province" EntitySet="Provinces" />
+      <End Role="District" EntitySet="Districts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Gift__CreateUser__34C8D9D1" Association="Self.FK__Gift__CreateUser__34C8D9D1">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Gift" EntitySet="Gifts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Request__GiftID__44FF419A" Association="Self.FK__Request__GiftID__44FF419A">
+      <End Role="Gift" EntitySet="Gifts" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Message__UserID__49C3F6B7" Association="Self.FK__Message__UserID__49C3F6B7">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK__News__CreateUser__3D5E1FD2" Association="Self.FK__News__CreateUser__3D5E1FD2">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="News" EntitySet="News" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Request__UserMod__4316F928" Association="Self.FK__Request__UserMod__4316F928">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Warranty__Create__267ABA7A" Association="Self.FK__Warranty__Create__267ABA7A">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Warranty" EntitySet="Warranties" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

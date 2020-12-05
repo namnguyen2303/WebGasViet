@@ -1,0 +1,326 @@
+﻿@using Data.DB
+@using Data.Model.APIWeb
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .pac-container {
+        position: relative;
+        z-index: 5000;
+    }
+
+    .modal-body {
+        overflow-y: visible;
+    }
+
+    .pac-icon {
+        opacity: 0;
+        margin-left: -13px;
+    }
+</style>
+
+<div id="View">
+    <div class="row mt-3">
+        <div class="col-md-4 col-sm-12">
+            <h3 class="">
+                <i class="fa fa-money"></i>
+                Quản lý đại lý
+            </h3>
+        </div>
+
+        @*<div class="col-md-3 col-sm-12">
+                <button class="btn  btn-success btn-block" onclick="window.location = 'exportFormImport'">
+                    <i class="fa fa-download"></i>
+                    Tải mẫu Import
+                </button>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <button class="btn  btn-success btn-block" data-target="#mdImport" data-toggle="modal" id="btnImport">
+                    <i class="fa fa-upload"></i>
+                    Import đại lý
+                </button>
+            </div>
+
+            <div class="col-md-3 col-sm-12">
+                <button class="btn btn-warning text-danger btn-block" data-toggle="modal" data-target="#mdAdd" onclick="">
+                    <i class="fa fa-plus"></i>
+                    Thêm mã đại lý
+                </button>
+            </div>*@
+
+
+        @*<div class="col-md-8 col-sm-8 col-12 text-right">
+                <button class="btn btn-outline-success" onclick="window.location = 'exportFormImport'">
+                    <i class="fa fa-download"></i>
+                    Tải mẫu Import
+                </button>
+                <button class="btn btn-success" data-target="#mdImport" data-toggle="modal" id="btnImport">
+                    <i class="fa fa-upload"></i>
+                    Import đại lý
+                </button>
+                <button class="btn btn-dekko text-danger" data-toggle="modal" data-target="#createAgent" onclick="">
+                    <i class="fa fa-plus"></i>
+                    Thêm đại lý
+                </button>
+            </div>*@
+
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-3 col-sm-12">
+            <input type="text" class="form-control" id="txtPhone" placeholder="Số điện thoại" />
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+            <input type="text" class="form-control" id="txtName" placeholder="Tên đại lý" />
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+            <input class="form-control relative-icon-calendar date" placeholder="Từ ngày" id="txtFromDate" />
+            <i class="fa fa-calendar absolute-icon-calendar"></i>
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+            <input class="form-control relative-icon-calendar date" placeholder="Đến ngày" id="txtToDate" />
+            <i class="fa fa-calendar absolute-icon-calendar"></i>
+        </div>
+    </div>
+
+    <div class="row mt-3 d-flex justify-content-end">
+        <button class="btn btn-primary mr-2" id="btnSearchAgent" onclick="searchAgent()">
+            <i class="fa fa-search"></i>
+            <span>Tìm kiếm</span>
+        </button>
+        <button class="btn btn-danger mr-2" data-toggle="modal" data-target="#addPoint">
+            <i class="fa fa-plus"></i>
+            <span>Cộng điểm</span>
+        </button>
+        <button class="btn btn-success mr-3" data-toggle="modal" data-target="#createAgent">
+            <i class="fa fa-plus"></i>
+            <span>Đại lý</span>
+        </button>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12 col-sm-12" id="list">
+            @{
+                Html.RenderAction("Search", "Agent", new { Page = 1 });
+            }
+        </div>
+    </div>
+</div>
+
+
+<!--modal them dai ly-->
+<div class="modal fade" id="createAgent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-fw fa-shopping-cart"></i> Thêm đại lý</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmCreate" name="FrmCreate">
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Họ và tên</label> *</p>
+                            <input type="text" class="form-control" id="NameCreate" name="Name" placeholder="Nhập họ và tên">
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Số điện thoại</label> *</p>
+                            <input type="text" class="form-control" id="PhoneCreate" name="Phone" placeholder="Nhập số điện thoại">
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Email</label> *</p>
+                            <input type="text" class="form-control" id="EmailCreate" name="Email" placeholder="Nhập email">
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Mật khẩu</label> *</p>
+                            <input type="password" class="form-control" id="PasswordCreate" name="Password" placeholder="Nhập mật khẩu">
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Xác nhận mật khẩu</label> *</p>
+                            <input type="password" class="form-control" id="PasswordConfirmCreate" name="PasswordConfirm" placeholder="Nhập lại mật khẩu">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Địa chỉ đại lý</label> *</p>
+                            <input class="form-control place-dropdown" placeholder="Thêm địa chỉ" id="AddressCreate" name="PlusCode2" />
+                            <div class="row">
+                                <input type="text" id="lati" name="Lati" class="col-md-6 form-control text-center" style="border:hidden"/>
+                                <input type="text" id="long" name="Long" class="col-md-6 form-control text-center" style="border:hidden"/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary px-3" onclick="createAgent()">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end modal them dai ly-->
+<!--start modal cong diem-->
+<div class="modal fade" id="addPoint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-fw fa-shopping-cart"></i>Cộng điểm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row pb-3">
+                    <label class="text-dark mb-0 col-md-3 ml-3">Số điểm</label>
+                    <input type="text" class="form-control col-md-7 offset-1 number" id="point" name="PasswordConfirm" placeholder="Nhập điểm muốn cộng">
+                </div>
+                <div class="row pb-3">
+                    <label class="text-dark mb-0 col-md-3 ml-3">Lý do</label>
+                    <textarea class="col-md-7 offset-1 form-control" placeholder="Nhập lý do cộng điểm" id="description"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="saveAddPoint()"><i class="fa fa-check"></i>Cộng điểm</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end modal cong diem-->
+<!--modal import dai ly-->
+<div class="modal fade" id="mdImport" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Import đại lý</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="">
+                <form method="post" id="frmImport" enctype="multipart/form-data">
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" name="txtFile" class="custom-file-input" id="txtFile"
+                                           aria-describedby="inputGroupFileAddon01">
+                                    <label class="custom-file-label" for="inputGroupFile01">Chọn File</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" onclick="ImportAgent()">Import</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        </div>
+                    </div>
+                </form>
+                <script>
+                    $('#mdImport #txtFile').on('change', function () {
+                        //get the file name
+                        var fileName = $(this).val();
+                        //replace the "Choose a file" label
+                        $(this).next('#mdImport .custom-file-label').html(fileName);
+                    });
+                </script>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#btnImport').on('click', function () {
+            $('#mdImport .custom-file-label').html("Chọn File");
+        });
+
+        $("#txtFromDate").on('keyup', function () {
+            if ($("#txtFromDate").val() == '')
+                $("#btnSearchAgent").click();
+        });
+
+        $("#txtToDate").on('keyup', function () {
+            if ($("#txtToDate").val() == '')
+                $("#btnSearchAgent").click();
+        });
+
+        $("#txtCode").on('keyup', function () {
+            if ($("#txtCode").val() == '')
+                $("#btnSearchAgent").click();
+        });
+
+        $("#slStatus").on('change', function (e) {
+            $("#btnSearchAgent").click();
+        });
+    })
+</script>
+
+<script>
+    // Search autocomplate agent
+    $("#txtName").autocomplete({
+        source: function (request, response) {
+            var name = $("#txtName").val();
+            $.ajax({
+                type: "POST",
+                url: "/Agent/SearchAgentName",
+                data: { Name: name },
+                success: response,
+                dataType: 'json'
+            });
+        }
+    });
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyAVKaTr6pjVc6Pa4QP8ZTuZ-dl349k_ZLE" type="text/javascript"></script>
+
+<script>
+    var input = document.getElementById('AddressCreate');
+    var autocomplete = new google.maps.places.Autocomplete(input, {
+        language: ["vi"],
+        input: ["hanoi"],
+    });
+      autocomplete.setComponentRestrictions(
+      {'country': ['VN']});
+    $(function () {
+
+        autocomplete.addListener('place_changed', fillInAddress);
+
+        $("#AddressCreate").focusin(function () {
+            $(document).keypress(function (e) {
+                if (e.which == 13) {
+                    infowindow.close();
+                }
+            });
+        });
+    });
+    
+    function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+        if (typeof place.geometry !== "undefined") {
+            $("#lati").val(place.geometry.location.lat());
+            $("#long").val(place.geometry.location.lng());
+        }
+    }
+</script>

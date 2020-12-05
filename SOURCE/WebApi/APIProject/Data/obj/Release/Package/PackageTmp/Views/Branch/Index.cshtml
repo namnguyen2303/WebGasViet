@@ -1,0 +1,219 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- navbar-->
+<!-- Counts Section -->
+
+<div class="breadcrumb-holder">
+    <div class="container-fluid">
+        <span class="h2 pt-3 pb-3 pl-0 "><i class="fa fa-map-marker"></i> Cơ Sở</span>
+    </div>
+</div>
+<section class="dashboard-counts pt-4">
+    <div class="container-fluid">
+        <div class="row mt">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="row mb-2 ml-5 ">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row mb-2 seach-User">
+                            <div class="input-group mb-2 col-6  input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:160px">Tên Cơ Sở </span>
+                                </div>
+                                <select class="form-control text_seach seach_parent seach_parent" id="cmb_seach_Name_Branch" name="STATUS">
+                                    <option value="0">---Tất cả---</option>
+                                </select>
+                            </div>
+                            <div class="form-send col-md-4 col-12 col-sm-12 ">
+                                <button title="Tìm kiếm" type="submit" class="btn btn-large btn-primary btn_header mr-2" onclick="SeachBranch()"><i class="fa fa-search"></i> Tìm kiếm</button>
+                                <button title="Thêm mới" type="submit" class="btn btn-large btn-info btn_header" data-toggle="modal" data-target="#Modal_Add_Branch"><i class="fa fa-plus-square"></i> Thêm cơ sở</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+<!-- Header Section-->
+<section class="dashboard-header section-padding">
+    <div class="container-fluid">
+        <div class="row d-flex align-items-md-stretch">
+            <div class="col-lg-12">
+                <div class="card" id="Table_Branch">
+                    @{
+                        Html.RenderAction("Seach", new { Page = 1, ID = 0 });
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section ng-app="my_app_modal_Branch">
+    <!-- Modal thêm mới Cơ Sở -->
+    <div class="modal " id="Modal_Add_Branch" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info ">
+                    <h5 class="modal-title" style="color:white;font-weight:bold;" id="exampleModalLabel">Thêm Cơ Sở</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="FormAdd_Branch" ng-controller="ctrl_Add_Branch" name="Form_Add_Branch">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="input-group mb-3 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:100px">Tên Cơ Sở</span>
+                                </div>
+                                <input type="text" class="form-control text_seach" name="NAME" id="txtAddName" ng-model="txt_add_name_branch" ng-required="true" ng-maxlength="200">
+                                <div class="input-group col-9 offset-3 pt-1 input-group-sm">
+                                    <span style="color:red" ng-show="Form_Add_Branch.NAME.$dirty && Form_Add_Branch.NAME.$invalid">
+                                        <span ng-show="Form_Add_Branch.NAME.$error.required">Tên Cơ Sở không được để trống</span>
+                                        <span ng-show="Form_Add_Branch.NAME.$error.maxlength">Tên Cơ Sở có độ dài vượt quá giới hạn cho phép</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:100px">Địa chỉ</span>
+                                </div>
+                                <input type="text" class="form-control text_seach" name="ADDRESS" id="txtAddADDRESS" ng-model="txt_add_address_branch" ng-required="true" ng-maxlength="200">
+                                <div class="input-group col-9 offset-3 pt-1 input-group-sm">
+                                    <span style="color:red" ng-show="Form_Add_Branch.ADDRESS.$dirty && Form_Add_Branch.ADDRESS.$invalid">
+                                        <span ng-show="Form_Add_Branch.ADDRESS.$error.required">Địa chỉ không được để trống</span>
+                                        <span ng-show="Form_Add_Branch.ADDRESS.$error.maxlength">Địa chỉ có độ dài vượt quá giới hạn cho phép</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:100px">Số điện thoại</span>
+                                </div>
+                                <input type="number" class="form-control text_seach" name="PHONE" id="txtAddPhone" ng-model="txt_add_phone_branch" ng-required="true" ng-maxlength="30">
+                                <div class="input-group col-9 offset-3 pt-1 input-group-sm">
+                                    <span style="color:red" ng-show="Form_Add_Branch.PHONE.$dirty && Form_Add_Branch.PHONE.$invalid">
+                                        <span ng-show="Form_Add_Branch.PHONE.$error.required">Số điện thoại không được để trống</span>
+                                        <span ng-show="Form_Add_Branch.PHONE.$error.maxlength">Số điện thoại vượt quá giới hạn cho phép</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="AddBranch()"><i class="fa fa-save"></i>Thêm mới</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal cập nhập thông tin Cơ Sở -->
+    <div class="modal" id="Modal_Edit_Branch" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info ">
+                    <h5 class="modal-title" style="color:white;font-weight:bold;" id="exampleModalLabel">Sửa Cơ Sở</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="CloesEditBranch()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="Form_EditBranch" ng-controller="ctrl_Edit_Branch" name="Form_Edit_Branch">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <input type="hidden" class="form-control text_seach" name="ID" id="txtEditIdBranch" value="0">
+                            <div class="input-group mb-3 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:100px">Tên cơ sở</span>
+                                </div>
+                                <input type="text" class="form-control text_seach" name="NAME" id="txtEditName" ng-model="txt_edit_name_branch" ng-required="true" ng-maxlength="200">
+                                <div class="input-group col-9 offset-3 pt-1 input-group-sm">
+                                    <span style="color:red" ng-show="Form_Edit_Branch.NAME.$dirty && Form_Edit_Branch.NAME.$invalid">
+                                        <span ng-show="Form_Edit_Branch.NAME.$error.required">Tên Cơ Sở không được để trống</span>
+                                        <span ng-show="Form_Edit_Branch.NAME.$error.maxlength">Tên Cơ Sở có độ dài vượt quá giới hạn cho phép</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:100px">Địa chỉ</span>
+                                </div>
+                                <input type="text" class="form-control text_seach" name="ADDRESS" id="txtEditAddress" ng-model="txt_edit_name_branch" ng-required="true" ng-maxlength="200">
+                                <div class="input-group col-9 offset-3 pt-1 input-group-sm">
+                                    <span style="color:red" ng-show="Form_Edit_Branch.ADDRESS.$dirty && Form_Edit_Branch.ADDRESS.$invalid">
+                                        <span ng-show="Form_Edit_Branch.ADDRESS.$error.required">Địa chỉ không được để trống</span>
+                                        <span ng-show="Form_Edit_Branch.ADDRESS.$error.maxlength">Địa chỉ có độ dài vượt quá giới hạn cho phép</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:100px">Số điện thoại</span>
+                                </div>
+                                <input type="number" class="form-control text_seach" name="PHONE" id="txtEditPhone" ng-model="txt_edit_phone_branch" ng-required="true" ng-maxlength="30">
+                                <div class="input-group col-9 offset-3 pt-1 input-group-sm">
+                                    <span style="color:red" ng-show="Form_Edit_Branch.PHONE.$dirty && Form_Edit_Branch.PHONE.$invalid">
+                                        <span ng-show="Form_Edit_Branch.PHONE.$error.required">Số điện thoại không được để trống</span>
+                                        <span ng-show="Form_Edit_Branch.PHONE.$error.maxlength">Số điện thoại vượt quá giới hạn cho phép</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="EditBranch()"><i class="fa fa-save"></i> Lưu</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="CloesEditBranch()"><i class="fa fa-times"></i> Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- xóa thông tin người dùng  -->
+<div class="modal " id="Modal_Del_Branch" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info ">
+                <h5 class="modal-title" style="color:white;font-weight:bold;" id="exampleModalLabel">Xóa cơ sở</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="CloseDeleteBranch()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn xóa cơ sở này
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="DelBranch()"><i class="fa fa-trash-o" aria-hidden="true"></i> Xóa</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="CloseDeleteBranch()"><i class="fa fa-times"></i> Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script type="text/javascript">
+    var app = angular.module("my_app_modal_Branch", []);
+    app.controller('ctrl_Add_Branch', function ($scope) {
+    });
+    app.controller('ctrl_Edit_Branch', function ($scope) {
+    });
+
+</script>

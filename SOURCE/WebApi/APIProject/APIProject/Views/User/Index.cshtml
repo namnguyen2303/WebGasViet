@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-10 col-sm-9 text-dark px-0">
+                <h4><i class="fa fa-user-secret" aria-hidden="true"></i> Quản lý tài khoản</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-md-6 mt-1">
+        <input type="text" class="form-control" id="txtPhoneUser" placeholder="Nhập tài khoản" />
+    </div>
+    <div class="col-md-3 offset-md-0 col-sm-3 mt-1">
+        <input type="text" class="form-control relative-icon-calendar date" id="txtFromDateUser" placeholder="Từ ngày" />
+        <i class="fa fa-calendar absolute-icon-calendar"></i>
+    </div>
+    <div class="col-md-3 offset-md-0 col-sm-3 mt-1">
+        <input type="text" class="form-control relative-icon-calendar date" id="txtToDateUser" placeholder="Đến ngày" />
+        <i class="fa fa-calendar absolute-icon-calendar"></i>
+    </div>
+</div>
+
+<div class="row mb-2 d-flex justify-content-end">
+    <div class="mr-3">
+        <button class="btn btn-primary" onclick="searchUser()"><i class="fa fa-search"></i> Tìm kiếm</button>
+    </div>
+    <div class="mr-3">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createUser"><i class="fa fa-fw fa-plus"></i> Thêm mới</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12" id="tableUser">
+        @{
+            Html.RenderAction("Search", "User", new { Page = 1, Phone = "" });
+        }
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div id="createUser" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-user-secret" aria-hidden="false"></i> Thêm tài khoản</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <label>Tài khoản</label>
+                        <input class="form-control" id="txtPhoneCreateUser" placeholder="Nhập tài khoản" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <label>Tên người dùng</label>
+                        <input class="form-control" id="txtNameCreateUser" placeholder="Nhập tên người dùng" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <label>Mật khẩu</label>
+                        <input class="form-control" id="txtPasswordCreateUser" type="password" placeholder="Nhập mật khẩu" />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <label>Nhập lại mật khẩu</label>
+                        <input class="form-control" id="txtPasswordConfirmCreateUser" type="password" placeholder="Nhập lại mật khẩu" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary px-3" onclick="createUser()">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divUserDetail">
+
+</div>

@@ -1,0 +1,7 @@
+<resources>
+	<string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">k_krMurpOMAt67hbxUei5aV_Ihzp30EUD1hSj</string>
+    <string name="app_name">Gas Việt 24H</string>
+    <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
+    <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
+    <string name="facebook_app_id">2449712991815530</string>
+</resources>

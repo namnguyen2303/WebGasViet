@@ -1,0 +1,140 @@
+﻿ @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Data.Utils
+
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-10 col-sm-10 col-9 text-dark px-0">
+                <h4><i class="fa fa-fw fa-check-square-o"></i> Tích điểm</h4>
+            </div>
+            <div class="col-md-2 col-sm-2 col-3 text-right px-0">
+                <button class="btn btn-dekko width-btn-create-batch showModalCreate" data-target="#createBatch" data-toggle="modal"><i class="fa fa-fw fa-plus"></i> Thêm lô</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-md-3 offset-md-0 col-sm-4 mt-1">
+        <input type="text" class="form-control relative-icon-calendar date" id="txtBatchFromDate" placeholder="Từ ngày" />
+        <i class="fa fa-calendar absolute-icon-calendar"></i>
+    </div>
+    <div class="col-md-3 offset-md-0 col-sm-4 mt-1">
+        <input type="text" class="form-control relative-icon-calendar date" id="txtBatchToDate" placeholder="Đến ngày" />
+        <i class="fa fa-calendar absolute-icon-calendar"></i>
+    </div>
+    <div class="col-md-3 offset-md-0 col-sm-4 mt-1">
+        <input type="text" class="form-control" id="txtBatchSearch" placeholder="Nhập mã lô hàng" />
+    </div>
+    <div class="col-md-2 offset-md-0 col-sm-2 offset-sm-5 mt-1 col-4 offset-4">
+        <button class="btn btn-primary" onclick="searchBatch()"><i class="fa fa-search"></i> Tìm kiếm</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12" id="tableBatch">
+        @{
+            Html.RenderAction("Search", "Batch", new { Page = 1, BatchCode = "" });
+        }
+    </div>
+</div>
+
+
+<!-- start modal create batch -->
+<div class="modal fade" id="createBatch" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-fw fa-check-square-o"></i> Thêm lô hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="form_create_batch" name="form_create_batch">
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Mã lô</label> *</p>
+                            <input type="text" class="form-control" id="code" name="BatchCode" ng-model="BatchCode" required placeholder="Nhập mã lô">
+                            <span class="require-field" ng-show="form_create_batch.BatchCode.$touched && form_create_batch.BatchCode.$invalid">@SystemParam.REQUIRE_FIELD</span>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Tên lô</label> *</p>
+                            <input type="text" class="form-control" id="name" name="BatchName" ng-model="BatchName" required placeholder="Nhập tên lô">
+                            <span class="require-field" ng-show="form_create_batch.BatchName.$touched && form_create_batch.BatchName.$invalid">@SystemParam.REQUIRE_FIELD</span>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Giá tiền</label> *</p>
+                            <input type="text" class="form-control number" id="price" name="Price" ng-model="Price" required placeholder="Nhập giá tiền">
+                            <span class="require-field" ng-show="form_create_batch.Price.$touched && form_create_batch.Price.$invalid">
+                                <span class="require-field" ng-show="form_create_batch.Price.$error.required">@SystemParam.REQUIRE_FIELD</span>
+                                <span class="require-field" ng-show="form_create_batch.Price.$error.number">@SystemParam.INVALID_NUMBER</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Số lượng</label> *</p>
+                            <input type="text" class="form-control number" id="qty" name="QTY" ng-model="QTY" required placeholder="Nhập số lượng">
+                            <span class="require-field" ng-show="form_create_batch.QTY.$touched && form_create_batch.QTY.$invalid">
+                                <span class="require-field" ng-show="form_create_batch.QTY.$error.required">@SystemParam.REQUIRE_FIELD</span>
+                                <span class="require-field" ng-show="form_create_batch.QTY.$error.number">@SystemParam.INVALID_NUMBER</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Số điểm</label> *</p>
+                            <input type="text" class="form-control number" id="point" name="Point" ng-model="Point" required placeholder="Nhập số điểm">
+                            <span class="require-field" ng-show="form_create_batch.Point.$touched && form_create_batch.Point.$invalid">
+                                <span class="require-field" ng-show="form_create_batch.Point.$error.required">@SystemParam.REQUIRE_FIELD</span>
+                                <span class="require-field" ng-show="form_create_batch.Point.$error.number">@SystemParam.INVALID_NUMBER</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label class="text-dark">Ghi chú</label>
+                            <textarea class="form-control" placeholder="Thêm ghi chú" id="note" name="Note"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary px-3" onclick="createBatch()">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal create batch -->
+
+<!-- start modal batch detail -->
+<div id="divBatchDetail">
+
+</div>
+
+<!-- end modal batch detail  -->
+
+<script>
+
+    $('.showModalCreate').click(function () {
+        $('#createBatch').modal('show');
+    });
+
+    $('.showModalUpdate').click(function () {
+        $('#updateBatch').modal('show');
+    });
+
+    $('.showModalDetail').click(function () {
+        
+    });
+
+</script>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bd171a55e23c4551a492e5a6b3d4e348" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="DEKKOModel.Agent" Width="1.5" PointX="7.5" PointY="51.625" />
+        <EntityTypeShape EntityType="DEKKOModel.Banking" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DEKKOModel.Batch" Width="1.5" PointX="11.25" PointY="40" />
+        <EntityTypeShape EntityType="DEKKOModel.BuyPackageHistory" Width="1.5" PointX="10.5" PointY="27.125" />
+        <EntityTypeShape EntityType="DEKKOModel.Card" Width="1.5" PointX="10.5" PointY="34.75" />
+        <EntityTypeShape EntityType="DEKKOModel.CategoryNew" Width="1.5" PointX="8.25" PointY="76.75" />
+        <EntityTypeShape EntityType="DEKKOModel.Configss" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DEKKOModel.Customer" Width="1.5" PointX="5.25" PointY="28.125" />
+        <EntityTypeShape EntityType="DEKKOModel.District" Width="1.5" PointX="3" PointY="36.875" />
+        <EntityTypeShape EntityType="DEKKOModel.Gift" Width="1.5" PointX="5.25" PointY="38.625" />
+        <EntityTypeShape EntityType="DEKKOModel.Item" Width="1.5" PointX="8.25" PointY="71.5" />
+        <EntityTypeShape EntityType="DEKKOModel.MembersPointHistory" Width="1.5" PointX="9.75" PointY="47.5" />
+        <EntityTypeShape EntityType="DEKKOModel.Message" Width="1.5" PointX="7.5" PointY="26.25" />
+        <EntityTypeShape EntityType="DEKKOModel.News" Width="1.5" PointX="10.5" PointY="73" />
+        <EntityTypeShape EntityType="DEKKOModel.Notification" Width="1.5" PointX="12.75" PointY="47.5" />
+        <EntityTypeShape EntityType="DEKKOModel.OrderItem" Width="1.5" PointX="9.75" PointY="65.625" />
+        <EntityTypeShape EntityType="DEKKOModel.Order" Width="1.5" PointX="7.5" PointY="64.125" />
+        <EntityTypeShape EntityType="DEKKOModel.Product" Width="1.5" PointX="13.5" PointY="31.25" />
+        <EntityTypeShape EntityType="DEKKOModel.Province" Width="1.5" PointX="0.75" PointY="26.125" />
+        <EntityTypeShape EntityType="DEKKOModel.Ranking" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="DEKKOModel.Request" Width="1.5" PointX="7.5" PointY="35.75" />
+        <EntityTypeShape EntityType="DEKKOModel.ServicePackage" Width="1.5" PointX="8.25" PointY="22.5" />
+        <EntityTypeShape EntityType="DEKKOModel.Shop" Width="1.5" PointX="8.25" PointY="30.375" />
+        <EntityTypeShape EntityType="DEKKOModel.ShopImage" Width="1.5" PointX="10.5" PointY="31.625" />
+        <EntityTypeShape EntityType="DEKKOModel.sysdiagram" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="DEKKOModel.User" Width="1.5" PointX="5.25" PointY="22.75" />
+        <EntityTypeShape EntityType="DEKKOModel.Warranty" Width="1.5" PointX="11.25" PointY="23.25" />
+        <EntityTypeShape EntityType="DEKKOModel.WarrantyCard" Width="1.5" PointX="13.5" PointY="27.25" />
+        <AssociationConnector Association="DEKKOModel.FK__Agent__CustomerA__534D60F1" />
+        <AssociationConnector Association="DEKKOModel.FK__Batch__CreateUse__5441852A" />
+        <AssociationConnector Association="DEKKOModel.FK__Product__BatchID__1B0907CE" />
+        <AssociationConnector Association="DEKKOModel.FK_BuyPackageHistory_Customer" />
+        <AssociationConnector Association="DEKKOModel.FK_BuyPackageHistory_ServicePackage" />
+        <AssociationConnector Association="DEKKOModel.FK__Card__CreateUser__5535A963" />
+        <AssociationConnector Association="DEKKOModel.FK__Card__CustomerAc__5629CD9C" />
+        <AssociationConnector Association="DEKKOModel.FK__News__CategoryID__3E52440B" />
+        <AssociationConnector Association="DEKKOModel.FK__Customer__Distri__571DF1D5" />
+        <AssociationConnector Association="DEKKOModel.FK__Customer__Provin__5812160E" />
+        <AssociationConnector Association="DEKKOModel.FK__MembersPo__Custo__5AEE82B9" />
+        <AssociationConnector Association="DEKKOModel.FK__Message__Custome__5BE2A6F2" />
+        <AssociationConnector Association="DEKKOModel.FK__Notificat__Custo__4F7CD00D" />
+        <AssociationConnector Association="DEKKOModel.FK__Product__Custome__1BFD2C07" />
+        <AssociationConnector Association="DEKKOModel.FK__Request__Custome__66603565" />
+        <AssociationConnector Association="DEKKOModel.FK__WarrantyC__Custo__2B3F6F97" />
+        <AssociationConnector Association="DEKKOModel.FK_Customer_Shop" />
+        <AssociationConnector Association="DEKKOModel.FK_Customer_Shop1" />
+        <AssociationConnector Association="DEKKOModel.FK_Orders_Customer" />
+        <AssociationConnector Association="DEKKOModel.FK_Orders_Customer1" />
+        <AssociationConnector Association="DEKKOModel.FK__District__Provin__59063A47" />
+        <AssociationConnector Association="DEKKOModel.FK_Shop_District" />
+        <AssociationConnector Association="DEKKOModel.FK__Gift__CreateUser__59FA5E80" />
+        <AssociationConnector Association="DEKKOModel.FK__Request__GiftID__6754599E" />
+        <AssociationConnector Association="DEKKOModel.FK__OrderItem__ItemI__1332DBDC" />
+        <AssociationConnector Association="DEKKOModel.FK_News_ItemI" />
+        <AssociationConnector Association="DEKKOModel.FK_MembersPointHistory_Orders" />
+        <AssociationConnector Association="DEKKOModel.FK__Message__UserID__5CD6CB2B" />
+        <AssociationConnector Association="DEKKOModel.FK__News__CreateUser__3D5E1FD2" />
+        <AssociationConnector Association="DEKKOModel.FK_Notification_News" />
+        <AssociationConnector Association="DEKKOModel.FK_Notification_Orders" />
+        <AssociationConnector Association="DEKKOModel.FK__OrderItem__Order__123EB7A3" />
+        <AssociationConnector Association="DEKKOModel.FK_Shop_Province" />
+        <AssociationConnector Association="DEKKOModel.FK__Request__UserMod__68487DD7" />
+        <AssociationConnector Association="DEKKOModel.FK__ShopImage__ShopI__236943A5" />
+        <AssociationConnector Association="DEKKOModel.FK__Warranty__Create__6C190EBB" />
+        <AssociationConnector Association="DEKKOModel.FK_WarrantyCard_Warranty" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

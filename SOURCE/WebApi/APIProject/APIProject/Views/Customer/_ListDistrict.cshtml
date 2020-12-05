@@ -1,0 +1,11 @@
+﻿@using Data.DB
+
+<select class="form-control" id="slDistrict">
+    @{
+        <option>Tất cả Quận/Huyện</option>
+        foreach (var d in (List<District>)ViewBag.listDistrict)
+        {
+            <option value="@d.Code">@d.Name</option>
+        }
+    }
+</select>

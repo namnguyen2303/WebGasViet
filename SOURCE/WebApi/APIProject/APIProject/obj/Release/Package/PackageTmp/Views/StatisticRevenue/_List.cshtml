@@ -1,0 +1,57 @@
+﻿@using Data.DB
+@using Data.Model.APIWeb
+@using PagedList.Mvc
+@using Data.Utils
+@model  PagedList.IPagedList<Order>
+
+<table class="table table-hover table-bordered " id="">
+    <thead class="bg-thead text-center text-white">
+        <tr>
+            <th>STT</th>
+            <th>Mã Đơn Hàng</th>
+            <th>Người Mua</th>
+            <th>Đối Tượng</th>
+            <th>Tổng Tiền</th>
+            <th>Thời Gian</th>
+        </tr>
+    </thead>
+    <tbody class="text-center" id="">
+        @{
+            int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+            foreach (var dt in Model)
+            {
+                <tr>
+                    <td>@stt</td>
+                    <td>@dt.Code</td>
+                    <td>@dt.Customer.Name</td>
+                    @if (@dt.Customer.Role == 2)
+                    {
+                    <td>Đại Lý</td>
+                    }
+                    else if (@dt.Customer.Role == 1)
+                    {
+                    <td>Khách Hàng</td>
+                    }
+                    <td>@String.Format("{0:0,0 VND}", @dt.TotalPrice)</td>
+                    <td>@dt.CreateDate.ToString("dd/MM/yyyy")</td>
+                </tr>
+                stt++;
+            }
+
+        }
+    </tbody>
+</table>
+
+<div class="col-md-12">
+    <div class="row float-right">
+        @Html.PagedListPager(Model, Page => Url.Action("Search", "StatisticRevenue", new { Page = Page, obj = ViewBag.obj, FromDate = ViewBag.fd, ToDate = ViewBag.td }),
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+        {
+            HttpMethod = "GET",
+            UpdateTargetId = "list"
+        })
+        )
+    </div>
+</div>
+
+

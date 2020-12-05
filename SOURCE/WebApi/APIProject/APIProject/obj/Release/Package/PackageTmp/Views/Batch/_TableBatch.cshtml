@@ -1,0 +1,70 @@
+﻿@using Data.Model.APIWeb
+@using PagedList.Mvc
+@model  PagedList.IPagedList<ListBatchOutputModel>
+<table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md mb-0">
+    <thead class="text-center text-white bg-thead">
+        <tr>
+            <th>STT</th>
+            <th>Mã lô</th>
+            <th style="min-width: 150px;">Tên lô</th>
+            <th>Số lượng</th>
+            <th>Đã dùng</th>
+            <th>Điểm</th>
+            <th>Người tạo</th>
+            <th>Ghi chú</th>
+            <th class="widthCreatedDate">Ngày tạo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+
+        @{
+            if (Model.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="10">Không có dữ liệu.</td>
+                </tr>
+            }
+            else
+            {
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var data in Model)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@data.BatchCode</td>
+                        <td>@data.BatchName</td>
+                        <td>@data.QTY</td>
+                        <td>@data.UsedQTY/@data.QTY</td>
+                        <td>@String.Format("{0:n0}", data.Point)</td>
+                        <td>@data.CreateUserName</td>
+                        <td>@data.Note</td>
+                        <td>@data.CraeteDateStr</td>
+                        <td class="width2btn">
+                            <a data-toggle="tooltip" data-placement="top" title="Chi tiết." class="cursor-pointer showModalDetail" onclick="getBatchDetail(@data.ID);">
+                                <i class="btnView fa fa-fw fa-eye"></i>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Xóa lô hàng." class="cursor-pointer" onclick="deleteBatch(@data.ID);">
+                                <i class="btnDelete fa fa-fw fa-trash-o"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    stt++;
+                }
+            }
+        }
+    </tbody>
+</table>
+<input type="hidden" id="txtPageCurrent" value="@ViewBag.PageCurrent" class="txtPageCurrent" />
+<div class="col-md-12">
+    <div class="row float-right">
+        @*phân trang*@
+        @Html.PagedListPager(Model, Page => Url.Action("Search", new { Page, BatchCode = ViewBag.BatchCode, FromDate = ViewBag.FromDate, ToDate = ViewBag.ToDate }),
+     PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+     {
+         HttpMethod = "GET",
+         UpdateTargetId = "tableBatch"
+     })
+     )
+    </div>
+</div>

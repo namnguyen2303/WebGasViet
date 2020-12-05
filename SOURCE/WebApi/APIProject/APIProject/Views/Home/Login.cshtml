@@ -1,0 +1,52 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Gas Việt</title>
+    <link rel="icon" href="~/Content/images/iconFire1.jpg" />
+
+    @Styles.Render("~/dekko/css")
+    @Scripts.Render("~/layout/js")
+    @Scripts.Render("~/dekko/js")
+    @Scripts.Render("~/bundle/js")
+</head>
+<body style="background: #ffd800;">
+    <div class="bg-image"></div>
+    <div class="bg-text">
+        <div class="col-md-12 px-0">
+            <img src="~/Content/images/logo_gasviet_icon.png" style="margin-bottom: -49px;" width="214" height="214" />
+        </div>
+        <div class="txtLogin row mt-5" id="txtLogin">
+            <input type="text" class="form-control col-md-10 inputLogin" placeholder="Tài khoản" id="txtUsernameLogin" name="">
+            <i class="iconUsernameLogin fa fa-user-o"></i>
+        </div>
+        <div class="txtLogin row mt-1" id="txtLogin">
+            <input type="password" class="form-control col-md-10 inputLogin" placeholder="Mật khẩu" id="txtPasswordLogin" name="">
+            <i class="iconPasswordLogin fa fa-unlock-alt"></i>
+        </div>
+        <button class="col-md-11 btn btn-default mt-3 btnLogin" id="btnLogin" onclick="Login()">ĐĂNG NHẬP</button>
+    </div>
+</body>
+</html>
+
+<script>
+
+$(document).ready(function () {
+
+    $("#txtUsernameLogin").focus();
+
+    $('.inputLogin').keypress(function (e) {
+        var key = e.which;
+        if (key == 13) {
+            $("#btnLogin").click();
+        }
+    });
+
+});
+
+</script>

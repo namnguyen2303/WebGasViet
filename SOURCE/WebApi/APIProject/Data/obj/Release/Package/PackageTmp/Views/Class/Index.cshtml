@@ -1,0 +1,143 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumb-holder">
+    <div class="container-fluid">
+        <span class="h2 pt-3 pb-3 pl-0 "><i class="fa fa-map-marker"></i>Thông tin lớp học</span>
+    </div>
+</div>
+@*Hiển thị các ô tìm kiếm lớp học*@
+<section class="dashboard-counts pt-4">
+    <div class="container-fluid">
+        <div class="row mt">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="row mb-2 seach-User">
+                    <div class="row col-lg-12">
+                        <div class="col-md-12 row">
+
+                            <div class="input-group mb-2 col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:101px">Tên Lớp Học</span>
+                                </div>
+                                <input type="text" class="form-control text_seach seach_parent" name="" id="txt_seach_name_class">
+                            </div>
+
+
+                            <div class="input-group mb-2  col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:101px">Trạng thái</span>
+                                </div>
+
+                                <select class="form-control text_seach text_seach seach_parent" id="cb_seach_sattus_class" name="STATUS">
+                                    <option>--lựa chọn--</option>
+                                    <option value="1">Lớp đang học</option>
+                                    <option value="2">Lớp đang nghỉ</option>
+                                    <option value="0">Lớp đã kêt thúc</option>
+                                </select>
+
+                            </div>
+                            <div class="input-group mb-2 col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:101px">Ngày bắt đầu</span>
+                                </div>
+                                <input type="text" class="form-control text_seach seach_parent" name="" id="txt_seach_create_class">
+                            </div>
+
+
+                            <div class="input-group mb-2 col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4  input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:101px">Cơ sở </span>
+                                </div>
+
+                                <select class="form-control text_seach seach_parent seach_teacher Select_branch" id="cb_seach_branch_class" name="">
+                                    <option value="0">--lựa chọn--</option>
+                                </select>
+
+                            </div>
+                            <div class="input-group mb-2 col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:101px">Loại lớp </span>
+                                </div>
+
+                                <select class="form-control text_seach seach_parent seach_teacher" id="cb_seach_tutor_class" name="">
+                                    <option>--lựa chọn--</option>
+                                    <option value="1">Lớp chính thức</option>
+                                    <option value="0">Lớp phụ đạo</option>
+                                </select>
+                            </div>
+
+                            <!---Tìm kiếm thông tin của giáo viên -->
+                            <div class="input-group mb-2 col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:101px">Tên giáo viên </span>
+                                </div>
+
+                            
+                                <input type="text" class="form-control text_seach seach_parent" name="" id="txt_seach_name_Teacher_class">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="dashboard-header section-padding mt-1">
+    <div class="container-fluid">
+        <div class="row d-flex align-items-md-stretch">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <button type="submit" class="btn btn-large btn-info btn_header mr-2 btn_teacher pull-right text-center" onclick="window.location='/class/create'"><i class="fa fa-plus-square"></i>  Thêm mới</button>
+                        <button type="submit" class="btn btn-large btn-primary btn_header mr-2  btn_teacher pull-right text-center" onclick="SeachClass()"><i class="fa fa-search"></i>   Tìm kiếm</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" id="Table_Class">
+
+                            @{
+                                Html.RenderAction("Seach", new { Page = 1, NAME = "" });
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/Assets/Addmin/vendor/jquery/jquery.js"></script>
+<script src="~/Assets/Addmin/vendor/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+
+<!-- xóa thông tin người dùng  -->
+<div class="modal " id="Modal_Del_Class" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info ">
+                <h5 class="modal-title" style="color:white;font-weight:bold;" id="exampleModalLabel">Xóa thông tin lớp học</h5>
+                <button type="button" class="close" data-dismiss="modal" onclick="CloseDeleteUser()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn xóa thông tin lớp học
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="CloseDeleteClass()"><i class="fa fa-times"></i> Hủy</button>
+                <button type="button" class="btn btn-danger" onclick="DelClass()"><i class="fa fa-trash-o" aria-hidden="true"></i> Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    // đóng khung xóa thông tin lớp học 
+    function CloseDeleteClass() {
+        $("#Modal_Del_Class").hide(); 
+    }
+</script>

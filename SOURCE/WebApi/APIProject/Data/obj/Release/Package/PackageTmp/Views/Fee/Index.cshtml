@@ -1,0 +1,135 @@
+﻿
+
+@using Data.Business
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="breadcrumb-holder">
+    <div class="container-fluid">
+
+        <span class="h2 pt-3 pb-3 pl-0 "><i class="fa fa-user"></i>Học phí</span>
+
+    </div>
+</div>
+
+@*Hiển thị các ô tìm kiếm học sinh*@
+<section class="dashboard-counts pt-4">
+    <div class="container-fluid">
+
+        <div class="row mt">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="row mb-2 seach-User">
+                    <div class="row col-lg-12">
+                        <div class="col-md-12 row">
+
+                            <div class="input-group mb-2 col-4 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:160px">Tên lớp học</span>
+                                </div>
+                                <input type="text" class="form-control text_seach seach_parent" name="" id="txt_seach_name_student_parent">
+                            </div>
+
+                            <div class="input-group mb-2 col-4  input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:160px">Tên học sinh</span>
+                                </div>
+                                <input type="text" class="form-control text_seach seach_parent" name="" id="txt_seach_name_student">
+                            </div>
+
+                            <div class="input-group mb-2 col-4  input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:160px">Thời gian </span>
+                                </div>
+                                <input type="text" class="form-control text_seach seach_parent" name="" id="txt_seach_create_parent">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="row mb-2 seach-User">
+                    <div class="row col-lg-12">
+                        <div class="col-md-12 row">
+                            <div class="input-group mb-2 col-4  input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:160px">Trạng thái thông báo </span>
+                                </div>
+                                <select class="form-control text_seach seach_parent seach_parent" id="txt_seach_sattus_parent" name="STATUS">
+                                    <option value="0">--lựa chọn trang thái --</option>
+                                    <option value="1">cơ sở 1</option>
+                                    <option value="2">cơ sở 2</option>
+
+                                </select>
+                            </div>
+
+                            <div class="input-group mb-2 col-4  input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:160px">Trạng thái thanh toán </span>
+                                </div>
+
+                                <select class="form-control text_seach seach_parent seach_parent" id="txt_seach_sattus_parent" name="STATUS">
+                                    <option value="2">--lựa chọn trang thái --</option>
+                                    <option value="0">đã đóng</option>
+                                    <option value="1">chưa đóng</option>
+
+                                </select>
+
+                            </div>
+                            <div class="input-group mb-2 col-4  input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width:160px">Cơ sở</span>
+                                </div>
+
+                                <select class="form-control text_seach seach_parent seach_parent" id="txt_seach_sattus_parent" name="STATUS">
+                                    <option value="2">--tất cả--</option>
+                                    <option value="0">cs1</option>
+                                    <option value="1">cs2</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@*Phần hiên thị danh sách của học viên*@
+
+<section class="dashboard-header section-padding">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <button type="submit" class="btn btn-large btn-primary btn_header mr-2 pull-right btn_Parent" onclick=""><i class="fa fa-sign-out"></i> In báo cáo</button>
+                        <button type="submit" class="btn btn-large btn-danger btn_header mr-2 pull-right btn_Parent " onclick="DeleteListParent()"><i class="fa fa-trash-o" aria-hidden="true"></i>Gửi tin nhắn</button>
+                        <button type="button" class="btn btn-large btn-info btn_header mr-2 pull-right btn_Parent" id="btn_add_parent"><i class="fa fa fa-subway"></i>Tổng hợp </button>
+                        <button type="submit" class="btn btn-large btn-primary btn_header mr-2  pull-right btn_Parent " onclick="SeachParent()"><i class="fa fa-search"></i>   Tìm kiếm</button>
+                    </div>
+                    <div class="card-body">
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script src="~/Assets/Addmin/vendor/jquery/jquery.js"></script>
+<script src="~/Assets/Addmin/vendor/jquery-ui-1.12.1.custom/jquery-ui.js"></script>

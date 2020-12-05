@@ -1,0 +1,145 @@
+﻿@using Data.Model.APIWeb
+@using Data.Utils
+@model BatchDetailOutputModel
+<div class="modal fade" id="mdBatchDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-fw fa-check-square-o"></i> Chi tiết lô hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Mã lô</label>
+                            </div>
+                            <div class="col-md-9">
+                                <p class="text-bold text-primary" id="batchCode">@Model.BatchCode</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Người tạo</label>
+                            </div>
+                            <div class="col-md-9">
+                                <p class="text-bold text-primary" id="userNameLogin">@Model.CreateUserName</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Số lượng</label>
+                            </div>
+                            <div class="col-md-9">
+                                <p id="qty">@String.Format("{0:n0}", Model.QTY)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Số điểm</label>
+                            </div>
+                            <div class="col-md-9">
+                                <p id="point">@String.Format("{0:n0}", Model.Point)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Tên lô</label>
+                            </div>
+                            <div class="col-md-9">
+                                <p id="name">@Model.BatchName</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Ghi chú</label>
+                            </div>
+                            <div class="col-md-9">
+                                <p id="note">@Model.Note</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 border-form"></div>
+                <div class="row mt-1">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <label class="mb-2 mt-2">Danh sách sản phẩm</label>
+                        <table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md">
+                            <thead class="text-center text-white bg-thead">
+                                <tr>
+                                    <th>Mã sản phẩm</th>
+                                    <th>Trạng thái</th>
+                                    <th>Mã QR</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                @{
+                                    foreach (var product in Model.ListProduct)
+                                    {
+                                        string qrcodeProduct = product.ProductCode + SystemParam.QRCODE_TYPE_PRODUCT;
+                                        <tr>
+                                            <td>@qrcodeProduct</td>
+                                            @{
+                                                if (product.Status == SystemParam.STATUS_PRODUCT_ACTIVE)
+                                                {
+                                                    <td>@SystemParam.STATUS_PRODUCT_ACTIVE_STRING</td>
+                                                }
+                                                else
+                                                    if (product.Status == SystemParam.STATUS_PRODUCT_NO_ACTIVE)
+                                                {
+                                                    <td class="text-info text-bold">@SystemParam.STATUS_PRODUCT_NO_ACTIVE_STRING</td>
+                                                }
+                                            }
+                                            <td class="text-center" width="50">
+                                                @*gen mã QR*@
+                                                <input class="@qrcodeProduct" type="text" style="display: none" value="@qrcodeProduct" />
+                                                <div id="@qrcodeProduct"></div>
+                                                <script type="text/javascript">
+                                                    $(document).ready(function () {
+                                                        var qrcode = new QRCode(document.getElementById("@qrcodeProduct"), {
+                                                            width: 60,
+                                                            height: 60,
+                                                            correctLevel: QRCode.CorrectLevel.L
+                                                        });
+                                                        function makeCode() {
+                                                            var codeValue = $(".@qrcodeProduct").val();
+                                                            qrcode.makeCode(codeValue);
+                                                        }
+                                                        makeCode();
+                                                    });
+                                                </script>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-success" onclick="window.location = 'ExportQR?batchID=@Model.BatchID'">Xuất excel mã QR</button>
+            </div>
+        </div>
+    </div>
+</div>

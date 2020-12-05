@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-10 col-sm-9 col-8 text-dark px-0">
+                <h4><i class="fa fa-fw fa-exchange"></i> Lịch sử giao dịch</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-md-4 offset-md-0 col-sm-6 mt-1">
+        <input id="fromDate" type="text" class="form-control relative-icon-calendar date" placeholder="Từ ngày" />
+        <i class="fa fa-calendar absolute-icon-calendar"></i>
+    </div>
+    <div class="col-md-4 offset-md-0 col-sm-6 mt-1">
+        <input id="toDate" type="text" class="form-control relative-icon-calendar date" placeholder="Đến ngày" />
+        <i class="fa fa-calendar absolute-icon-calendar"></i>
+    </div>
+
+    <div class="col-md-4 offset-md-0 col-sm-6 mt-1">
+        <select id="type" class="form-control">
+            <optgroup label="Loại giao dịch">
+                <option value="0">Tất cả loại giao dịch</option>
+                <option value="1">Tích điểm</option>
+                <option value="2">Tặng điểm</option>
+                <option value="3">Được tặng điểm</option>
+                <option value="4">Đổi quà</option>
+                <option value="7">Hủy yêu cầu đổi quà</option>
+                <option value="5">Hệ thống cộng điểm</option>
+                <option value="6">Đổi thẻ</option>
+            </optgroup>
+        </select>
+    </div>
+    <div class="col-md-6 offset-md-0 col-sm-6 mt-1">
+        <input id="keySearch" type="text" class="form-control" placeholder="Nhập tên, sđt khách hàng hoặc mã giao dịch" />
+    </div>
+    @*<div class="col-md-4 offset-md-0 col-sm-6 mt-1">
+            <input id="codePoint" type="text" class="form-control" placeholder="Nhập mã giao dịch" />
+    </div>*@
+    <div class="col-md-4 offset-md-0 col-sm-2 offset-sm-5 mt-1 col-4 offset-4">
+        <button class="btn btn-primary" onclick="searchPoint();"><i class="fa fa-search"></i> Tìm kiếm</button>
+    </div>
+</div>
+<div class="row">
+    <div id="tablePoint" class="col-md-12">
+        @{
+            Html.RenderAction("Search", "Point", new { Page = 1, type = 0, pointCode = "", cusName = "" });
+        }
+    </div>
+</div>
+
+
+
+<div id="modalDetailPoint">
+
+</div>
+
+

@@ -1,0 +1,78 @@
+﻿@using Data.DB
+@using Data.Model.APIWeb
+@using PagedList.Mvc
+@using Data.Utils
+@model Agent
+
+
+<div class="modal fade" id="mdEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-edit"></i> Sửa đại lý</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="frmUpdate">
+                <div class="modal-body">
+                    @*<div class="row pb-4">
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <label class="text-danger mr-3">Người Sửa: </label>
+                                <label class="text-danger"></label>
+                            </div>
+                        </div>*@
+                    <div class="row pb-4">
+                        <label class="ml-3">Mã đại lý</label>
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <input type="text" readonly class="relative-icon-calendar form-control" value="@Model.Code" id="" name="" placeholder="Mã Đại Lý..." required />
+                            @*<i class="fa fa-code absolute-icon-calendar"></i>*@
+                        </div>
+                    </div>
+                    <div class="row pb-4">
+                        <label class="ml-3">Tên đại lý<span class="text-danger"> *</span></label>
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <input type="text" class="relative-icon-calendar form-control" value="@Model.Name" id="txtNameEdit" name="Name" placeholder="" required />
+                            @*<i class="fa fa-user-circle absolute-icon-calendar"></i>*@
+                        </div>
+                    </div>
+                    @{
+                        if (Model.CustomerActiveID != null)
+                        {
+                            <div class="row pb-4">
+                                <label class="ml-3">Số điện thoại kích hoạt</label>
+                                <div class="col-md-12 col-sm-12 col-12">
+                                    <input type="text" class="form-control relative-icon-calendar" disabled id="txtPhoneEdit" name="Phone" value="@Model.Phone" placeholder="" required>
+                                    @*<i class="fa fa-key absolute-icon-calendar"></i>*@
+                                </div>
+                            </div>
+                        }
+                    }
+                    <div class="row pb-4">
+                        @*<lable class="ml-3">Địa Chỉ<span class="text-danger"> *</span></lable>*@
+                        <label class="ml-3">Địa chỉ<span class="text-danger"> *</span></label>
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <input type="text" class="form-control relative-icon-calendar" id="txtAddressEdit" name="Address" value="@Model.Address" placeholder="" required />
+                            @*<i class="fa fa-map-marker absolute-icon-calendar"></i>*@
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" id="btnCancel" onclick="cancelActiveAgent(@Model.ID)" class="btn btn-warning">Hủy kích hoạt</button>
+                    <button type="submit" class="btn btn-primary px-3" onclick="saveEditAgent(@Model.ID)">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#mdEdit #btnCancel").hide();
+        if(@Model.CustomerActiveID.ToString().Length > 0) {
+            $("#mdEdit #btnCancel").show();
+        }
+    })
+</script>

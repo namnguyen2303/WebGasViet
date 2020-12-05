@@ -1,0 +1,61 @@
+﻿@using Data.DB
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<Customer>
+
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-10 col-sm-10 col-9 text-dark px-0">
+                <h4><i class="fa fa-bar-chart" aria-hidden="true"></i> Thống kê tốp đầu tích điểm</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-12">
+        <table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md">
+            <thead class="text-center text-white bg-thead">
+                <tr>
+                    <th>STT</th>
+                    <th>Tên khách hàng</th>
+                    <th>Số điện thoại</th>
+                    <th>Ngày sinh</th>
+                    <th>Số điểm</th>
+                    <th>Trạng thái</th>
+                    <th>Ngày tạo</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                @{
+                    int stt = 1;
+                    foreach (var data in Model)
+                    {
+                        <tr>
+                            <td>@stt</td>
+                            <td>@data.Name</td>
+                            <td>@data.Phone</td>
+                            <td>@data.DOB.ToString("dd/MM/yyyy")</td>
+                            <td>@String.Format("{0:0,0}", @data.Point)</td>
+                            @{
+                                if (@data.Status == 1)
+                                {
+                                    <td class="text-success">Đang Hoạt Động</td>
+                                }
+                                else if (@data.Status == 0)
+                                {
+                                    <td class="text-danger">Dừng Hoạt Động</td>
+                                }
+                            }
+                            <td>@data.CraeteDate.ToString("dd/MM/yyyy")</td>
+                        </tr>
+                                    stt++;
+                                }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

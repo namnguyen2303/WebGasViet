@@ -1,0 +1,89 @@
+﻿@using Data.Model.APIWeb
+@using Data.Utils
+@model  List<WarrantyCardOutput>
+
+
+<!-- start modal print QR Code warranty -->
+<div class="modal fade" id="printWarranty" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-fw fa-bookmark-o"></i> Mã khuyến mãi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Số lượng</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p id="qty">@ViewBag.Qty</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Số điểm</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p id="point">@ViewBag.Point</p>
+                    </div>
+                </div>
+                <div class="col-md-12 border-form"></div>
+
+                <div class="row mt-1">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <label class="mb-2">Danh sách phiếu khuyến mãi</label>
+                        <table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md">
+                            <thead class="text-center text-white bg-thead">
+                                <tr>
+                                    <th class="width-stt">STT</th>
+                                    <th>Mã khuyến mãi</th>
+                                    <th>Mã QR</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                @{
+                                    int count = 0;
+                                    foreach (var data in Model)
+                                    {
+                                        count++;
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@String.Concat(data.WarrantyCardCode, "2")</td>
+                                            <td class="text-center">
+                                                <input class="@String.Concat(data.WarrantyCardCode,"2")" type="hidden" value="@String.Concat(data.WarrantyCardCode,"2")" />
+                                                <div id="@String.Concat(data.WarrantyCardCode,"2")"></div>
+                                                <script type="text/javascript">
+                                                    $(document).ready(function () {
+                                                        var qrcode = new QRCode(document.getElementById("@String.Concat(data.WarrantyCardCode, "2")"), {
+                                                            width: 60,
+                                                            height: 60,
+                                                            correctLevel: QRCode.CorrectLevel.L
+                                                        });
+                                                        function makeCode() {
+                                                            var codeValue = $(".@String.Concat(data.WarrantyCardCode, "2")").val();
+                                                            qrcode.makeCode(codeValue);
+                                                        }
+                                                        makeCode();
+                                                    });
+                                                </script>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary px-3" onclick="window.location='PrintListQRCodeWarranty?ID=@ViewBag.WarrantyID'">Xuất QR</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal -->

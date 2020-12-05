@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "_ListStudentClass";
+}
+
+@using Data.Models.WebModels.StudentClass
+@model List<GetListStudentClassModels>
+
+@{
+    foreach (var data in Model)
+    {
+        <tr id="data_row_class_student_@data.ID" class="data_row_class_student_edit">
+            <td> <input type="hidden" value="@data.ID"/></td>
+            <td><input type="hidden" value="@data.STUDENT_ID" /> @data.STUDENT_NAME </td>
+            <td>@data.PARENT_NAME</td>
+            <td>@data.PHONE</td>
+            <td><input type="text" value="@data.GET_STRING_START_DATE()" class="form-control form-control-sm datetimepicker" /></td>
+            <td><input type="text" value="@data.GET_STRING_END_DATE()" class="form-control form-control-sm datetimepicker" /></td>
+            <td><input value="@data.FEE" type="number" class="form-control form-control-sm" /></td>
+            <td>
+                <select class="form-control form-control-sm STUDENT_CLASS_STATUS" id="Edit_option_status_student_in_class_@data.STUDENT_ID" name="STUDENT_CLASS_STATUS">
+                    @if (data.STATUS == 0)
+                    {
+                        <option>--lựa chọn--</option>
+                        <option value="1">Đang học</option>
+                        <option value="0" selected="selected">Thôi học</option>
+                    }
+                    else if (data.STATUS == 1)
+                    {
+                        <option>--lựa chọn--</option>
+                        <option value="1" selected="selected">Đang học</option>
+                        <option value="0">Thôi học</option>
+                    }
+                    else
+                    {
+                        <option selected="selected">--lựa chọn--</option>
+                        <option value="1">Đang học</option>
+                        <option value="0">Thôi học</option>
+                    }
+
+                </select>
+
+            </td>
+            <td><input type="text" value="@data.NODE" class="form-control form-control-sm" /></td>
+            <td><button class="btn btn-danger"> <i class="fa fa-trash-o"></i></button></td>
+        </tr>
+    }
+}

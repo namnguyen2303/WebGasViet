@@ -1,0 +1,199 @@
+﻿@using Data.Model.APIWeb
+@using Data.Utils
+@model RequestDetailWebOutputModel
+<div class="modal fade" id="questDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-fw fa-gift"></i> Xác nhận yêu cầu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <div class="col-md-12 bg-light radius-form mb-3 box-shadow-form">
+                            <div class="row pt-3">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p>Khách hàng:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="text-bold">@Model.CustomerName</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p>Số điện thoại:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="text-bold">@Model.CustomerPhone</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p>Địa chỉ:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="text-bold">@Model.CustomerAddress</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p>Ngày yêu cầu:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="text-bold">@Model.CreateDateStr</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12 bg-light radius-form mb-3 box-shadow-form">
+                            <div class="row pt-3">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p>Mã yêu cầu:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="text-bold" id="requestCode">@Model.RequestCode</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p>Loại hiện vật:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @{
+                                                if (Model.TypeGift == SystemParam.TYPE_REQUEST_GIFT)
+                                                {
+                                                    <p class="text-bold">@SystemParam.TYPE_REQUEST_GIFT_STRING</p>
+                                                }
+                                                else
+                                                    if (Model.TypeGift == SystemParam.TYPE_REQUEST_VOUCHER)
+                                                {
+                                                    <p class="text-bold">@SystemParam.TYPE_REQUEST_VOUCHER_STRING</p>
+                                                }
+                                                else
+                                                {
+                                                    <p class="text-bold">@SystemParam.TYPE_REQUEST_CARD_STRING</p>
+                                                }
+
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p>Điểm quy đổi:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="text-bold" id="requestPoint">@Model.Point</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p>Tên hiện vật:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="text-bold" id="requestGiftName">@Model.GiftName</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-1 pb-3">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p>Trạng thái:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @{
+                                                if (Model.Status == SystemParam.STATUS_REQUEST_PENDING)
+                                                {
+                                                    <p class="text-bold text-warning">@SystemParam.STATUS_REQUEST_PENDING_STRING</p>
+                                                }
+                                                else
+                                                    if (Model.Status == SystemParam.STATUS_REQUEST_ACCEPTED)
+                                                {
+                                                    <p class="text-bold text-success">@SystemParam.STATUS_REQUEST_ACCEPTED_STRING</p>
+                                                }
+                                                else
+                                                    if (Model.Status == SystemParam.STATUS_REQUEST_CANCEL)
+                                                    {
+                                                        <p class="text-bold text-danger">@SystemParam.STATUS_REQUEST_CANCEL_STRING</p>
+                                                    }
+
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            @{
+                                                if (Model.Status == SystemParam.STATUS_REQUEST_PENDING)
+                                                {
+                                                    <textarea class="form-control" id="noteRequest" placeholder="Nhập nội dung ghi chú..."></textarea>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-4 px-0">
+                                                        <p>Ghi chú:</p>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <p class="text-bold">@Model.Note</p>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                @{
+                    if (Model.Status == SystemParam.STATUS_REQUEST_PENDING)
+                    {
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-warning" onclick="acceptRequest(@Model.ID, @Model.CustomerID, @SystemParam.STATUS_REQUEST_CANCEL);">Hủy</button>
+                        <button type="button" class="btn btn-success" onclick="acceptRequest(@Model.ID, @Model.CustomerID, @SystemParam.STATUS_REQUEST_ACCEPTED);">Xác nhận</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                    }
+                }
+                <button type="button" class="btn btn-outline-success" onclick='window.location.href = "/Request/singleRequestExport?id=" + @Model.ID'>Xuất file excel</button>
+            </div>
+        </div>
+    </div>
+</div>

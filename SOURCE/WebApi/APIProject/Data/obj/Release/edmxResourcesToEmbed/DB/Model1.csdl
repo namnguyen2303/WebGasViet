@@ -1,0 +1,889 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DEKKOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="DEKKOEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Agents" EntityType="DEKKOModel.Agent" />
+    <EntitySet Name="Batches" EntityType="DEKKOModel.Batch" />
+    <EntitySet Name="Cards" EntityType="DEKKOModel.Card" />
+    <EntitySet Name="CategoryNews" EntityType="DEKKOModel.CategoryNew" />
+    <EntitySet Name="Customers" EntityType="DEKKOModel.Customer" />
+    <EntitySet Name="Districts" EntityType="DEKKOModel.District" />
+    <EntitySet Name="Gifts" EntityType="DEKKOModel.Gift" />
+    <EntitySet Name="Items" EntityType="DEKKOModel.Item" />
+    <EntitySet Name="MembersPointHistories" EntityType="DEKKOModel.MembersPointHistory" />
+    <EntitySet Name="Messages" EntityType="DEKKOModel.Message" />
+    <EntitySet Name="Notifications" EntityType="DEKKOModel.Notification" />
+    <EntitySet Name="OrderItems" EntityType="DEKKOModel.OrderItem" />
+    <EntitySet Name="Orders" EntityType="DEKKOModel.Order" />
+    <EntitySet Name="Products" EntityType="DEKKOModel.Product" />
+    <EntitySet Name="Provinces" EntityType="DEKKOModel.Province" />
+    <EntitySet Name="Rankings" EntityType="DEKKOModel.Ranking" />
+    <EntitySet Name="Requests" EntityType="DEKKOModel.Request" />
+    <EntitySet Name="Shops" EntityType="DEKKOModel.Shop" />
+    <EntitySet Name="ShopImages" EntityType="DEKKOModel.ShopImage" />
+    <EntitySet Name="sysdiagrams" EntityType="DEKKOModel.sysdiagram" />
+    <EntitySet Name="Users" EntityType="DEKKOModel.User" />
+    <EntitySet Name="Warranties" EntityType="DEKKOModel.Warranty" />
+    <EntitySet Name="WarrantyCards" EntityType="DEKKOModel.WarrantyCard" />
+    <EntitySet Name="Configs" EntityType="DEKKOModel.Config" />
+    <AssociationSet Name="FK__Agent__CustomerA__17F790F9" Association="DEKKOModel.FK__Agent__CustomerA__17F790F9">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Agent" EntitySet="Agents" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Batch__CreateUse__060DEAE8" Association="DEKKOModel.FK__Batch__CreateUse__060DEAE8">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Batch" EntitySet="Batches" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Product__BatchID__1B0907CE" Association="DEKKOModel.FK__Product__BatchID__1B0907CE">
+      <End Role="Batch" EntitySet="Batches" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Card__CreateUser__20C1E124" Association="DEKKOModel.FK__Card__CreateUser__20C1E124">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Card" EntitySet="Cards" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Card__CustomerAc__21B6055D" Association="DEKKOModel.FK__Card__CustomerAc__21B6055D">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Card" EntitySet="Cards" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customer__Distri__15502E78" Association="DEKKOModel.FK__Customer__Distri__15502E78">
+      <End Role="District" EntitySet="Districts" />
+      <End Role="Customer" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customer__Provin__145C0A3F" Association="DEKKOModel.FK__Customer__Provin__145C0A3F">
+      <End Role="Province" EntitySet="Provinces" />
+      <End Role="Customer" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MembersPo__Custo__300424B4" Association="DEKKOModel.FK__MembersPo__Custo__300424B4">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="MembersPointHistory" EntitySet="MembersPointHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Message__Custome__6FE99F9F" Association="DEKKOModel.FK__Message__Custome__6FE99F9F">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Notificat__Custo__4F7CD00D" Association="DEKKOModel.FK__Notificat__Custo__4F7CD00D">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Notification" EntitySet="Notifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Product__Custome__1BFD2C07" Association="DEKKOModel.FK__Product__Custome__1BFD2C07">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Request__Custome__68487DD7" Association="DEKKOModel.FK__Request__Custome__68487DD7">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK__WarrantyC__Custo__2B3F6F97" Association="DEKKOModel.FK__WarrantyC__Custo__2B3F6F97">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="WarrantyCard" EntitySet="WarrantyCards" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Customer" Association="DEKKOModel.FK_Orders_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__District__Provin__0EA330E9" Association="DEKKOModel.FK__District__Provin__0EA330E9">
+      <End Role="Province" EntitySet="Provinces" />
+      <End Role="District" EntitySet="Districts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Gift__CreateUser__34C8D9D1" Association="DEKKOModel.FK__Gift__CreateUser__34C8D9D1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Gift" EntitySet="Gifts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Request__GiftID__693CA210" Association="DEKKOModel.FK__Request__GiftID__693CA210">
+      <End Role="Gift" EntitySet="Gifts" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderItem__ItemI__1332DBDC" Association="DEKKOModel.FK__OrderItem__ItemI__1332DBDC">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="OrderItem" EntitySet="OrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Message__UserID__6EF57B66" Association="DEKKOModel.FK__Message__UserID__6EF57B66">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderItem__Order__123EB7A3" Association="DEKKOModel.FK__OrderItem__Order__123EB7A3">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderItem" EntitySet="OrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shop_Province" Association="DEKKOModel.FK_Shop_Province">
+      <End Role="Province" EntitySet="Provinces" />
+      <End Role="Shop" EntitySet="Shops" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Request__UserMod__6754599E" Association="DEKKOModel.FK__Request__UserMod__6754599E">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ShopImage__ShopI__236943A5" Association="DEKKOModel.FK__ShopImage__ShopI__236943A5">
+      <End Role="Shop" EntitySet="Shops" />
+      <End Role="ShopImage" EntitySet="ShopImages" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Warranty__Create__267ABA7A" Association="DEKKOModel.FK__Warranty__Create__267ABA7A">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Warranty" EntitySet="Warranties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WarrantyCard_Warranty" Association="DEKKOModel.FK_WarrantyCard_Warranty">
+      <End Role="Warranty" EntitySet="Warranties" />
+      <End Role="WarrantyCard" EntitySet="WarrantyCards" />
+    </AssociationSet>
+    <EntitySet Name="News" EntityType="DEKKOModel.News" />
+    <AssociationSet Name="FK__News__CategoryID__3E52440B" Association="DEKKOModel.FK__News__CategoryID__3E52440B">
+      <End Role="CategoryNew" EntitySet="CategoryNews" />
+      <End Role="News" EntitySet="News" />
+    </AssociationSet>
+    <AssociationSet Name="FK_News_ItemI" Association="DEKKOModel.FK_News_ItemI">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="News" EntitySet="News" />
+    </AssociationSet>
+    <AssociationSet Name="FK__News__CreateUser__3D5E1FD2" Association="DEKKOModel.FK__News__CreateUser__3D5E1FD2">
+      <End Role="User" EntitySet="Users" />
+      <End Role="News" EntitySet="News" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Agent">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Code" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerActiveID" Type="Int32" />
+    <Property Name="ActiveDate" Type="DateTime" Precision="3" />
+    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="DEKKOModel.FK__Agent__CustomerA__17F790F9" FromRole="Agent" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="Batch">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BatchName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="BatchCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Note" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Int64" Nullable="false" />
+    <Property Name="QTY" Type="Int32" Nullable="false" />
+    <Property Name="Point" Type="Int32" Nullable="false" />
+    <Property Name="CreateUserID" Type="Int32" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="DEKKOModel.FK__Batch__CreateUse__060DEAE8" FromRole="Batch" ToRole="User" />
+    <NavigationProperty Name="Products" Relationship="DEKKOModel.FK__Product__BatchID__1B0907CE" FromRole="Batch" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Card">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreateUserID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerActiveID" Type="Int32" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Seri" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="TelecomType" Type="Int32" Nullable="false" />
+    <Property Name="CardType" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ExpireDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ActiveDate" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="DEKKOModel.FK__Card__CreateUser__20C1E124" FromRole="Card" ToRole="User" />
+    <NavigationProperty Name="Customer" Relationship="DEKKOModel.FK__Card__CustomerAc__21B6055D" FromRole="Card" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="CategoryNew">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <Property Name="ParentID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="News" Relationship="DEKKOModel.FK__News__CategoryID__3E52440B" FromRole="CategoryNew" ToRole="News" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Token" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Role" Type="Int32" Nullable="false" />
+    <Property Name="Sex" Type="Int32" Nullable="false" />
+    <Property Name="AvatarUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ProvinceCode" Type="Int32" Nullable="false" />
+    <Property Name="DistrictCode" Type="Int32" Nullable="false" />
+    <Property Name="Point" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastLoginDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="ExpireTocken" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <Property Name="DeviceID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ConfirmCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PointRanking" Type="Int32" />
+    <Property Name="AgentCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Agents" Relationship="DEKKOModel.FK__Agent__CustomerA__17F790F9" FromRole="Customer" ToRole="Agent" />
+    <NavigationProperty Name="Cards" Relationship="DEKKOModel.FK__Card__CustomerAc__21B6055D" FromRole="Customer" ToRole="Card" />
+    <NavigationProperty Name="District" Relationship="DEKKOModel.FK__Customer__Distri__15502E78" FromRole="Customer" ToRole="District" />
+    <NavigationProperty Name="Province" Relationship="DEKKOModel.FK__Customer__Provin__145C0A3F" FromRole="Customer" ToRole="Province" />
+    <NavigationProperty Name="MembersPointHistories" Relationship="DEKKOModel.FK__MembersPo__Custo__300424B4" FromRole="Customer" ToRole="MembersPointHistory" />
+    <NavigationProperty Name="Messages" Relationship="DEKKOModel.FK__Message__Custome__6FE99F9F" FromRole="Customer" ToRole="Message" />
+    <NavigationProperty Name="Notifications" Relationship="DEKKOModel.FK__Notificat__Custo__4F7CD00D" FromRole="Customer" ToRole="Notification" />
+    <NavigationProperty Name="Products" Relationship="DEKKOModel.FK__Product__Custome__1BFD2C07" FromRole="Customer" ToRole="Product" />
+    <NavigationProperty Name="Requests" Relationship="DEKKOModel.FK__Request__Custome__68487DD7" FromRole="Customer" ToRole="Request" />
+    <NavigationProperty Name="WarrantyCards" Relationship="DEKKOModel.FK__WarrantyC__Custo__2B3F6F97" FromRole="Customer" ToRole="WarrantyCard" />
+    <NavigationProperty Name="Orders" Relationship="DEKKOModel.FK_Orders_Customer" FromRole="Customer" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="District">
+    <Key>
+      <PropertyRef Name="Code" />
+    </Key>
+    <Property Name="Code" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ProvinceCode" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customers" Relationship="DEKKOModel.FK__Customer__Distri__15502E78" FromRole="District" ToRole="Customer" />
+    <NavigationProperty Name="Province" Relationship="DEKKOModel.FK__District__Provin__0EA330E9" FromRole="District" ToRole="Province" />
+  </EntityType>
+  <EntityType Name="Gift">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="Point" Type="Int32" Nullable="false" />
+    <Property Name="UrlImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateUserID" Type="Int32" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="FromDate" Type="DateTime" Precision="3" />
+    <Property Name="ToDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <Property Name="TelecomType" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="DEKKOModel.FK__Gift__CreateUser__34C8D9D1" FromRole="Gift" ToRole="User" />
+    <NavigationProperty Name="Requests" Relationship="DEKKOModel.FK__Request__GiftID__693CA210" FromRole="Gift" ToRole="Request" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Int64" Nullable="false" />
+    <Property Name="ImageUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CateID" Type="Int32" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="OrderItems" Relationship="DEKKOModel.FK__OrderItem__ItemI__1332DBDC" FromRole="Item" ToRole="OrderItem" />
+    <NavigationProperty Name="News" Relationship="DEKKOModel.FK_News_ItemI" FromRole="Item" ToRole="News" />
+  </EntityType>
+  <EntityType Name="MembersPointHistory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="Point" Type="Int32" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="AddPointCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="TypeAdd" Type="Int32" Nullable="false" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Balance" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="DEKKOModel.FK__MembersPo__Custo__300424B4" FromRole="MembersPointHistory" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Viewed" Type="Int32" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="DEKKOModel.FK__Message__Custome__6FE99F9F" FromRole="Message" ToRole="Customer" />
+    <NavigationProperty Name="User" Relationship="DEKKOModel.FK__Message__UserID__6EF57B66" FromRole="Message" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Notification">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Viewed" Type="Int32" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="DEKKOModel.FK__Notificat__Custo__4F7CD00D" FromRole="Notification" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="OrderItem">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderID" Type="Int32" Nullable="false" />
+    <Property Name="ItemID" Type="Int32" Nullable="false" />
+    <Property Name="QTY" Type="Int32" Nullable="false" />
+    <Property Name="SumPrice" Type="Int64" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="Discount" Type="Int32" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Item" Relationship="DEKKOModel.FK__OrderItem__ItemI__1332DBDC" FromRole="OrderItem" ToRole="Item" />
+    <NavigationProperty Name="Order" Relationship="DEKKOModel.FK__OrderItem__Order__123EB7A3" FromRole="OrderItem" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerID" Type="Int32" Nullable="false" />
+    <Property Name="Discount" Type="Int64" Nullable="false" />
+    <Property Name="TotalPrice" Type="Int64" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <Property Name="BuyerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BuyerPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BuyerAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PointAdd" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="DEKKOModel.FK_Orders_Customer" FromRole="Order" ToRole="Customer" />
+    <NavigationProperty Name="OrderItems" Relationship="DEKKOModel.FK__OrderItem__Order__123EB7A3" FromRole="Order" ToRole="OrderItem" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BatchID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerActiveID" Type="Int32" />
+    <Property Name="ProductCode" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ActiveDate" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Batch" Relationship="DEKKOModel.FK__Product__BatchID__1B0907CE" FromRole="Product" ToRole="Batch" />
+    <NavigationProperty Name="Customer" Relationship="DEKKOModel.FK__Product__Custome__1BFD2C07" FromRole="Product" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="Province">
+    <Key>
+      <PropertyRef Name="Code" />
+    </Key>
+    <Property Name="Code" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Customers" Relationship="DEKKOModel.FK__Customer__Provin__145C0A3F" FromRole="Province" ToRole="Customer" />
+    <NavigationProperty Name="Districts" Relationship="DEKKOModel.FK__District__Provin__0EA330E9" FromRole="Province" ToRole="District" />
+    <NavigationProperty Name="Shops" Relationship="DEKKOModel.FK_Shop_Province" FromRole="Province" ToRole="Shop" />
+  </EntityType>
+  <EntityType Name="Ranking">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RankName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Descriptions" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <Property Name="MinPoint" Type="Int32" />
+    <Property Name="MaxPoint" Type="Int32" />
+    <Property Name="Level" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Request">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserModifiedID" Type="Int32" />
+    <Property Name="CustomerID" Type="Int32" Nullable="false" />
+    <Property Name="GiftID" Type="Int32" Nullable="false" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Point" Type="Int32" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="DEKKOModel.FK__Request__Custome__68487DD7" FromRole="Request" ToRole="Customer" />
+    <NavigationProperty Name="Gift" Relationship="DEKKOModel.FK__Request__GiftID__693CA210" FromRole="Request" ToRole="Gift" />
+    <NavigationProperty Name="User" Relationship="DEKKOModel.FK__Request__UserMod__6754599E" FromRole="Request" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Shop">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ProvinceID" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Lati" Type="Double" Nullable="false" />
+    <Property Name="Long" Type="Double" Nullable="false" />
+    <Property Name="PlusCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ContactName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ContactPhone" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="AgentID" Type="Int32" />
+    <Property Name="CraeteDate" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Province" Relationship="DEKKOModel.FK_Shop_Province" FromRole="Shop" ToRole="Province" />
+    <NavigationProperty Name="ShopImages" Relationship="DEKKOModel.FK__ShopImage__ShopI__236943A5" FromRole="Shop" ToRole="ShopImage" />
+  </EntityType>
+  <EntityType Name="ShopImage">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ShopID" Type="Int32" Nullable="false" />
+    <Property Name="Path" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <Property Name="CraeteDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Shop" Relationship="DEKKOModel.FK__ShopImage__ShopI__236943A5" FromRole="ShopImage" ToRole="Shop" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Phone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Role" Type="Int32" Nullable="false" />
+    <Property Name="PassWord" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Batches" Relationship="DEKKOModel.FK__Batch__CreateUse__060DEAE8" FromRole="User" ToRole="Batch" />
+    <NavigationProperty Name="Cards" Relationship="DEKKOModel.FK__Card__CreateUser__20C1E124" FromRole="User" ToRole="Card" />
+    <NavigationProperty Name="Gifts" Relationship="DEKKOModel.FK__Gift__CreateUser__34C8D9D1" FromRole="User" ToRole="Gift" />
+    <NavigationProperty Name="Messages" Relationship="DEKKOModel.FK__Message__UserID__6EF57B66" FromRole="User" ToRole="Message" />
+    <NavigationProperty Name="Requests" Relationship="DEKKOModel.FK__Request__UserMod__6754599E" FromRole="User" ToRole="Request" />
+    <NavigationProperty Name="Warranties" Relationship="DEKKOModel.FK__Warranty__Create__267ABA7A" FromRole="User" ToRole="Warranty" />
+    <NavigationProperty Name="News" Relationship="DEKKOModel.FK__News__CreateUser__3D5E1FD2" FromRole="User" ToRole="News" />
+  </EntityType>
+  <EntityType Name="Warranty">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreateUserID" Type="Int32" Nullable="false" />
+    <Property Name="WarrantyCode" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="QTY" Type="Int32" Nullable="false" />
+    <Property Name="Point" Type="Int32" Nullable="false" />
+    <Property Name="ExpireDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="DEKKOModel.FK__Warranty__Create__267ABA7A" FromRole="Warranty" ToRole="User" />
+    <NavigationProperty Name="WarrantyCards" Relationship="DEKKOModel.FK_WarrantyCard_Warranty" FromRole="Warranty" ToRole="WarrantyCard" />
+  </EntityType>
+  <EntityType Name="WarrantyCard">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerActiveID" Type="Int32" />
+    <Property Name="WarrantyCardCode" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="ActiveDate" Type="DateTime" Precision="3" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <Property Name="WarrantyID" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="DEKKOModel.FK__WarrantyC__Custo__2B3F6F97" FromRole="WarrantyCard" ToRole="Customer" />
+    <NavigationProperty Name="Warranty" Relationship="DEKKOModel.FK_WarrantyCard_Warranty" FromRole="WarrantyCard" ToRole="Warranty" />
+  </EntityType>
+  <EntityType Name="Config">
+    <Key>
+      <PropertyRef Name="Key" />
+      <PropertyRef Name="Value" />
+    </Key>
+    <Property Name="Key" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Value" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Agent__CustomerA__17F790F9">
+    <End Type="DEKKOModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="DEKKOModel.Agent" Role="Agent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Agent">
+        <PropertyRef Name="CustomerActiveID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Batch__CreateUse__060DEAE8">
+    <End Type="DEKKOModel.User" Role="User" Multiplicity="1" />
+    <End Type="DEKKOModel.Batch" Role="Batch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Batch">
+        <PropertyRef Name="CreateUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Product__BatchID__1B0907CE">
+    <End Type="DEKKOModel.Batch" Role="Batch" Multiplicity="1" />
+    <End Type="DEKKOModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batch">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="BatchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Card__CreateUser__20C1E124">
+    <End Type="DEKKOModel.User" Role="User" Multiplicity="1" />
+    <End Type="DEKKOModel.Card" Role="Card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Card">
+        <PropertyRef Name="CreateUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Card__CustomerAc__21B6055D">
+    <End Type="DEKKOModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="DEKKOModel.Card" Role="Card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Card">
+        <PropertyRef Name="CustomerActiveID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customer__Distri__15502E78">
+    <End Type="DEKKOModel.District" Role="District" Multiplicity="1" />
+    <End Type="DEKKOModel.Customer" Role="Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="DistrictCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customer__Provin__145C0A3F">
+    <End Type="DEKKOModel.Province" Role="Province" Multiplicity="1" />
+    <End Type="DEKKOModel.Customer" Role="Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Province">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="ProvinceCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MembersPo__Custo__300424B4">
+    <End Type="DEKKOModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="DEKKOModel.MembersPointHistory" Role="MembersPointHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MembersPointHistory">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Message__Custome__6FE99F9F">
+    <End Type="DEKKOModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="DEKKOModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Notificat__Custo__4F7CD00D">
+    <End Type="DEKKOModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="DEKKOModel.Notification" Role="Notification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Notification">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Product__Custome__1BFD2C07">
+    <End Type="DEKKOModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="DEKKOModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CustomerActiveID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Request__Custome__68487DD7">
+    <End Type="DEKKOModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="DEKKOModel.Request" Role="Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__WarrantyC__Custo__2B3F6F97">
+    <End Type="DEKKOModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="DEKKOModel.WarrantyCard" Role="WarrantyCard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WarrantyCard">
+        <PropertyRef Name="CustomerActiveID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Customer">
+    <End Type="DEKKOModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="DEKKOModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__District__Provin__0EA330E9">
+    <End Type="DEKKOModel.Province" Role="Province" Multiplicity="1" />
+    <End Type="DEKKOModel.District" Role="District" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Province">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="District">
+        <PropertyRef Name="ProvinceCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Gift__CreateUser__34C8D9D1">
+    <End Type="DEKKOModel.User" Role="User" Multiplicity="1" />
+    <End Type="DEKKOModel.Gift" Role="Gift" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Gift">
+        <PropertyRef Name="CreateUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Request__GiftID__693CA210">
+    <End Type="DEKKOModel.Gift" Role="Gift" Multiplicity="1" />
+    <End Type="DEKKOModel.Request" Role="Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gift">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="GiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderItem__ItemI__1332DBDC">
+    <End Type="DEKKOModel.Item" Role="Item" Multiplicity="1" />
+    <End Type="DEKKOModel.OrderItem" Role="OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="ItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Message__UserID__6EF57B66">
+    <End Type="DEKKOModel.User" Role="User" Multiplicity="1" />
+    <End Type="DEKKOModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderItem__Order__123EB7A3">
+    <End Type="DEKKOModel.Order" Role="Order" Multiplicity="1" />
+    <End Type="DEKKOModel.OrderItem" Role="OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shop_Province">
+    <End Type="DEKKOModel.Province" Role="Province" Multiplicity="1" />
+    <End Type="DEKKOModel.Shop" Role="Shop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Province">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="Shop">
+        <PropertyRef Name="ProvinceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Request__UserMod__6754599E">
+    <End Type="DEKKOModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="DEKKOModel.Request" Role="Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="UserModifiedID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ShopImage__ShopI__236943A5">
+    <End Type="DEKKOModel.Shop" Role="Shop" Multiplicity="1" />
+    <End Type="DEKKOModel.ShopImage" Role="ShopImage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ShopImage">
+        <PropertyRef Name="ShopID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Warranty__Create__267ABA7A">
+    <End Type="DEKKOModel.User" Role="User" Multiplicity="1" />
+    <End Type="DEKKOModel.Warranty" Role="Warranty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Warranty">
+        <PropertyRef Name="CreateUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WarrantyCard_Warranty">
+    <End Type="DEKKOModel.Warranty" Role="Warranty" Multiplicity="0..1" />
+    <End Type="DEKKOModel.WarrantyCard" Role="WarrantyCard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warranty">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WarrantyCard">
+        <PropertyRef Name="WarrantyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="News">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreateUserID" Type="Int32" Nullable="false" />
+    <Property Name="CategoryID" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UrlImage" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="TypeSend" Type="Int32" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Int32" Nullable="false" />
+    <Property Name="ItemID" Type="Int32" />
+    <Property Name="DisplayOrder" Type="Int32" />
+    <NavigationProperty Name="CategoryNew" Relationship="DEKKOModel.FK__News__CategoryID__3E52440B" FromRole="News" ToRole="CategoryNew" />
+    <NavigationProperty Name="Item" Relationship="DEKKOModel.FK_News_ItemI" FromRole="News" ToRole="Item" />
+    <NavigationProperty Name="User" Relationship="DEKKOModel.FK__News__CreateUser__3D5E1FD2" FromRole="News" ToRole="User" />
+  </EntityType>
+  <Association Name="FK__News__CategoryID__3E52440B">
+    <End Type="DEKKOModel.CategoryNew" Role="CategoryNew" Multiplicity="1" />
+    <End Type="DEKKOModel.News" Role="News" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoryNew">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="News">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_News_ItemI">
+    <End Type="DEKKOModel.Item" Role="Item" Multiplicity="0..1" />
+    <End Type="DEKKOModel.News" Role="News" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="News">
+        <PropertyRef Name="ItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__News__CreateUser__3D5E1FD2">
+    <End Type="DEKKOModel.User" Role="User" Multiplicity="1" />
+    <End Type="DEKKOModel.News" Role="News" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="News">
+        <PropertyRef Name="CreateUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

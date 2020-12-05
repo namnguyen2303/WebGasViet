@@ -1,0 +1,144 @@
+﻿
+@using Data.Model.APIWeb
+@model ListShopOutputModel
+
+<div class="modal fade" id="EditShop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-fw fa-shopping-basket"></i> Sửa cửa hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form_edit_shop" name="form_edit_shop">
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <input type="hidden" value="@Model.ID" name="ID" />
+                            <input type="text" class="form-control" id="_Name" name="Name" placeholder="Tên cửa hàng" value="@Model.Name">
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-6 col-sm-6 col-6">
+                            <input type="text" class="form-control" id="_ContactName" name="ContactName" placeholder="Người liên hệ" value="@Model.ContactName">
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-6">
+                            <input type="text" class="form-control" id="_ContactPhone" name="ContactPhone" placeholder="Số điện thoại" value="@Model.ContactPhone">
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-6 col-sm-6 col-6">
+                            <select class="form-control" id="_ProvinceID" name="ProvinceID" onchange="loadListDistrictShopUpdate(this.value, @Model.ID)">
+                                <option value="0">Chọn tỉnh/ thành phố</option>
+                                @foreach (var p in ViewBag.lstProvince)
+                                {
+                                    <option value="@p.Code" @(Model.ProvinceID == @p.Code ? Html.Raw("selected") : Html.Raw(""))>@p.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-6" id="ListDistrictShopUpdate">
+                            @{
+                                Html.RenderAction("LoadDistrictShopUpdate", "Shop", new { ProvinceID = Model.ProvinceID, ID = Model.ID });
+                            }
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-6 col-sm-6 col-6">
+                            <input type="text" class="form-control" id="_Address" name="Address" placeholder="Địa chỉ cụ thể" value="@Model.Address">
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-6" style="position:relative;">
+                            <input type="text" readonly class="form-control" id="_Place" name="PlusCode" value="@Model.PlusCode" placeholder="Đường dẫn Url trên bản đồ" style="padding-right:20px;" />
+                            @*<i class="fa fa-check fa-1x cursor-pointer" data-toggle="tooltip" data-placement="top" title="Chọn" onclick="LoadPlaceEditShop();" style="position:absolute;@(Model.ImageUrl.Count>2?Html.Raw("left:208px;top:13px;"):Html.Raw("left:210px;top:13px;"))"></i>*@
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-6 col-sm-6 col-6">
+                            <input class="form-control" type="text" readonly name="Lati" id="_Lati" value="@Model.Lati">
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-6">
+                            <input class="form-control" type="text" readonly name="Long" id="_Long" value="@Model.Long">
+                        </div>
+                    </div>
+                    <input type="hidden" id="_txturlImage" name="Url" />
+                    <div class="row pb-3">
+
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Ảnh</label> *</p>
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <a href="" class="text-bold mb-3" style="width:100%;height:100%; color: #5A5A5A;" id="_addImg">
+                                    <img id="Imgtag" src="https://cdn4.iconfinder.com/data/icons/social-communication/142/add_photo-512.png" class="col-ml-2 col-md-2 px-0" alt="Chọn" />
+                                </a>
+                                <div class="imgShop">
+                                    <div class="article" id="_divAddImg">
+                                        @{
+                                            if (Model.ImageUrl != null && Model.ImageUrl.Count > 0)
+                                            {
+                                                for (int i = 0; i < Model.ImageUrl.Count; i++)
+                                                {
+                                                    <div class="Imgs" id="img-@i" style="box-sizing:border-box;display:inline-block;margin-top:10px;"><img class="_lstImage" width="180" height="120" src="@Model.ImageUrl[i]" onclick="ChangeImage($(this));" /><i title="Xóa" onclick="DeleteImage($(this));" src="@Model.ImageUrl[i]" class="fa fa-2x fa-remove cursor-pointer" data="img-@i" style="position:relative;top:-42px;left:-23px;color: #ff0000;"></i></div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary px-3" onclick="saveEditShop()">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var count = 0;
+    $("#_addImg").off('click').on('click', function (e) {
+        e.preventDefault();
+        count++;
+        var fider = new CKFinder();
+        fider.selectActionFunction = function (fileUrl) {
+            $("#_divAddImg").append('<div class="Imgs" id="img' + count + '" style ="box-sizing:border-box;display:inline-block;margin-top:10px;"><img class="_lstImage" width="180" height="120" src="' + fileUrl + '" onclick="ChangeImage($(this));" /><i  title ="Xóa" onclick="DeleteImage($(this));" src="' + fileUrl + '" class="fa fa-2x fa-remove " data="img' + count + '" style="position:relative;top:-42px;left:-23px;color: #ff0000;"></i></div>');
+            var listUrl = $("#_txturlImage").val();
+            if (listUrl == "") {
+                listUrl = fileUrl;
+                $("#_txturlImage").val(listUrl);
+            }
+            else {
+                var url = listUrl + "," + fileUrl;
+                $("#_txturlImage").val(url);
+            }
+        }
+        fider.popup();
+    });
+</script>
+
+<script type="text/javascript">
+    function ChangeImage($url) {
+        var fider = new CKFinder();
+        fider.selectActionFunction = function (fileUrl) {
+            var url_old = $url.attr('src');
+            $url.attr('src', fileUrl);
+            if (fileUrl != url_old) {
+                var str = $('#_txturlImage').val();
+                $('#_txturlImage').val(str.replace(url_old, fileUrl));
+            }
+        }
+        fider.popup();
+    }
+</script>
+
+<script type="text/javascript">
+    function DeleteImage(obj) {
+        var temp = obj.attr('data');
+        var url = obj.attr('src');     
+        var str = $('#_txturlImage').val();
+        $('#_txturlImage').val(str.replace(url, ""));
+        $('#' + temp + '').remove();
+    }
+</script>

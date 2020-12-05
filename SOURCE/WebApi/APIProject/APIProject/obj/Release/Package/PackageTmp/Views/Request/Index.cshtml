@@ -1,0 +1,88 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Data.Utils
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-10 col-sm-10 col-9 text-dark px-0">
+                <h4><i class="fa fa-fw fa-gift"></i> Yêu cầu đổi hiện vật</h4>
+            </div>
+            <div class="col-md-2 text-right px-0">
+                <button class="btn btn-success" onclick="exportExcel()">
+                    <i class="fa fa-file-excel-o mr-2"></i>
+                    <span>Xuất Excel</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 offset-md-0 col-sm-4 mt-1">
+        <input type="text" class="form-control relative-icon-calendar date" id="txtRequestFromDate" placeholder="Từ ngày" />
+        <i class="fa fa-calendar absolute-icon-calendar"></i>
+    </div>
+    <div class="col-md-4 offset-md-0 col-sm-4 mt-1">
+        <input type="text" class="form-control relative-icon-calendar date" id="txtRequestToDate" placeholder="Đến ngày" />
+        <i class="fa fa-calendar absolute-icon-calendar"></i>
+    </div>
+    <div class="col-md-4 offset-md-0 col-sm-4 mt-1">
+        <select class="form-control" id="cbbStatus">
+            <optgroup label="Trạng thái">
+                <option value="@SystemParam.STATUS_REQUEST_PENDING">Chờ xác nhận</option>
+                <option value="@SystemParam.STATUS_REQUEST_ACCEPTED">Đã xác nhận</option>
+                <option value="@SystemParam.STATUS_REQUEST_CANCEL">Đã hủy</option>
+                <option selected>Tất cả trạng thái</option>
+            </optgroup>
+        </select>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-md-4 offset-md-0 col-sm-4 mt-1">
+        <select class="form-control" id="cbbType">
+            <optgroup label="Loại yêu cầu">
+                <option value="@SystemParam.TYPE_REQUEST_GIFT">Quà tặng</option>
+                <option value="@SystemParam.TYPE_REQUEST_VOUCHER">Voucher</option>
+                <option selected>Tất cả yêu cầu</option>
+            </optgroup>
+        </select>
+    </div>
+    <div class="col-md-4 offset-md-0 col-sm-4 mt-1">
+        <input type="text" class="form-control" id="txtRequestCodeSearch" placeholder="Nhập mã yêu cầu hoặc tên khách hàng" />
+    </div>
+    <div class="col-md-2 offset-md-0 col-sm-2 offset-sm-0 mt-1 col-4 offset-4">
+        <button class="btn btn-primary" onclick="searchRequest();"><i class="fa fa-search"></i> Tìm kiếm</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12" id="tableRequest">
+        @{
+            Html.RenderAction("Search", "Request", new { Page = 1, RequestCode = "" });
+        }
+    </div>
+</div>
+
+
+<!-- start modal request detail -->
+<div id="divRequestDetail">
+
+</div>
+<!-- end modal -->
+
+<script>
+    $('.showModalRequest').click(function () {
+
+    });
+
+    function exportExcel() {
+        var fromDate = $("#txtRequestFromDate").val();
+        var toDate = $("#txtRequestToDate").val(); 
+        var status = $("#cbbStatus").val();
+        var type = $("#cbbType").val(); 
+        var codeOrName = $("#txtRequestCodeSearch").val();
+        window.location.href = "/Request/ExportRequest?fromDate=" + fromDate + "&toDate=" + toDate + "&status=" + status + "&typeRequest=" + type + "&codeOrCusName=" + codeOrName;
+    }
+</script>

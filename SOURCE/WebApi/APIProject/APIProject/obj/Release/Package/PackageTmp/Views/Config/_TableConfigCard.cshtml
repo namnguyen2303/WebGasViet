@@ -1,0 +1,78 @@
+﻿@using Data.Model.APIWeb
+@using PagedList.Mvc
+@using Data.Utils
+@model  PagedList.IPagedList<ListGiftWebOutputModel>
+
+<table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md">
+    <thead class="text-center text-white bg-thead">
+        <tr>
+            <th>STT</th>
+            <th>Tên thẻ</th>
+            <th>Số điểm</th>
+            <th>Giá trị thẻ cào</th>
+            @*<th>Trạng thái</th>*@
+            <th>Ghi chú</th>
+            <th class="widthCreatedDate">Ngày tạo</th>
+            <th class="width2btn"></th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @{
+            if (Model.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="7">Không có dữ liệu.</td>
+                </tr>
+            }
+            else
+            {
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var data in Model)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@data.Name</td>
+                        <td>@String.Format("{0:n0}", data.Point)</td>
+                        <td>@String.Format("{0:n0}", data.Price)</td>
+                        @*@{
+                                if (data.Status == SystemParam.STATUS_GIFT_ACTIVE)
+                                {
+                                    <td>Đang hoạt động</td>
+                                }
+                                else
+                                {
+                                    <td>Tạm dừng</td>
+                                }
+                            }*@
+                        <td>@data.Description</td>
+                        <td>@data.CreateDateStr</td>
+                        <td class="width2btn">
+                            <a data-toggle="tooltip" data-placement="top" title="Chỉnh sửa." class="cursor-pointer showModalDetail" onclick="getConfigCardDetail(@data.ID);">
+                                <i class="btnEdit fa fa-fw fa-edit"></i>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Xóa." class="cursor-pointer" onclick="deleteConfigCard(@data.ID);">
+                                <i class="btnDelete fa fa-fw fa-trash-o"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    stt++;
+                }
+            }
+        }
+
+       
+    </tbody>
+</table>
+<input type="hidden" id="txtPageCurrentCard" value="@ViewBag.PageCurrentCard" class="txtPageCurrentCard" />
+<div class="col-md-12">
+    <div class="row float-right">
+        @*phân trang*@
+        @Html.PagedListPager(Model, Page => Url.Action("SearchConfigCard", new { Page }),
+     PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+     {
+         HttpMethod = "GET",
+         UpdateTargetId = "tableConfigCard"
+     })
+     )
+    </div>
+</div>

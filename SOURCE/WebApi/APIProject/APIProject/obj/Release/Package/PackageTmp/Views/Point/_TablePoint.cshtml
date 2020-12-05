@@ -1,0 +1,76 @@
+﻿@using Data.Model.APIWeb
+@using Data.Utils
+@using PagedList.Mvc
+@model PagedList.IPagedList<ListHistoryOutputModel>
+
+<table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md">
+    <thead class="text-center text-white bg-thead">
+        <tr>
+            <th>STT</th>
+            <th>Mã giao dịch</th>
+            <th>Loại giao dịch</th>
+            <th>Khách hàng</th>
+            <th>SĐT</th>
+            <th>Số điểm</th>
+            <th>Số dư</th>
+            <th>Ngày giao dịch</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @{
+            if (Model.Count <= 0)
+            {
+                <tr>
+                    <td colspan="10">Không có dữ liệu.</td>
+                </tr>
+            }
+            else
+            {
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var data in Model)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@data.PointAddCode</td>
+                        <td>@Util.GetNameType(data.Type)</td>
+                        <td>@data.CustomerName</td>
+                        @{
+                            if (data.CustomerPhone != null)
+                            {
+                                <td>@data.CustomerPhone</td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                        }
+
+                        <td>@String.Format("{0:n0}", data.Point)</td>
+                        <td>@String.Format("{0:n0}", data.Balance)</td>
+                        <td>@data.GetStringCreateDate</td>
+                        <td class="width2btn">
+                            <a data-toggle="tooltip" data-placement="top" title="Xem chi tiết." class="cursor-pointer showModalPoint" onclick="getPointDetail(@data.ID);">
+                                <i class="btnView fa fa-fw fa-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    stt++;
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<div class="col-md-12">
+    <div class="row float-right">
+        @*phân trang*@
+        @Html.PagedListPager(Model, Page => Url.Action("Search", new { Page, Type=ViewBag.Type, KeySearch = ViewBag.KeySearch, fromDate = ViewBag.fromDate, toDate = ViewBag.toDate }),
+     PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+     {
+         HttpMethod = "GET",
+         UpdateTargetId = "tablePoint"
+     })
+     )
+    </div>
+</div>

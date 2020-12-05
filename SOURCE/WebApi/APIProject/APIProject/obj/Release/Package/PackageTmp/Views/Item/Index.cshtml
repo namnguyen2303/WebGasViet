@@ -1,0 +1,200 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-10 col-sm-10 col-9 text-dark px-0">
+                <h4><i class="fa fa-fw fa-product-hunt"></i> Quản lý sản phẩm</h4>
+            </div>
+            <div class="col-md-2 col-sm-2 col-3 text-right px-0">
+                <button class="btn btn-dekko" data-toggle="modal" data-target="#createItem" onclick="resetInputItem();"><i class="fa fa-fw fa-plus"></i> Thêm sản phẩm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="row mb-2">
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-3 offset-md-0 col-sm-4 mt-1">
+                <input type="text" id="fromDateItem" class="form-control relative-icon-calendar date" placeholder="Từ ngày" />
+                <i class="fa fa-calendar absolute-icon-calendar"></i>
+            </div>
+            <div class="col-md-3 offset-md-0 col-sm-4 mt-1">
+                <input type="text" id="toDateItem" class="form-control relative-icon-calendar date" placeholder="Đến ngày" />
+                <i class="fa fa-calendar absolute-icon-calendar"></i>
+            </div>
+            <div class="col-md-3 offset-md-0 col-sm-4 mt-1">
+                <select id="itemStatus" class="form-control">
+                    <optgroup label="Trạng thái">
+                        <option value="0">Ngừng hoạt động</option>
+                        <option value="1" selected>Đang hoạt động</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="col-md-6 offset-md-0 col-sm-4 mt-1">
+                <input value="" type="text" id="itemName" class="form-control" placeholder="Nhập tên sản phẩm" />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 offset-md-0 col-sm-2 offset-sm-5 mt-1 col-4 offset-4">
+        <button class="btn btn-primary" onclick="SearchItem();"><i class="fa fa-search"></i> Tìm kiếm</button>
+    </div>
+</div>*@
+
+<div class="row mb-2">
+    <div class="col-md-3 offset-md-0 col-sm-4 mt-1">
+        <input type="text" id="fromDateItem" class="form-control relative-icon-calendar date" placeholder="Từ ngày" />
+        <i class="fa fa-calendar absolute-icon-calendar"></i>
+    </div>
+    <div class="col-md-3 offset-md-0 col-sm-4 mt-1">
+        <input type="text" id="toDateItem" class="form-control relative-icon-calendar date" placeholder="Đến ngày" />
+        <i class="fa fa-calendar absolute-icon-calendar"></i>
+    </div>
+    <div class="col-md-3 offset-md-0 col-sm-4 mt-1">
+        <select id="itemStatus" class="form-control">
+            <optgroup label="Trạng thái">
+                <option value="0">Ngừng hoạt động</option>
+                <option value="1" selected>Đang hoạt động</option>
+            </optgroup>
+        </select>
+    </div>
+    <div class="col-md-3 offset-md-0 col-sm-4 mt-1">
+        <select id="cbbCategorySearch" class="form-control">
+            @{
+                <option>Tất cả danh mục</option>
+                foreach (var p in ViewBag.listCategory)
+                {
+                    <option value="@p.CategoryID">@p.Name</option>
+                }
+            }
+        </select>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-md-6 offset-md-0 col-sm-4 mt-1">
+        <input value="" type="text" id="itemName" class="form-control" placeholder="Nhập tên sản phẩm" />
+    </div>
+    <div class="col-md-2 offset-md-0 col-sm-3 offset-sm-0 mt-1 col-4 offset-4">
+        <button class="btn btn-primary" onclick="SearchItem();"><i class="fa fa-search"></i> Tìm kiếm</button>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12" id="tableItem">
+        @{Html.RenderAction("Search", "Item", new { Page = 1, itemName = "", Status = 1 }); }
+    </div>
+</div>
+
+<!-- start modal create Item -->
+<div class="modal fade" id="createItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-fw fa-shopping-cart"></i> Thêm sản phẩm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="form_create_item" name="form_create_item">
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Danh mục</label> *</p>
+                            <select class="form-control" id="cbbCategory" name="CategoryID">
+                                @{
+                                    foreach (var c in ViewBag.listCategory)
+                                    {
+                                        <option value="@c.CategoryID">@c.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Mã sản phẩm</label> *</p>
+                            <input type="text" class="form-control" id="CodeCreate" name="Code" placeholder="Nhập mã sản phẩm">
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Tên sản phẩm</label> *</p>
+                            <input type="text" class="form-control" id="NameCreate" name="Name" placeholder="Nhập tên sản phẩm">
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Trạng thái</label> *</p>
+                            <select id="StatusCreate" name="Status" class="form-control">
+                                <option value="1">Đang hoạt động</option>
+                                <option value="0">Ngừng hoạt động</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Giá tiền</label> *</p>
+                            <input type="text" class="form-control number" id="PriceCreate" name="Price" placeholder="Nhập giá tiền">
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Ảnh sản phẩm</label> *</p>
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <a href="" class="text-bold mb-3" style="width:100%;height:100%; color: #5A5A5A;" id="addImg">
+                                    <img id="Imgtag" src="https://cdn4.iconfinder.com/data/icons/social-communication/142/add_photo-512.png" class="col-ml-2 col-md-2 px-0" alt="Chọn" />
+                                </a>
+                                <div class="Items">
+                                    <div class="article" id="divAddImg">
+                                        <input value="" type="hidden" id="txt-url-img" name="ImageUrl" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Ghi chú</label> *</p>
+                            <textarea class="form-control" placeholder="Thêm ghi chú" id="NoteCreate" name="Note"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary px-3" onclick="CreateItem();">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal create Item -->
+
+<div id="UpdateItem">
+
+</div>
+<script type="text/javascript">
+    $("#addImg").off('click').on('click', function (e) {
+        e.preventDefault();
+        var fider = new CKFinder();
+        fider.selectActionFunction = function (fileUrl) {
+            $("#DivtagImg ").remove();
+            $("#divAddImg").append('<div id="DivtagImg" style ="box-sizing:border-box;display:inline-block;margin-top:10px;"><img width="180" height="120" src="' + fileUrl + '" /></div>');
+            $("#txt-url-img").val(fileUrl);
+        }
+        fider.popup();
+    });
+</script>
+@*<script type="text/javascript">
+        function DeleteImg() {
+            $("#DivtagImg ").remove();
+            $("#txt-url-img").val("");
+        }
+    </script>*@

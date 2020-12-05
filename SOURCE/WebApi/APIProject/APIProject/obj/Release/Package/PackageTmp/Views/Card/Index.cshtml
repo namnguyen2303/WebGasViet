@@ -1,0 +1,204 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    $(document).ready(function (e) {
+        $('#test').on('click', function ()  {
+            $('#mdImport .custom-file-label').html("Chọn File");
+        });
+
+        $("#txtFromDate").on('keyup', function () {
+            if ($("#txtFromDate").val() == '')
+                $("#btnSearch").click();
+        });
+
+        $("#txtSeri").on('keyup', function () {
+            if ($("#txtSeri").val() == '')
+                $("#btnSearch").click();
+        });
+
+        $("#txtToDate").on('keyup', function () {
+            if ($("#txtToDate").val() == '')
+                $("#btnSearch").click();
+        });
+
+        $("#cmbStatus").on('change', function () {
+                $("#btnSearch").click();
+        });
+    });
+</script>
+
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row mb-3 mt-3">
+
+            <div class="col-md-6 col-sm-4 col-12 text-dark px-0">
+                <h4><i class="fa fa-fw fa-credit-card"></i> Thẻ cào</h4>
+            </div>
+            <div class="col-md-6 col-sm-8 col-12 text-right px-0">
+                <button class="btn btn-outline-success" onclick="window.location = 'ExportFormCard'" ;><i class="fa fa-fw fa-download"></i> Mẫu import</button>
+                <button class="btn btn-success" id="test" onclick="" data-toggle="modal" data-target="#mdImport"><i class="fa fa-fw fa-upload"></i> Import thẻ</button>
+                <button class="btn btn-dekko" data-toggle="modal" data-target="#createCard"><i class="fa fa-fw fa-plus"></i> Thêm thẻ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+        <input type="text" id="txtFromDate" class="form-control relative-icon-calendar date" placeholder="Từ ngày" />
+        <i class="fa fa-calendar absolute-icon-calendar"></i>
+    </div>
+    <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+        <input type="text" id="txtToDate" class="form-control relative-icon-calendar date" placeholder="Đến ngày" />
+        <i class="fa fa-calendar absolute-icon-calendar"></i>
+    </div>
+    <div class="col-md-2 offset-md-0 col-sm-6 mt-1">
+        <select class="form-control" id="cmbStatus">
+            <option selected>Tất Cả</option>
+            <option value="1">Đã đổi</option>
+            <option value="2">Chưa đổi</option>
+        </select>
+    </div>
+    <div class="col-md-2 offset-md-0 col-sm-6 mt-1">
+        <input type="text" class="form-control" id="txtSeri" placeholder="Nhập Số Seri" />
+    </div>
+    <div class="col-md-2 offset-md-0 col-sm-2 offset-sm-5 mt-1 col-4 offset-4">
+        <button class="btn btn-primary" id="btnSearch" onclick="searchCard()"><i class="fa fa-search"></i> Tìm kiếm</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12" id="tableCard">
+        @{
+            Html.RenderAction("Search", "Card", new { Page = 1, Seri = "", FromDate = DateTime.Now.AddYears(-1).ToString("dd/MM/yyyy"), ToDate = DateTime.Now.ToString("dd/MM/yyyy") });
+        }
+    </div>
+</div>
+
+<div id="frmEdit">
+
+</div>
+
+<div class="modal fade" id="createCard" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-credit-card"></i> Thêm Thẻ Cào</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form name="frmInformation" id="frmCreateCard" method="post">
+                <div class="modal-body">
+                    <div class="row pb-4">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Nhà mạng <span class="text-danger"> *</span></label>
+                            <select class="form-control" id="cmbTelecomType" name="TelecomType">
+                                <option value="1">Viettel</option>
+                                <option value="2">Vinaphone</option>
+                                <option value="3">Mobiphone</option>
+                                <option value="4">VietnamMobile</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pb-4">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Mệnh giá<span class="text-danger"> *</span></label>
+                            <select class="form-control" id="cmbCardType" name="CardType">
+                                <option value="500000">500.000</option>
+                                <option value="200000">200.000</option>
+                                <option value="100000">100.000</option>
+                                <option value="50000">50.000</option>
+                                <option value="20000">20.000</option>
+                                <option value="10000">10.000</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pb-4">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Mã thẻ cào<span class="text-danger"> *</span></label>
+                            <input type="number" class="form-control" id="txtCardCode" name="CardCode" placeholder="Mã Thẻ Cào" required>
+                        </div>
+                    </div>
+                    <div class="row pb-4">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Số Seri<span class="text-danger"> *</span></label>
+                            <input type="number" class="form-control" id="txtSeriNumber" name="SeriNumber" placeholder="Nhập số seri" required>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Ngày bắt đầu<span class="text-danger"> *</span></label>
+                            <input type="text" class="form-control relative-icon-calendar-warranty date" id="dtpStartDate" name="StartDate" placeholder="Chọn ngày bắt đầu">
+                            <i class="fa fa-calendar absolute-icon-calendar-warranty"></i>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Ngày hết hạn<span class="text-danger"> *</span></label>
+                            <input type="text" class="form-control relative-icon-calendar-warranty date" id="dtpExprireDate" name="ExprireDate" placeholder="Chọn ngày hết hạn">
+                            <i class="fa fa-calendar absolute-icon-calendar-warranty"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary px-3" onclick="createCard()">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="mdImport" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Import Thẻ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="">
+                <form method="post" id="frmImport" enctype="multipart/form-data">
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupFileAddon01">Tải Lên</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" name="txtFile" class="custom-file-input" id="inputExcelFile"
+                                           aria-describedby="inputGroupFileAddon01">
+                                    <label class="custom-file-label" for="inputExcelFile">Chọn File</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="modal-footer">
+                            <button type="button" id="btnImport" class="btn btn-success" onclick="importCard()">Import</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <script>
+                        $('#mdImport #inputExcelFile').on('change', function () {
+                            //get the file name
+                            var fileName = $(this).val();
+                            //replace the "Choose a file" label
+                            $(this).next('#mdImport .custom-file-label').html(fileName);
+                        });
+                    </script>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+

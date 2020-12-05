@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "_ListTeacherClass";
+}
+
+@using Data.Models.WebModels.Class_Teacher
+@model List<GetListTeacherClassModels>
+
+@{
+    foreach (var data in Model)
+    {
+        <tr>
+
+            <td>@data.TEACHER_NAME <input type="hidden" value="@data.ID"/></td>
+            <td>Bậc @data.SALARY_LEVEL_ID</td>
+            <td>@data.GET_STRING_START_DATE()</td>
+            <td>@data.GET_STRING_END_DATE() </td>
+            <td><button class="btn btn-danger" onclick="DeleteTeacherClass(@data.ID)"> <i class="fa fa-trash-o"></i></button> </td>
+        </tr>
+    }
+}

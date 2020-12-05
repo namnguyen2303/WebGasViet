@@ -1,0 +1,381 @@
+﻿@using Data.Model.APIWeb
+@model Data.Model.APIWeb.OrderDetailEditOutput
+@using Data.Utils
+<!--Modal-->
+
+<div class="modal fade" id="mdEdit" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chi tiết đơn hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmEditOrder">
+                    <div class="row ml-5 font-16"> <strong>Thông tin đơn hàng</strong></div>
+                    <div class="row mt-4 col-md-12 font-15">
+                        <div class="col-md-6 text-left">
+
+                            <div class="row text-left pd-3 "><i class="fa fa-fire ml-5 mr-2 mt-1"></i><p><strong>Đại lý: @Model.AgentName</strong></p></div>
+                            <div class="row text-left pd-3 ">
+                                <i class="fa fa-location-arrow ml-5 mr-2 mt-1"></i>
+                                @{
+                                    if (Model.AgentAddress != null && Model.AgentAddress != "") {
+                                        <p>@Model.AgentAddress</p>
+                                    } else {
+                                        <p class="text-danger"><i>unidentify</i></p>
+                                    }
+                                }
+                            </div>
+                            <div class="row text-left pd-3 "><i class="fa fa-phone ml-5 mr-2 mt-1"></i><p>@Model.AgentPhone</p></div>
+                            <div class="row text-left pd-3 "><i class="fa fa-clock-o ml-5 mr-2 mt-1"></i><p>@(Model.order.ConfirmDate != null ? Html.Raw(Model.order.ConfirmDate.Value.ToString("dd/MM/yyyy hh:mm")) : Html.Raw("")) </p> </div>
+                            <div class="row text-left pd-3 ">
+                                <i class="fa fa-bars ml-5 mr-2 mt-1"></i>
+                                @{
+                                    var Status = Model.OrderStatus;
+                                    if (Status == SystemParam.TYPE_NOTI_ORDER_ADMIN) {
+                                        <p>Trạng thái: <span class="text-danger">ORDER ADMIN</span></p>
+                                    } else if (Status == SystemParam.TYPE_NOTI_CONFIRM_ORDER) {
+                                        <p>Trạng thái: <span class="text-primary">Xác nhận</span></p>
+                                    } else if (Status == SystemParam.TYPE_NOTI_ORDER_CUSSCESS) {
+                                        <p> Trạng thái: <span class="text-success">Đã thanh toán</span></p>
+                                    } else if (Status == SystemParam.TYPE_NOTI_ORDER_CANCEL) {
+                                        <p>Trạng thái: <span class="text-danger">Hủy</span></p>
+                                    } else {
+                                        <p class="text-danger"><i>unidentify</i></p>
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 text-left">
+                            <div class="row text-left pd-3"><i class="fa fa-user ml-5 mr-2 mt-1"></i><p><strong>@Model.BuyerName</strong></p></div>
+                            <div class="row text-left pd-3">
+                                <i class="fa fa-location-arrow ml-5 mr-2 mt-1"></i>
+                                <div class="col-md-8"> <p style="margin-left:-15px;">@Model.BuyerAddress</p></div>
+                            </div>
+                            <div class="row text-left pd-3"><i class="fa fa-phone ml-5 mr-2 mt-1"></i> <p>@Model.BuyerPhone</p></div>
+                            <div class="row text-left pd-3" style="color:#085394"><i class="ml-5 mr-2 mt-1"></i><p>Điểm thu từ đơn hàng: @Model.order.PointAdd điểm</p></div>
+                            <div class="row text-left pd-3"><i class="ml-5 mr-2 mt-1"></i><p>Ghi chú: @Model.order.Note</p></div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-12 m-auto">
+                            <table class="table table-hover table-bordered">
+                                <thead class="bg-thead text-center text-white">
+                                    <tr>
+                                        <th colspan="4" class="text-success bg-light">Chi Tiết Đơn Hàng</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Tên Sản Phẩm</th>
+                                        <th>Số Lượng</th>
+                                        <th>Đơn Giá</th>
+                                        <th>Thành Tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    @{
+                                        foreach (var item in Model.ListItem) {
+                                            <tr>
+                                                <td>@item.ItemName</td>
+                                                <td>@item.ItemQTY</td>
+                                                <td>@String.Format("{0:0,0 vnđ}", @item.ItemPrice)</td>
+                                                <td>@String.Format("{0:0,0 vnđ}", @item.ItemTotalPrice)</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row-mt-4">
+                        <div class="col-md-7 offset-md-5">
+                            <table class="table text-bold">
+                                <tr>
+                                    <td class="text-left">Tổng Tiền:</td>
+                                    <td class="text-right" id="dtTotalPrice">@String.Format("{0:0,0 vnđ}", @Model.order.TotalPrice)</td>
+                                </tr>
+                                @*<tr>
+                                    <td class="text-left">Chiết Khấu <span class="text-danger">(%)</span>:</td>
+                                    <td>
+                                        <div class="row">
+                                            <input type="text" class="form-control number text-center col-md-4" id="txtDiscount" name="Discount" value="@Model.Order.Discount" onkeyup="calPrice(this)" />
+                                            <span style="padding-top: 10px;" class="col-md-8 text-right" id="textMoneyDiscount"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-danger text-left">Tổng Cộng:</td>
+                                    <td class="text-right" id="Pay"></td>
+                                </tr>*@
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var valInit = $("#mdEdit #txtDiscount").val();
+
+        //valInit = valInit.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+       // $("#mdEdit #txtDiscount").val(valInit);
+        $("#mdEdit #trAddPoint").hide();
+        $('#mdEdit #slStatus').val(@Model.order.Status);
+        //var convertPrice = $("#mdEdit #dtTotalPrice").text().replace(/,/g, '');
+        var convertPrice = parseInt($("#mdEdit #dtTotalPrice").text().replace(/,/g, ''));
+
+        var payPrice = convertPrice-$("#mdEdit #txtDiscount").val() * convertPrice / 100;
+        $('#mdEdit #Pay').text(formatNumber(payPrice, '.', ','));
+
+        var totalDiscount = $("#mdEdit #txtDiscount").val() * convertPrice / 100;
+        $("#mdEdit #textMoneyDiscount").html(cms_encode_currency_format(totalDiscount) + " vnđ");
+
+        if(@Model.order.Status == 2) {
+            $('#mdEdit #slStatus').prop('disabled', true);
+            if(@Model.addPoint.ToString().Count() > 0) {
+                $("#mdEdit #txtAddPoint").val(@Model.addPoint);
+            }else {
+                $("#mdEdit #txtAddPoint").val(0);
+            }
+
+            $("#mdEdit #trAddPoint").show();
+
+        }
+        else{
+            $("#mdEdit #slStatus").change(function() {
+
+                var show = $('#mdEdit #slStatus').val();
+                if(show == 2)
+                {
+                    $("#mdEdit #trAddPoint").show();
+                }
+                else {
+                    $("#mdEdit #txtAddPoint").val('');
+                    $("#mdEdit #trAddPoint").hide();
+                }
+            });
+        }
+        if(@Model.order.Status == 3) {
+            $('#mdEdit #btnSave').hide();
+            $('#mdEdit #slStatus').prop('disabled', true);
+        }
+
+        // handler Export Excel
+        $("form :input").change(function() {
+            $(this).closest('form').data('changed', true);
+        });
+
+        if(@Model.order.Status == 1 || @Model.order.Status == 2) {
+            $("#mdEdit #btnBill").show();
+        }
+        else {
+            $("#mdEdit #btnBill").hide();
+        }
+
+        $("#mdEdit #btnBill").on('click', function(e) {
+            if($(this).closest('#mdEdit #frmEditOrder').data('changed')) {
+                swal({
+                    title: "Bạn đã thay đổi thông tin đơn hàng",
+                    text: "Vui Lòng Lưu Lại Trước Khi Xuất Hóa Đơn",
+                    icon: "warning"
+                });
+                $("#mdEdit #frmEditOrder").data("changed", false);
+            }
+            else {
+                window.location.href = "/Order/ExportBill?id=" + @Model.order.ID;
+            }
+        })
+
+
+    });
+    /*function format_curency(a) {
+        a.value = a.value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    }*/
+
+    function calPrice(a) {
+        var convertPrice = parseInt($("#mdEdit #dtTotalPrice").text().replace(/,/g, ''));
+        var val = $("#mdEdit #txtDiscount").val();
+        //alert(val);
+        if(val == '') {
+            val = 0;
+        }
+        else {
+            val = parseInt(val.replace(/,/g, ''));
+        }
+        a.value = val;
+        var totalDiscount = $("#mdEdit #txtDiscount").val() * convertPrice / 100;
+        var payPrice = convertPrice - totalDiscount;
+        $("#mdEdit #textMoneyDiscount").html(cms_encode_currency_format(totalDiscount) + " vnđ");
+        if(payPrice < 0)
+        {
+            $("#mdEdit #txtDiscount").val("");
+            swal({
+                title: "Thông báo",
+                text: "Chiết khấu không được vượt quá tổng tiền",
+                icon: "warning"
+            });
+            //$("#mdEdit").modal("hide");
+            return;
+        }
+        $('#mdEdit #Pay').text(formatNumber(payPrice, '.', ','));
+        //a.value = val;
+        a.value = a.value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    }
+
+
+    // format number
+    function formatNumber(nStr, decSeperate, groupSeperate) {
+        nStr += '';
+        x = nStr.split(decSeperate);
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + groupSeperate + '$2');
+        }
+        return x1 + x2 +" vnđ";
+    }
+
+</script>
+
+@*<div class="modal fade" id="mdEdit" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chi tiết đơn hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="frmEditOrder">
+                        <div class="row">
+                            <div class="col-md-12 m-auto">
+                                <table class="table text-center">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th class="text-success" colspan="2">Thông Tin Đơn Hàng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-left"><i class="fa fa-user ml-5 mr-2"></i>Người Mua</td>
+                                            <td class="position-relative">
+                                                <input class="form-control text-left" id="txtCusName" name="CusName" value="@Model.BuyerName" disabled />
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left"><i class="fa fa-phone ml-5 mr-2"></i>Số Điện Thoại</td>
+                                            <td class="position-relative">
+                                                <input class="form-control text-left" id="txtPhone" name="CusPhone" value="@Model.BuyerPhone" disabled />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left"><i class="fa fa-map-marker ml-5 mr-2"></i>Địa Chỉ</td>
+                                            <td class="position-relative">
+                                                <input class="form-control text-left" id="txtAddress" name="CusAddress" value="@Model.BuyerAddress" disabled />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left"><i class="fa fa-clock-o ml-5 mr-2"></i>Ngày Đặt</td>
+                                            <td>
+                                                <input class="form-control text-left" type="text" value="@Model.CreateDate.ToString("dd-MM-yyy hh:mm")" disabled />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left"><i class="fa fa-hashtag mr-2 ml-5"></i>Mã Đại Lý</td>
+                                            <td>
+                                                <input class="form-control text-left" type="text" value="@Model.AgentCode" disabled />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left"><i class="fa fa-toggle-on ml-5 mr-2"></i>Trạng Thái</td>
+                                            <td>
+                                                <select class="form-control" id="slStatus">
+                                                    <option value="0">Chờ</option>
+                                                    <option value="1">Xác Nhận</option>
+                                                    <option value="2">Đã Thanh Toán</option>
+                                                    <option value="3">Hủy</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr id="trAddPoint" class="transistion">
+                                            <td class="text-left"><i class="fa fa-bitcoin ml-5 mr-2"></i>Tích Điểm</td>
+                                            <td>
+                                                <input class="form-control" id="txtAddPoint" type="number" name="AddPoint" placeholder="Số Điểm Được Tích" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-12 m-auto">
+                                <table class="table table-hover table-bordered">
+                                    <thead class="bg-thead text-center text-white">
+                                        <tr>
+                                            <th colspan="4" class="text-success bg-light">Chi Tiết Đơn Hàng</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Tên Sản Phẩm</th>
+                                            <th>Số Lượng</th>
+                                            <th>Đơn Giá</th>
+                                            <th>Thành Tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        @{
+                                            foreach (var item in Model.ListItem)
+                                            {
+                                                <tr>
+                                                    <td>@item.ItemName</td>
+                                                    <td>@item.ItemQTY</td>
+                                                    <td>@String.Format("{0:0,0 vnđ}", @item.ItemPrice)</td>
+                                                    <td>@String.Format("{0:0,0 vnđ}", @item.ItemTotalPrice)</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row-mt-4">
+                            <div class="col-md-7 offset-md-5">
+                                <table class="table text-bold">
+                                    <tr>
+                                        <td class="text-left">Tổng Tiền:</td>
+                                        <td class="text-right" id="dtTotalPrice">@String.Format("{0:0,0 vnđ}", @Model.TotalPrice)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">Chiết Khấu <span class="text-danger">(%)</span>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <input type="text" class="form-control number text-center col-md-4" id="txtDiscount" name="Discount" value="@Model.Discount" onkeyup="calPrice(this)" />
+                                                <span style="padding-top: 10px;" class="col-md-8 text-right" id="textMoneyDiscount"></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-danger text-left">Tổng Cộng:</td>
+                                        <td class="text-right" id="Pay"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="btnBill" class="btn btn-success"><i class="fa fa-download mr-1"></i>Xuất Hóa Đơn</button>
+                            <button type="submit" id="btnSave" class="btn btn-primary" onclick="SaveEditOrder(@Model.OrderID)">Lưu</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>*@

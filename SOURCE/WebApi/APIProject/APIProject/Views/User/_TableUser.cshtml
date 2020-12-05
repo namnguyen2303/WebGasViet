@@ -1,0 +1,75 @@
+﻿@using Data.Model.APIWeb
+@using Data.Utils
+@using PagedList.Mvc
+@model  PagedList.IPagedList<UserDetailOutputModel>
+<table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md">
+    <thead class="text-center text-white bg-thead">
+        <tr>
+            <th>STT</th>
+            <th>Tài khoản</th>
+            <th>Tên người dùng</th>
+            @*<th>Quyền</th>*@
+            <th>Ngày tạo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+
+        @{
+            if (Model.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="5">Không có dữ liệu.</td>
+                </tr>
+            }
+            else
+            {
+
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var data in Model)
+                {
+                    <tr>
+                        <td> @stt </td>
+                        <td> @data.Phone </td>
+                        <td> @data.UserName </td>
+                        @*@{ 
+                            if (data.Role == SystemParam.ROLE_ADMIN) {
+                                <td class="text-danger">Admin</td>
+                            } else if(data.Role == SystemParam.ROLE_USER) {
+                                <td class="text-success">User</td>
+                            } else if(data.Role == SystemParam.ROLE_USER_ORDER) {
+                                <td class="text-primary">User Order</td>
+                            }
+                        }*@
+                        <td> @data.CraeteDateStr </td>
+                        <td>
+                            <a data-toggle="tooltip" data-placement="top" title="Chỉnh sửa" class="cursor-pointer" onclick="getUserDetail(@data.UserID)">
+                                <i class="btnEdit fa fa-fw fa-edit"></i>
+                            </a>
+                            <a title="Reset mật khẩu về mật khẩu mặc định 123456" class="cursor-pointer" onclick="resetPassword(@data.UserID)"><i class="fa fa-refresh text-success font-18"></i></a>
+                            <a data-toggle="tooltip" data-placement="top" title="Xóa tài khoản." class="cursor-pointer" onclick="deleteUser(@data.UserID)">
+                                <i class="btnDelete fa fa-fw fa-trash-o"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    stt++;
+
+                }
+            }
+        }
+
+    </tbody>
+</table>
+<input type="hidden" id="txtPageCurrent" value="@ViewBag.PageCurrent" class="txtPageCurrent" />
+<div class="col-md-12">
+    <div class="row float-right">
+        @*phân trang*@
+        @Html.PagedListPager(Model, Page => Url.Action("Search", new { Page, Phone = ViewBag.Phone, FromDate = ViewBag.FromDate, ToDate = ViewBag.ToDate }),
+     PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+     {
+         HttpMethod = "GET",
+         UpdateTargetId = "tableUser"
+     })
+     )
+    </div>
+</div>

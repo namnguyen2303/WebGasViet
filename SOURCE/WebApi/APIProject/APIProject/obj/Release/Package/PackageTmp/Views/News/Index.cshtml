@@ -1,0 +1,115 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Data.Model.APIWeb
+@using Data.Utils
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-6 col-sm-4 col-4 text-dark px-0">
+                <h4><i class="fa fa-fw fa-newspaper-o"></i> Tin tức</h4>
+            </div>
+            <div class="col-md-6 col-sm-8 col-8 text-right px-0">
+                <a class="btn btn-dekko" href="/News/CreateNews"><i class="fa fa-fw fa-plus"></i> Thêm bài</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-md-4 offset-md-0 col-sm-4 mt-1">
+        <input type="text" class="form-control relative-icon-calendar date" id="txtNewsFromDate" placeholder="Từ ngày" />
+        <i class="fa fa-calendar absolute-icon-calendar"></i>
+    </div>
+    <div class="col-md-4 offset-md-0 col-sm-4 mt-1">
+        <input type="text" class="form-control relative-icon-calendar date" id="txtNewsToDate" placeholder="Đến ngày" />
+        <i class="fa fa-calendar absolute-icon-calendar"></i>
+    </div>
+    <div class="col-md-4 offset-md-0 col-sm-4 mt-1">
+        <input type="text" class="form-control" id="txtTitle" placeholder="Nhập tiêu đề hoặc tên tác giả" />
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-md-3 offset-md-0 col-sm-5 mt-1">
+        <select class="form-control" id="cbbCreateUser">
+            <optgroup label="Tác giả">
+                @{
+                    foreach (var author in ViewBag.ListAuthor)
+                    {
+                        <option value="@author.ID">@author.Name</option>
+                    }
+                }
+                <option selected>Tất cả tác giả</option>
+            </optgroup>
+        </select>
+    </div>
+    <div class="col-md-3 offset-md-0 col-sm-4 mt-1">
+        <select class="form-control" id="cbbTypeNews">
+            <optgroup label="Danh mục">
+                @*<option value="@SystemParam.TYPE_ADS">@SystemParam.TYPE_ADS_STRING</option>
+        <option value="@SystemParam.TYPE_EVENT">@SystemParam.TYPE_EVENT_STRING</option>*@
+                <option value="@SystemParam.TYPE_NEWS">@SystemParam.TYPE_NEWS_STRING</option>
+                <option value="@SystemParam.TYPE_PRODUCT">@SystemParam.TYPE_PRODUCT_STRING</option>
+                <option value="@SystemParam.TYPE_PROMOTION">@SystemParam.TYPE_PROMOTION_STRING</option>
+                <option value="@SystemParam.TYPE_PRICE_QUOTE">@SystemParam.TYPE_PRICE_QUOTE_STRING</option>
+                <option selected>Tất cả danh mục</option>
+            </optgroup>
+        </select>
+    </div>
+    <div class="col-md-3 offset-md-0 col-sm-4 mt-1">
+        <select class="form-control" id="cbbStatusNews">
+            <optgroup label="Trạng thái">
+                <option value="@SystemParam.STATUS_NEWS_ACTIVE">Bài đăng</option>
+                <option value="@SystemParam.STATUS_NEWS_DRAFT">Bản nháp</option>
+                <option selected>Tất cả trạng thái</option>
+            </optgroup>
+        </select>
+    </div>
+    <div class="col-md-2 offset-md-0 col-sm-3 offset-sm-0 mt-1 col-4 offset-4">
+        <button class="btn btn-primary" onclick="searchNews()"><i class="fa fa-search"></i> Tìm kiếm</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12" id="tableNews">
+        @{
+            //if (ViewBag.PageCurrentNews == null)
+            //{
+            //    ViewBag.PageCurrentNews = 1;
+            //}
+            //if (ViewBag.TitleNews == null)
+            //{
+            //    ViewBag.TitleNews = "";
+            //}
+            //Html.RenderAction("Search", "News", new { Page = ViewBag.PageCurrentNews, Title = ViewBag.TitleNews, CreateUserID = ViewBag.CreateUserIDNews, Type = ViewBag.TypeNews, Status = ViewBag.StatusNews, FromDate = ViewBag.FromDateNews, ToDate = ViewBag.ToDateNews });
+            Html.RenderAction("Search", "News", new { Page = 1, Title = "" });
+        }
+    </div>
+</div>
+<input type="hidden" id="txtPageCurrentNews" value="@ViewBag.PageCurrentNews" />
+<script type="text/javascript">
+    $(document).ready(function () {
+    //    var page = $("#txtPageCurrentNews").val();
+    //    if (page == null) {
+    //        page = 1;
+    //    }
+    //    $.ajax({
+    //        url: '/News/Search',
+    //        data: {
+    //            Page: page,
+    //            Title: $("#txtTitle").val(),
+    //            CreateUserID: $("#cbbCreateUser").val(),
+    //            Type: $("#cbbTypeNews").val(),
+    //            Status: $("#cbbStatusNews").val(),
+    //            FromDate: $("#txtNewsFromDate").val(),
+    //            ToDate: $("#txtNewsToDate").val()
+    //        },
+    //        type: 'POST',
+    //        success: function (response) {
+    //            $("#tableNews").html(response);
+    //        }
+    //    });
+
+    })
+</script>

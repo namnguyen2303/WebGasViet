@@ -1,0 +1,274 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Data.Utils
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-10 col-sm-10 col-9 text-dark px-0">
+                <h4><i class="fa fa-cogs"></i> Thiết lập chung</h4>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 offset-md-0 mt-2 text-center">
+        <label>Khoảng cách tìm kiếm (km)</label>
+    </div>
+    <div class="col-md-4 offset-md-0 mt-2">
+        <input type="text" class="form-control number" id="txtDistance" value="@ViewBag.Distance"/>
+    </div>
+</div>
+<div class="row mt-3 ">
+    <div class="col-md-4 offset-md-0 mt-2 text-center ">
+        <label>Thời gian chờ nhận đơn (s)</label>
+    </div>
+    <div class="col-md-4 ">
+        <input type="text" class="form-control number" id="txtTimeWaiting" value="@ViewBag.TimeWaiting"/>
+    </div>
+</div>
+<div class="row mt-3 ">
+    <div class="col-md-4 offset-md-0 mt-2 text-center ">
+        <label>Điểm cộng mặc định</label>
+    </div>
+    <div class="col-md-4 ">
+        <input type="text" class="form-control number" id="txtPointAddFirst" value="@ViewBag.PointAddFirst"/>
+    </div>
+</div>
+<div class="mt-2 d-flex justify-content-center">
+    <button class="btn btn-primary" onclick="saveConfig()"><i class="fa fa-save"></i> Lưu</button>
+</div>
+@*Nav tabs
+    <ul class="nav nav-tabs justify-content-center" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#gift_voucher">Quà tặng và voucher</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link px-4" data-toggle="tab" href="#gift_card">Thẻ cào</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link px-4" data-toggle="tab" href="#Ranking">Xếp hạng</a>
+        </li>
+    </ul>
+
+     Tab panes
+    <div class="tab-content">
+        <div id="gift_voucher" class="tab-pane active">
+            <div class="row ml-1 mt-3 mb-3">
+                <div class="col-md-12 text-right">
+                    <button class="btn btn-dekko" data-toggle="modal" data-target="#createConfigGift"><i class="fa fa-plus" aria-hidden="true"></i> Thiết lập</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="tableConfigGift">
+                    @{
+                        Html.RenderAction("SearchConfigGift", "Config", new { Page = 1 });
+                    }
+                </div>
+            </div>
+        </div>
+        <div id="gift_card" class="tab-pane">
+            <div class="row ml-1 mt-3 mb-3">
+                <div class="col-md-12 text-right">
+                    <button class="btn btn-dekko" data-toggle="modal" data-target="#createConfigCard"><i class="fa fa-plus" aria-hidden="true"></i> Thiết lập</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="tableConfigCard">
+                    @{
+                        Html.RenderAction("SearchConfigCard", "Config", new { Page = 1 });
+                    }
+                </div>
+            </div>
+        </div>
+        <div id="Ranking" class="tab-pane btn-block">
+            <div class="row ml-1 mt-3 mb-3">
+                <div class="col-md-12 text-right">
+
+                        <button class="btn btn-dekko" data-toggle="modal" data-target="#addRank"><i class="fa fa-plus" aria-hidden="true"></i> Thiết lập</button>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="ListRank">
+                    @{ Html.RenderAction("LoadRank", "Config", new { Page = 1 });}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+     start modal Thêm thiết lập đổi điểm lấy quà,voucher
+    <div class="modal fade" id="createConfigGift" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-gift" aria-hidden="true"></i> Đổi điểm lấy quà, voucher</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <label>Loại</label>
+                            <select class="form-control" id="cbbType">
+                                <option value="@SystemParam.TYPE_GIFT_GIFT">Quà tặng</option>
+                                <option value="@SystemParam.TYPE_GIFT_VOUCHER">Voucher</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Tên quà, voucher</label>
+                            <div><input class="form-control" id="txtName" placeholder="Tên quà" /></div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <label>Số điểm quy đổi</label>
+                            <div><input class="form-control number" id="txtPoint" placeholder="Điểm quy đổi" /></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Giá trị quà,voucher</label>
+                            <div><input class="form-control number" id="txtPrice" placeholder="Giá trị quà, voucher" /></div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <label>Từ ngày</label>
+                            <input class="form-control relative-icon-calendar date" id="txtFromDate" placeholder="Từ ngày" />
+                            <i class="fa fa-calendar" style="position: absolute; right: 25px; top: 30px; font-size: 20px;"></i>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Đến ngày</label>
+                            <input class="form-control relative-icon-calendar date" id="txtToDate" placeholder="Đến ngày" />
+                            <i class="fa fa-calendar" style="position: absolute; right: 25px; top: 30px; font-size: 20px;"></i>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mb-2">
+                            <label>Ghi chú</label>
+                            <textarea class="form-control" rows="5" id="txtDescription" placeholder="Nhập ghi chú"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Hình ảnh</label>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-12">
+                                    <a href="" class="text-bold mb-3" style="width:100%;height:100%; color: #5A5A5A;" id="addImg">
+                                        <div class="news">
+                                            <div class="article" id="divAddImg">
+                                                <img id="tagImg" src="/Uploads/files/add_img.png" class="col-md-12 px-0 contentImg" alt="your image" />
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary px-3" onclick="createConfigGift()">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     end modal
+     modal Thêm thiết lập đổi điểm lấy thẻ
+    <div class="modal fade" id="createConfigCard" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-credit-card" aria-hidden="true"></i> Đổi điểm với thẻ cào</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row mt-1">
+                        <label class="col-md-4">Số điểm quy đổi</label>
+                        <div class="col-md-8"><input class="form-control number" id="txtPointConfigCard" placeholder="Điểm quy đổi" /></div>
+                    </div>
+                    <div class="row mt-1">
+                        <label class="col-md-4">Mệnh giá</label>
+                        <div class="col-md-8">
+                            <select class="form-control" id="cbbPriceConfigCard">
+                                <option value="500000">500.000</option>
+                                <option value="200000">200.000</option>
+                                <option value="100000">100.000</option>
+                                <option value="50000">50.000</option>
+                                <option value="20000">20.000</option>
+                                <option value="10000">10.000</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <label class="col-md-4">Nhà mạng</label>
+                        <div class="col-md-8">
+                            <select class="form-control" id="cbbTelecomTypeConfigCard">
+                                <option value="@SystemParam.TYPE_VIETTEL">Viettel</option>
+                                <option value="@SystemParam.TYPE_MOBIPHONE">Mobiphone</option>
+                                <option value="@SystemParam.TYPE_VINAPHONE">Vinaphone</option>
+                                <option value="@SystemParam.TYPE_VIETNAMMOBILE">VietnamMobile</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-1 mb-1">
+                        <label class="col-md-4">Ghi chú</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" rows="3" id="txtDescriptionConfigCard" placeholder="Nhập ghi chú"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary px-3" onclick="createConfigCard(@SystemParam.TYPE_GIFT_CARD)">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     end modal
+     modal Sửa thiết lập đổi điểm lấy thẻ
+
+     end modal
+
+    <div id="divConfigGiftDetail">
+
+    </div>
+
+    <div id="divConfigCardDetail">
+
+    </div>*@
+
+
+<script type="text/javascript">
+
+    $('.showModal').click(function () {
+        $('#updateConfigCard').modal('show');
+    });
+
+    $("#addImg").off('click').on('click', function (e) {
+        e.preventDefault();
+        var fider = new CKFinder();
+
+        fider.selectActionFunction = function (fileUrl) {
+            $("#tagImg ").remove();
+            $("#divAddImg").append('<img id="tagImg" src="' + fileUrl + '" class="col-md-12 px-0 contentImg" alt="your image" />');
+        }
+        fider.popup();
+    });
+
+</script>
+
+

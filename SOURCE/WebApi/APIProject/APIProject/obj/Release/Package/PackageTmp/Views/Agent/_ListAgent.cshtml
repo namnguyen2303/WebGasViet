@@ -1,0 +1,143 @@
+﻿@using Data.DB
+@using Data.Model.APIWeb
+@using PagedList.Mvc
+@using Data.Utils
+@model  PagedList.IPagedList<Agent>
+
+<table class="table table-light table-hover table-bordered " id="">
+    <thead class="bg-thead text-center text-white">
+        <tr>
+            <th>STT</th>
+            <th>Mã đại lý</th>
+            <th>Tên đại lý</th>
+            <th>Loại đại lý</th>
+            <th>Trạng thái</th>
+            <th>Người kích hoạt</th>
+            <th>Ngày kích hoạt</th>
+            <th class="widthCreatedDate">Ngày tạo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="text-center" id="">
+        @{
+            if (Model.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="10">Không có dữ liệu.</td>
+                </tr>
+            }
+            else
+            {
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var dt in Model)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@dt.Code</td>
+                        <td>@dt.Name</td>
+                        <td>Cấp 1</td>
+                        @{
+                            if (@dt.CustomerActiveID == null)
+                            {
+                                <td>Chưa kích hoạt</td>
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td class="text-success">Đã kích hoạt</td>
+
+                                <td class="text-success">@dt.Customer.Name</td>
+                            }
+
+                            if (@dt.ActiveDate != null)
+                            {
+                                <td>@dt.ActiveDate.Value.ToString("dd/MM/yyyy")</td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+
+                            <td>@dt.CreateDate.ToString("dd/MM/yyyy")</td>
+                        }
+
+                        <td class="width2btn">
+                            <a data-toggle="modal" data-target="" data-placement="top" title="Chỉnh sửa thông tin." class="cursor-pointer" onclick="showEditAgent(@dt.ID)">
+                                <i class="btnEdit fa fa-fw fa-edit"></i>
+                            </a>
+                            <a data-toggle="" data-placement="top" title="Xóa đại lý." class="cursor-pointer" data-target="" onclick="deleteAgent(@dt.ID)">
+                                <i class="btnDelete fa fa-fw fa-trash-o"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    stt++;
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<div class="col-md-12">
+    <div class="row float-right">
+        @Html.PagedListPager(Model, Page => Url.Action("Search", "Agent", new { Page = Page, Code = ViewBag.Code, Status = ViewBag.Status, FromDate = ViewBag.FromDate, ToDate = ViewBag.ToDate }),
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+        {
+            HttpMethod = "GET",
+            UpdateTargetId = "list"
+        })
+        )
+    </div>
+</div>
+<div class="" id="fill"></div>
+
+<!--Start Modal create -->
+<div class="modal fade" id="mdAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-plus-circle"></i> Thêm đại lý</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="frmCreate">
+                <div class="modal-body">
+                    @*<div class="row pb-4">
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <label class="text-danger mr-3">Người Thêm: </label>
+                                <label class="text-danger"></label>
+                            </div>
+                        </div>*@
+                    <div class="row pb-4">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Mã đại lý<span class="text-danger"> *</span></label>
+                            <input type="text" class="position-relative form-control" id="" name="Code" placeholder="Nhập mã đại lý" required />
+                            @*<i class="fa fa-code position-absolute icon-inner"></i>*@
+                        </div>
+                    </div>
+                    <div class="row pb-4">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Tên đại lý<span class="text-danger"> *</span></label>
+                            <input type="text" class="form-control position-relative" id="txtName" name="Name" value="" placeholder="Nhập tên đại lý" required />
+                            @*<i class="fa fa-user-circle position-absolute icon-inner"></i>*@
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Địa chỉ<span class="text-danger"> *</span></label>
+                            <input type="text" class="form-control position-relative" id="txtAddress" name="Address" value="" placeholder="Nhập địa chỉ" required />
+                            @*<i class="fa fa-map-marker position-absolute icon-inner mr-1"></i>*@
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary px-3" onclick="createAgent()">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Fill Modal Update -->

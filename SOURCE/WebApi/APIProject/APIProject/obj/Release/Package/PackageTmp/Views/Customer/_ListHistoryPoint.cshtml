@@ -1,0 +1,71 @@
+﻿@using Data.DB
+@using Data.Model.APIWeb
+@using PagedList.Mvc
+@using PagedList
+@model IPagedList<GetListHistoryMemberPointInputModel>
+
+<div class="col-md-12">
+    <table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md">
+        <thead class="text-center text-white bg-thead">
+            <tr>
+                <th class="width-stt">STT</th>
+                <th>Mã tích điểm</th>
+                <th>Loại tích điểm</th>
+                <th>Số điểm</th>
+                <th>Ngày tích điểm</th>
+                <th>Ghi chú</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @{
+                if (Model.Count() <= 0)
+                {
+                    <tr>
+                        <td colspan="10">Không có dữ liệu.</td>
+                    </tr>
+                }
+                else
+                {
+                    int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                    foreach (var data in Model)
+                    {
+                        <tr>
+                            <td>@stt</td>
+                            <td>@data.AddPointCode</td>
+                            @{
+                                if (@data.TypeAdd == 1)
+                                {
+                                    <td>Sản Phẩm</td>
+                                }
+                                else if (@data.TypeAdd == 2)
+                                {
+                                    <td>Bảo Hành</td>
+                                }
+                                else
+                                {
+                                    <td>Khác</td>
+                                }
+                            }
+                            <td>@String.Format("{0:n0}", data.Point)</td>
+                            <td>@data.CreateDate.Value.ToString("dd/MM/yyyy hh:mm")</td>
+                            <td>@data.Comment</td>
+                        </tr>
+                        stt++;
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<div class="col-md-12">
+    <div class="row float-right mr-1">
+        @*phân trang*@
+        @Html.PagedListPager(
+            Model,
+            page => Url.Action("SearchHistoryPoint", "Customer", new { Page = page, FromDateHis = ViewBag.FromDate, ToDateHis = ViewBag.ToDate, cusID = ViewBag.cusID }),
+            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "ListHistoryPoint" })
+            )
+    </div>
+</div>

@@ -1,0 +1,83 @@
+﻿@using Data.Model.APIWeb
+@using Data.Utils
+@model ListGiftWebOutputModel
+
+<!-- start modal sửa thiết lập đổi điểm lấy thẻ cào-->
+<div class="modal fade" id="updateConfigCard" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-credit-card" aria-hidden="true"></i> Đổi điểm với thẻ cào</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row mt-1">
+                    <label class="col-md-4">Số điểm quy đổi</label>
+                    <div class="col-md-8"><input class="form-control number" id="txtPoint" value="@String.Format("{0:n0}", Model.Point)" placeholder="Điểm quy đổi..." /></div>
+                </div>
+                <div class="row mt-1">
+                    <label class="col-md-4">Mệnh giá</label>
+                    <div class="col-md-8">
+                        <select class="form-control" id="cbbPriceCard" disabled>
+                            <option value="500000">500.000</option>
+                            <option value="200000">200.000</option>
+                            <option value="100000">100.000</option>
+                            <option value="50000">50.000</option>
+                            <option value="20000">20.000</option>
+                            <option value="10000">10.000</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <label class="col-md-4">Nhà mạng</label>
+                    <div class="col-md-8">
+                        <select class="form-control" id="cbbTelecomType" disabled>
+                            <option value="@SystemParam.TYPE_VIETTEL">Viettel</option>
+                            <option value="@SystemParam.TYPE_MOBIPHONE">Mobiphone</option>
+                            <option value="@SystemParam.TYPE_VINAPHONE">Vinaphone</option>
+                            <option value="@SystemParam.TYPE_VIETNAMMOBILE">VietnamMobile</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-1 mb-1">
+                    <label class="col-md-4">Ghi chú</label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" rows="3" id="txtDescription" placeholder="Nhập ghi chú...">@Model.Description</textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary px-3" onclick="updateConfigCard(@Model.ID);">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#updateConfigCard #cbbPriceCard").val(@Model.Price);
+        $("#updateConfigCard #cbbTelecomType").val(@Model.TelecomType);
+
+        $('.number').keyup(function () {
+            $val = cms_decode_currency_format($(this).val());
+            $(this).val(cms_encode_currency_format($val));
+        });
+    });
+
+    //Format money in textbox
+    function cms_encode_currency_format(num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    }
+
+    function cms_decode_currency_format(obs) {
+        if (obs == '')
+            return 0;
+        else
+            return parseInt(obs.replace(/,/g, ''));
+    }
+</script>

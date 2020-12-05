@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Data.DB
+@using Data.Utils
+    <div class="row mt-3">
+        <div class="col-md-12 col-sm-12">
+            <h3 class="">
+                <i class="fa fa-money"></i>
+                Thống kê doanh thu
+            </h3>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <select class="form-control" id="slObj">
+                @{ 
+                    <option>Tất cả</option>
+                    foreach(var a in (List<Customer>) ViewBag.listAgent) {
+                        if(a.Role == SystemParam.ROLE_ADMIN) {
+                            <option value="@a.ID">ĐẠI LÝ @a.Name</option>
+                        } else {
+                            <option value="@a.ID">KHÁCH HÀNG @a.Name</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <input class="form-control relative-icon-calendar date" placeholder="Từ ngày" id="txtFromDate" />
+            <i class="fa fa-calendar absolute-icon-calendar"></i>
+        </div>
+        <div class="col-md-4">
+            <input class="form-control relative-icon-calendar date" placeholder="Đến ngày" id="txtToDate" />
+            <i class="fa fa-calendar absolute-icon-calendar"></i>
+        </div>
+        
+    </div>
+    <div class="row mt-3">
+       
+        <div class="col-md-4 d-flex justify-content-end">
+            <button class="btn btn-primary" id="btnSearch" onclick="statisticRevenue()">Tìm Kiếm</button>
+        </div>
+    </div>
+
+    @*<div class="row mt-3">
+        <div class="col-md-12 col-sm-12 text-left ">
+            <h5 class="rounded pt-2 text-bold text-danger">Tổng doanh thu: @String.Format("{0:0,0 VND}", @ViewBag.Revenue) </h5>
+        </div>
+    </div>*@
+
+    <div class="row mt-2">
+        <div class="col-md-12 col-sm-12" id="list">
+            @{Html.RenderAction("Search", "StatisticRevenue", new { Page = 1 });}           
+        </div>
+    </div>
+
+<script>
+    $(document).ready(function (e) {
+
+        $("#txtFromDate").on('keyup', function () {
+            if ($("#txtFromDate").val() == '')
+                $("#btnSearch").click();
+        });
+
+
+        $("#txtToDate").on('keyup', function () {
+            if ($("#txtToDate").val() == '')
+                $("#btnSearch").click();
+        });
+
+        $("#slObj").on('change', function () {
+            $("#btnSearch").click();
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#slObj").on('change', function () {
+            $("#btnSearch").click();
+        });
+    })
+</script>

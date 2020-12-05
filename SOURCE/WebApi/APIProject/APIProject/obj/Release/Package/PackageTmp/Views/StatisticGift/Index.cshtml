@@ -1,0 +1,70 @@
+﻿@using Data.DB
+@using Data.Utils
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<Gift>
+
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-10 col-sm-9 text-dark px-0">
+                <h4><i class="fa fa-gift" aria-hidden="true"></i> Thống kê đổi quà</h4>
+            </div>
+            @*<div class="col-md-2 col-sm-3 text-right px-0">
+                <button class="btn btn-dekko"><i class="fa fa-print"></i> Báo cáo</button>
+            </div>*@
+        </div>
+    </div>
+</div>
+<div class="row mb-1">
+    <div class="col-md-4 col-sm-5 mt-1">
+        <input class="form-control" placeholder="Nhập tên khách hàng" id="txtCusName" />
+    </div>
+    <div class="col-md-2 col-sm-3 mt-1">
+        <select class="form-control" id="slGiftType">
+            <option value="@SystemParam.TYPE_REQUEST_GIFT">Quà Tặng</option>
+            <option value="@SystemParam.TYPE_REQUEST_VOUCHER">Voucher</option>
+            <option selected>-Tất cả yêu cầu-</option>
+        </select>
+    </div>
+    <div class="col-md-3 col-sm-3 mt-1">
+        <input class="form-control date"  placeholder="Từ Ngày" id="txtFromDate" />
+    </div>
+    <div class="col-md-3 col-sm-3 mt-1">
+        <input class="form-control date" placeholder="Đến Ngày" id="txtToDate" />
+    </div>
+</div>
+<div class="row mb-4">
+    <div class="col-md-2 offset-md-10 col-sm-3 mt-1">
+        <button class="btn btn-primary btn-block" id="btnSearch" onclick="searchRequestForGift()"><i class="fa fa-search"></i> Tìm kiếm</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12" id="TableRQ">
+        @{
+            Html.RenderAction("SearchRequestForGift", "StatisticGift", new { Page = 1 });
+        }
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function (e) {
+
+        $("#txtFromDate").on('keyup', function () {
+            if ($("#txtFromDate").val() == '')
+                $("#btnSearch").click();
+        });
+
+        $("#txtToDate").on('keyup', function () {
+            if ($("#txtToDate").val() == '')
+                $("#btnSearch").click();
+        });
+
+        $("#slGiftType").on('change', function () {
+            $("#btnSearch").click();
+        });
+    });
+</script>

@@ -1,0 +1,110 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Data.Model.APIWeb
+@model UserDetailOutputModel
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-4 col-sm-4 col-12 text-dark px-0">
+                <h4><i class="fa fa-fw fa-bookmark-o"></i> Mã khuyến mãi</h4>
+            </div>
+            <div class="col-md-8 col-sm-8 col-12 text-right px-0">
+                <button class="btn btn-success" id="export"><i class="fa fa-fw fa-download"></i> Xuất Excel</button>
+                <button class="btn btn-dekko width-btn-create-batch" data-toggle="modal" data-target="#createWarranty"><i class="fa fa-fw fa-plus"></i> Thêm mã</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#export').click(function () {
+        $('#form_info').submit();
+    });
+</script>
+<div class="row">
+    <form class="col-md-10 mb-2" id="form_info" action="/warranty/Export">
+        <div class="row">
+            <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                <input id="fromDate" name="fromDate" type="text" class="form-control relative-icon-calendar date" placeholder="Từ ngày" />
+                <i class="fa fa-calendar absolute-icon-calendar"></i>
+            </div>
+            <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                <input id="toDate" name="toDate" type="text" class="form-control relative-icon-calendar date" placeholder="Đến ngày" />
+                <i class="fa fa-calendar absolute-icon-calendar"></i>
+            </div>
+            <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                <select class="form-control" id="status" name="Status">
+                    <option selected>Tất cả trạng thái</option>
+                    <option value="1">Đã tích điểm</option>
+                    <option value="2">Chưa tích điểm</option>
+                </select>
+            </div>
+            <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                <input name="warrantyCardCode" id="warrantyCardCode" type="text" class="form-control" placeholder="Nhập mã khuyến mãi" />
+            </div>
+        </div>
+    </form>
+    <div class="col-md-2 offset-md-0 col-sm-2 offset-sm-5 mt-1 col-4 offset-4">
+        <button class="btn btn-primary" onclick="searchWarrantyCard();"><i class="fa fa-search"></i> Tìm kiếm</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12" id="TableWarranty">
+        @{Html.RenderAction("Search", "Warranty", new { Page = 1, WarrantyCardCode = "" }); }
+    </div>
+</div>
+
+
+<!-- start modal add warranty -->
+<div class="modal fade" id="createWarranty" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-fw fa-bookmark-o"></i> Thêm mã khuyến mãi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form_create_warranty" name="form_create_warranty">                  
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Số lượng</label>
+                            <input type="text" class="form-control number" name="Qty" id="quantity" placeholder="Nhập số lượng">
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Số điểm</label>
+                            <input type="text" class="form-control number" name="Point" id="point" placeholder="Nhập số điểm">
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <label>Ngày hết hạn</label>
+                            <input type="text" class="form-control relative-icon-calendar-warranty date" name="ExpireDate" id="expireDate" placeholder="Chọn ngày hết hạn">
+                            <i class="fa fa-calendar absolute-icon-calendar-warranty"></i>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary px-3 showModal" onclick="CreateWarranty();">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+
+
+
+<div class="row" id="QrCodeWarrantyCard">
+
+</div>
+
+<div class="row" id="DetailWarrantyQRCode">
+
+</div>
+

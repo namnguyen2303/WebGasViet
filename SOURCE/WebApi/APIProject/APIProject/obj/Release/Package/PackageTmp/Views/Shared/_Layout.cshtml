@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>DEKKO</title>
+
+    @*@Styles.Render("~/layout/css")*@
+    @Styles.Render("~/dekko/css")
+    @Scripts.Render("~/layout/js")
+    @Scripts.Render("~/dekko/js")
+    @Scripts.Render("~/bundle/js")
+</head>
+<body class="theme-orange" ng-app="appDekko" ng-controller="controllerDekko">
+    <div class="divLoading" style="display: none">
+        <div class="col-md-12 spinner">
+            <img class="spinner" src="~/Content/images/index.rotate-pie-preloader-gif.svg" />
+            @*<span class="text-white spinner" style="font-size: 20px; height: 200px; text-align: center; margin-top: 28%">Đang xử lý...</span>*@
+        </div>
+    </div>
+    <input type="hidden" id="txtRole" />
+    <div id="wrapper">
+        <nav class="navbar navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-btn">
+                    <button type="button" class="btn-toggle-offcanvas"><i class="lnr lnr-menu fa fa-bars"></i></button>
+                </div>
+                <div class="navbar-brand d-inline-flex p-2">
+                    <!-- d-inline-flex p-2 giống wrap-content của android-->
+                    <a href="/Home/Index"><img src="~/Content/images/logo1.jpg" alt="Dekko Logo" class="img-responsive logo"></a>
+                </div>
+                <div class="navbar-right">
+                    <div class="user-account float-right">
+                        <div class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown">
+                                <strong class="text-danger" id="userNameLogin"></strong>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right account">
+                                <li data-toggle="modal" data-target="#changePassword"><a href="#"><i class="fa fa-user-o"></i>Đổi mật khẩu</a></li>
+                                <li class="divider"></li>
+                                <li><a href="" onclick="logout();"><i class="fa fa-sign-out"></i>Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div id="left-sidebar" class="sidebar">
+            <div class="sidebar-scroll bg-white">
+                <div class="tab-content p-l-0 p-r-0 bg-white">
+                    <div class="tab-pane active">
+                        <nav class="sidebar-nav">
+                            <ul class="main-menu metismenu">
+                                <li id="tabHome">
+                                    <a href="/Home/Index"><i class="fa fa-tachometer ic-menu"></i>Tổng quan</a>
+                                </li>
+                                <li id="tabBatch" class="">
+                                    <a href="/Batch/Index"><i class="fa fa-check-square-o ic-menu"></i>Tích điểm</a>
+                                </li>
+                                <li id="tabCard">
+                                    <a href="/Card/Index"><i class="fa fa-credit-card ic-menu"></i>Thẻ cào</a>
+                                </li>
+                                <li id="tabItem">
+                                    <a href="/Item/Index"><i class="fa fa-product-hunt ic-menu"></i>Sản phẩm</a>
+                                </li>
+                                <li id="tabAgent">
+                                    <a href="/Agent/Index"><i class="fa fa-money ic-menu"></i>Đại lý</a>
+                                </li>
+                                <li id="tabShop">
+                                    <a href="/Shop/Index"><i class="fa fa-shopping-basket ic-menu"></i>Cửa hàng</a>
+                                </li>
+                                <li id="tabOrder">
+                                    <a href="/Order/Index"><i class="fa fa-bitcoin ic-menu"></i>Đơn hàng</a>
+                                </li>
+                                <li id="tabRequest">
+                                    <a href="/Request/Index"><i class="fa fa-gift ic-menu"></i>Đổi hiện vật</a>
+                                </li>
+                                <li id="tabWarranty">
+                                    <a href="/Warranty/Index"><i class="fa fa-bookmark-o ic-menu"></i>Mã khuyến mãi</a>
+                                </li>
+                                <li id="tabPoint">
+                                    <a href="/Point/Index"><i class="fa fa-exchange ic-menu"></i>Lịch sử giao dịch</a>
+                                </li>
+                                <li id="tabCustomer">
+                                    <a href="/Customer/Index"><i class="fa fa-users ic-menu"></i>Khách hàng</a>
+                                </li>
+                                <li id="tabMessage">
+                                    <a href="/Message/Chat"><i class="fa fa-wechat ic-menu"></i>Chat</a>
+                                </li>
+                                <li id="tabStatistic">
+                                    <a href="#" class="has-arrow"><i class="fa fa-line-chart ic-menu"></i>Thống kê</a>
+                                    <ul id="ulStatistic">
+                                        <li id="tabStatisticGift"><a href="/StatisticGift/Index"><i class="fa fa-gift"></i>Đổi quà</a></li>
+                                        <li id="tabStatisticPoit"><a href="/StatisticPoit/Index"><i class="fa fa-sort-numeric-asc"></i>TOP tích điểm</a></li>
+                                        <li id="tabStatisticRevenue"><a href="/StatisticRevenue/Index"><i class="fa fa-money"></i>Doanh Thu</a></li>
+                                    </ul>
+                                </li>
+                                <li id="tabConfig">
+                                    <a href="/Config/Index"><i class="fa fa-gears ic-menu"></i>Thiết lập</a>
+                                </li>
+                                <li id="tabNews">
+                                    <a href="/News/Index"><i class="fa fa-newspaper-o ic-menu"></i>Tin tức</a>
+                                </li>
+                                <li id="tabUser">
+                                    <a href="/User/Index"><i class="fa fa-user-secret ic-menu"></i>Tài khoản</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="main-content">
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+
+    })
+
+    var app = angular.module("appDekko", []);
+    app.controller("controllerDekko", function ($scope) { });
+</script>
+
+<div id="changePassword" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-lock" aria-hidden="false"></i> Thay đổi mật khẩu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <label>Mật khẩu hiện tại</label>
+                        <input class="form-control" type="password" id="txtCurrentPassword" />
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <label>Mật khẩu mới</label>
+                        <input class="form-control" type="password" id="txtNewPassword" />
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <label>Xác nhận mật khẩu mới</label>
+                        <input class="form-control" type="password" id="txtConfirmPassword" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="changePassword()">Thay đổi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*modal loading *@
+<div class="modal" id="modalLoad" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content text-center py-3">
+            <div class="modal-body text-center">
+                <i class="fa fa-spinner text-success fa-spin" style="font-size: 40px;"></i>
+                <div class="col-md-12 text-center mt-2">
+                    <span>Đang xử lý</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

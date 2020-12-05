@@ -1,0 +1,267 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="breadcrumb-holder">
+    <div class="container-fluid ">
+
+        <span class="h2 pt-3 pb-3 pl-0 "><i class="fa fa-user"></i> Thêm mới học sinh</span>
+
+    </div>
+</div>
+<section class="dashboard-counts pt-4">
+    <div class="container-fluid">
+        <div class="col-lg-12">
+
+            <form id="Form_Add_Parent" ng-app="my_app_add_parent" ng-controller="ctrl_add_parent" name="form_add_parent" >
+                <div class="card">
+                    <div class="card-header">
+                        <button type="button" class="btn btn-large btn-danger btn_header mr-2 pull-right btn_Parent" onclick="window.location = '/parent/index'"><i class="fa fa-trash-o" aria-hidden="true"></i>Thoát</button>
+                        <div class="inputWithIcon pull-right " onclick="AddParent()">
+                            <input type="button" ng-disabled="form_add_parent.NAME.$dirty && form_add_parent.NAME.$invalid||
+                                   form_add_parent.EMAIL.$dirty && form_add_parent.EMAIL.$invalid||
+                                   form_add_parent.ADDRESS.$dirty && form_add_parent.ADDRESS.$invalid||
+                                   form_add_parent.PHONE.$dirty && form_add_parent.PHONE.$invalid||
+                                   form_add_parent.PASSWORD.$dirty && form_add_parent.PASSWORD.$invalid||
+                                   form_add_parent.NOTE_SUBJECT.$dirty && form_add_parent.NOTE_SUBJECT.$invalid||
+                                   form_add_parent.STUDENT_PHONE.$dirty && form_add_parent.STUDENT_PHONE.$invalid||
+                                   form_add_parent.STUDENT_SEX.$dirty && form_add_parent.STUDENT_SEX.$invalid||
+                                   form_add_parent.STUDENT_BIRTHDAY.$dirty && form_add_parent.STUDENT_BIRTHDAY.$invalid||
+                                   form_add_parent.STUDENT_SCHOOL_NAME.$dirty && form_add_parent.STUDENT_SCHOOL_NAME.$invalid||
+                                   form_add_parent.STUDENT_NAME.$dirty && form_add_parent.STUDENT_NAME.$invalid
+                             " class="btn btn-large btn-info btn_header mr-2 " value="Lưu học viên">
+                            <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+                        </div>
+                        
+                    </div>
+
+
+
+                    <div class="modal-body row">
+
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header d-flex align-items-center back_color">
+                                    <h4>Thông tin của phụ huynh</h4>
+                                </div>
+                                <div class="card-body">
+
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_add_parent.NAME.$dirty && form_add_parent.NAME.$invalid">
+                                            <span ng-show="form_add_parent.NAME.$error.required">Tên phụ huynh không được để trống</span>
+                                            <span ng-show="form_add_parent.NAME.$error.maxlength">Tên phụ huynh có độ dài vượt quá giới hạn cho phép</span>
+                                        </span>
+                                    </div>
+                                    <!--Tên của phụ huynh-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Tên phụ huynh</span>
+                                        </div>
+                                        <input type="text" class="form-control text_seach seach_parent" ng-model="txt_add_name_parent_model" name="NAME" id="txt_add_name_parent" ng-required="true" ng-maxlength="200">
+                                    </div>
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_add_parent.ADDRESS.$dirty && form_add_parent.ADDRESS.$invalid">
+                                            <span ng-show="form_add_parent.ADDRESS.$error.required">địa chỉ của phụ huynh không được phép để trống</span>
+                                            <span ng-show="form_add_parent.ADDRESS.$error.maxlength">địa chỉ phụ huynh có độ dài vượi quá giới hạn cho phép</span>
+                                        </span>
+                                    </div>
+                                    <!--Địa chỉ của phụ huynh-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Địa chỉ phụ huynh</span>
+                                        </div>
+                                        <input type="text" class="form-control text_seach seach_parent" name="ADDRESS" id="txt_add_address_parent" ng-model="txt_add_address_parent_model" ng-required="true" ng-maxlength="200">
+                                    </div>
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_add_parent.PHONE.$dirty && form_add_parent.PHONE.$invalid">
+                                            <span ng-show="form_add_parent.PHONE.$error.required">Số điện thoại của phụ huynh không được phép để trống</span>
+                                            <span ng-show="form_add_parent.PHONE.$error.maxlength">số điện thoại của phụ huynh có độ dài vượt quá giới hạn cho phép</span>
+                                        </span>
+                                    </div>
+                                    <!--Điện thoại của phụ huynh-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Điện thoại phụ huynh</span>
+                                        </div>
+                                        <input type="number" class="form-control text_seach seach_parent" name="PHONE" id="txt_add_phone_parent" ng-model="txt_add_phone_parent_model" ng-required="true" ng-maxlength="30">
+                                    </div>
+
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_add_parent.PASSWORD.$dirty && form_add_parent.PASSWORD.$invalid">
+                                            <span ng-show="form_add_parent.PASSWORD.$error.required">Mật khẩu không được để trống</span>
+                                            <span ng-show="form_add_parent.PASSWORD.$error.maxlength">Độ dài mật khẩu vượt quá giới hạn</span>
+                                            <span ng-show="form_add_parent.PASSWORD.$error.minlength">Mật khẩu phải dài trên 8 ký tự</span>
+                                        </span>
+                                    </div>
+                                    <!--Mật khẩu của phụ huynh-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Mật khẩu</span>
+                                        </div>
+                                        <input type="password" class="form-control text_seach seach_parent" name="PASSWORD" id="txt_add_password_parent" ng-model="txt_add_password_parent_model" ng-required="true" ng-maxlength="20" ng-minlength="8">
+                                    </div>
+
+                                    <!--Địa chỉ mail của phụ huynh-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_add_parent.EMAIL.$dirty && form_add_parent.EMAIL.$invalid">
+                                            <span ng-show="form_add_parent.EMAIL.$error.required">địa chỉ email của phụ huynh không được để trống</span>
+                                            <span ng-show="form_add_parent.EMAIL.$error.maxlength">địa chỉ email có độ dài vượt quá giới hạn</span>
+                                            <span ng-show="form_add_parent.EMAIL.$error.email">địa chỉ email của phụ huynh không hợp lệ</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Email </span>
+                                        </div> 
+                                        <input type="email" class="form-control text_seach seach_parent" name="EMAIL" id="txt_add_email_parent" ng-model="txt_add_email_parent_model" ng-required="true" ng-maxlength="200" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header d-flex align-items-center back_color">
+                                    <h4>Thông tin của học sinh</h4>
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_add_parent.STUDENT_NAME.$dirty && form_add_parent.STUDENT_NAME.$invalid">
+                                            <span ng-show="form_add_parent.STUDENT_NAME.$error.required">tên của học sinh không được phép để trống</span>
+                                            <span ng-show="form_add_parent.STUDENT_NAME.$error.maxlength">tên học sinh có độ dài vượt quá giới hạn</span>
+                                        </span>
+                                    </div>
+                                    <!--Tên của học sinh-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Tên học sinh</span>
+                                        </div>
+                                        <input type="text" class="form-control text_seach seach_parent" name="STUDENT_NAME" id="txt_add_name_student_parent" ng-model="txt_add_name_student_parent_model" ng-required="true" ng-maxlength="200">
+                                    </div>
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_add_parent.STUDENT_SCHOOL_NAME.$dirty && form_add_parent.STUDENT_SCHOOL_NAME.$invalid">
+                                            <span ng-show="form_add_parent.STUDENT_SCHOOL_NAME.$error.required">trường của học sinh không được phép để trống</span>
+                                            <span ng-show="form_add_parent.STUDENT_SCHOOL_NAME.$error.maxlength">tên của trường có độ dài vượt quá giới hạn</span>
+                                        </span>
+                                    </div>
+                                    <!--Trường học của học sinh-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Trường học</span>
+                                        </div>
+                                        <input type="text" class="form-control text_seach seach_parent" name="STUDENT_SCHOOL_NAME" id="txt_add_school_student_parent" ng-model="txt_add_school_student_parent_model" ng-required="true" ng-maxlength="200">
+                                    </div>
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_add_parent.STUDENT_BIRTHDAY.$dirty && form_add_parent.STUDENT_BIRTHDAY.$invalid">
+                                            <span ng-show="form_add_parent.STUDENT_BIRTHDAY.$error.required">ngáy sinh của học viên không được phép để trống</span>
+                                            <span ng-show="form_add_parent.STUDENT_BIRTHDAY.$error.date">định dạng của ngày sinh không hợp lệ</span>
+                                        </span>
+                                    </div>
+                                    <!--Ngày sinh của học sinh-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Ngày sinh</span>
+                                        </div>
+                                        <input type="text" class="form-control text_seach seach_parent   col-9" name="STUDENT_BIRTHDAY" id="datetimepicker1" ng-model="txt_add_bithday_student_parent_model" ng-required="true">
+                                    </div>
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_add_parent.STUDENT_SEX.$dirty && form_add_parent.STUDENT_SEX.$invalid">
+                                            <span ng-show="form_add_parent.STUDENT_SEX.$error.required">giới tính của học viên không được phép để trống</span>
+                                        </span>
+                                    </div>
+                                    <!--giới tính của học sinh-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Giới tính</span>
+                                        </div>
+                                        <label class="radio-inline mr-5 ml-5">
+                                            <input type="radio" name="STUDENT_SEX" value="1" id="txt_add_student_sex_male" ng-required="true" checked>Nam
+                                        </label>
+                                        <label class="radio-inline ml-5">
+                                            <input type="radio" name="STUDENT_SEX" value="0" id="txt_add_student_sex_female" ng-required="true">Nữ
+                                        </label>
+                                    </div>
+
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_add_parent.STUDENT_PHONE.$dirty && form_add_parent.STUDENT_PHONE.$invalid">
+                                            <span ng-show="form_add_parent.STUDENT_PHONE.$error.required">điện thoại của học sinh không được phép để trống</span>
+                                            <span ng-show="form_add_parent.STUDENT_PHONE.$error.maxlength">số điện thoại của học sinh có độ dài vượt quá giới hạn</span>
+                                        </span>
+                                    </div>
+                                    <!--Số điện thoại của học sinh-->
+                                    <div class="input-group mb-2 col-12 input-group-sm  col-md-12">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px ; float:left">Điện thoại</span>
+                                        </div>
+                                        <input type="number" class="form-control text_seach seach_parent" name="STUDENT_PHONE" id="txt_add_phone_student_parent"  ng-model="txt_add_phone_student_parent_model" ng-required="true" ng-maxlength="30"> 
+                                    </div>
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <span style="color:red" ng-show="form_add_parent.NOTE_SUBJECT.$dirty && form_add_parent.NOTE_SUBJECT.$invalid">
+                                            <span ng-show="form_add_parent.NOTE_SUBJECT.$error.required">Tên môn học đăng ký không được phép để trống</span>
+                                            <span ng-show="form_add_parent.NOTE_SUBJECT.$error.maxlength">Tên môn học có độ dài vượt quá giới hạn</span>
+                                        </span>
+                                    </div>
+                                    <!--Danh sách môn học đăng ký-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Đăng ký môn học</span>
+                                        </div>
+                                        <input type="text" class="form-control text_seach seach_parent" name="NOTE_SUBJECT" id="txt_add_node_subject_student_parent" ng-model="txt_add_note_subject_student_parent_model" ng-required="true" ng-maxlength="200">
+                                    </div>
+                                    <!--Điểm thị của học viên -->
+                                    <div class="row co-12 col-md-12">
+                                        <div class="input-group mb-2 col-6 input-group-sm" id="Max1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" style="width:160px">Điểm lần 1</span>
+                                            </div>
+                                            <input type="number" class="form-control text_seach seach_parent" name="MARK1" id="txt_add_max1_student_parent">
+                                        </div>
+                                        <div class="input-group mb-2 col-6 input-group-sm" id="Max2">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" style="width:160px">Điểm lần 2</span>
+                                            </div>
+                                            <input type="number" class="form-control text_seach seach_parent" name="MARK2" id="txt_add_max2_student_parent">
+                                        </div>
+                                    </div>
+                                    <!--ghi chú của học viên-->
+                                    <div class="input-group mb-2 col-12 input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width:160px">Ghi chú</span>
+                                        </div>
+                                        <textarea rows="4" cols="50" class="co-12 " style="width:100%" id="txt_add_node_parent" name="NOTE"> </textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+@*khai báo module của angular*@
+<script type="text/javascript">
+
+    var app = angular.module("my_app_add_parent", []);
+    app.controller('ctrl_add_parent', function ($scope) {
+    });
+</script>

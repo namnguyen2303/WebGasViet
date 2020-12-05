@@ -1,0 +1,19 @@
+﻿@using Data.Models.WebModels.Schedule_Class
+@model List<GetListScheduleClassModels>
+@{
+    ViewBag.Title = "_ListScheduleClass";
+}
+
+@{
+    foreach (var data in Model)
+    {
+        <tr>
+            <td>@data.GET_STRING_DAY()</td>
+            <td>@data.GET_STRING_START_DATE()</td>
+            <td>@data.GET_STRING_END_DATE()</td>
+            <td>@data.ROOM_NAME</td>
+            <td><button class="btn btn-danger" onclick="DeleteScheduleClass(@data.ID)"> <i class="fa fa-trash-o"></i></button></td>
+        </tr>
+    }
+}
+

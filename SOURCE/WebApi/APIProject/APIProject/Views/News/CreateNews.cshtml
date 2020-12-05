@@ -1,0 +1,171 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Data.Utils
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-6 col-sm-6 col-12 text-dark px-0">
+                <h4><i class="fa fa-fw fa-newspaper-o"></i> Thêm bài viết</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-10 offset-md-1 col-sm-10 offset-sm-1 col-12 bg-white radius-form box-shadow-form mb-5">
+    <!-- START col-md-8 panel form create -->
+    <div class="row pb-3">
+        <div class="col-md-2 col-sm-6 col-12 mt-3">
+            <label>Thứ tự ưu tiên</label>
+            <input type="text" class="form-control number" id="txtDisplay" placeholder="Nhập thứ tự" />
+        </div>
+        <div class="col-md-4 col-sm-6 col-12 mt-3">
+            <label>Chọn để gửi thông báo đến cho:</label>
+            <select class="form-control" id="cbbTypeSend">
+                <option value="">Không gửi thông báo</option>
+                @*<option value="@SystemParam.TYPE_SEND_ALL">Tất cả</option>*@
+                <option value="@SystemParam.TYPE_SEND_CUSTOMER">Khách hàng</option>
+                @*<option value="@SystemParam.TYPE_SEND_AGENCY">Đại lý</option>*@
+            </select>
+        </div>
+        @*<div class="col-md-3 col-sm-6 col-12 mt-3">
+            <label>Danh mục</label>
+            <select class="form-control" id="cbbType" onchange="getItemNews(this.value)">
+                <option value="@SystemParam.TYPE_ADS">@SystemParam.TYPE_ADS_STRING</option>
+                <option value="@SystemParam.TYPE_EVENT">@SystemParam.TYPE_EVENT_STRING</option>
+                <option value="@SystemParam.TYPE_PRODUCT">@SystemParam.TYPE_PRODUCT_STRING</option>
+                <option value="@SystemParam.TYPE_NEWS">@SystemParam.TYPE_NEWS_STRING</option>
+                <option value="@SystemParam.TYPE_PROMOTION">@SystemParam.TYPE_PROMOTION_STRING</option>
+                <option value="@SystemParam.TYPE_PRICE_QUOTE">@SystemParam.TYPE_PRICE_QUOTE_STRING</option>
+            </select>
+        </div>*@
+        @*<div class="col-md-4 col-sm-6 col-12 mt-3" id="divItem">
+            <label id="labelItem">Sẩn phẩm</label>
+            <select class="form-control" id="cbbItemNews">
+                @{
+                    foreach (var p in ViewBag.itemNewsProduct)
+                    {
+                        <option value="@p.CategoryID">@p.Name</option>
+                    }
+                }
+            </select>
+        </div>*@
+    </div>
+    <div class="row pb-3">
+        <div class="col-md-12 col-sm-12 col-12">
+            <label>Tiêu đề</label>
+            <input type="text" class="form-control" id="txtTitle" placeholder="Nhập tiêu đề bài viết" />
+        </div>
+    </div>
+    <div class="row pb-3">
+        <div class="col-md-12 col-sm-12 col-12">
+            <label>Mô tả</label>
+            <textarea class="form-control" rows="3" id="txtDescription" placeholder="Nhập nội dung mô tả"></textarea>
+        </div>
+    </div>
+
+    <div class="row pb-3">
+        <div class="col-md-3 col-sm-12 col-12">
+            <a href="" class="text-bold mb-3" style="width:100%;height:100%; color: #5A5A5A;" id="add_logo_place">
+                Hình ảnh
+                <div class="news">
+                    <div class="article" id="AddLogoPlace">
+                        <img id="AddImgLogoPlace" src="/Uploads/files/add_img.png" class="col-md-12 px-0 contentImg" alt="your image" />
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row pb-3">
+        <div class="col-md-12 col-sm-12 col-12">
+            <label>Nội dung</label>
+            <textarea name="editor" class="form-control mb-3" id="editor"></textarea>
+        </div>
+    </div>
+
+
+    @*<div class="col-md-12 border-form mt-2"></div>*@
+
+    <div class="row pb-2 pt-2 text-right">
+        <div class="col-md-12 col-sm-12 col-12 txtBeauty">
+            @*<a class="btn btn-outline-secondary" href="/News/Index"><i class="fa fa-fw fa-arrow-left"></i> Trở về</a>*@
+            <button class="btn btn-info" onclick="createNews(@SystemParam.STATUS_NEWS_DRAFT);"><i class="fa fa-fw fa-file-word-o"></i> Lưu nháp</button>
+            <button class="btn btn-success" onclick="createNews(@SystemParam.STATUS_NEWS_ACTIVE);"><i class="fa fa-fw fa-check"></i> Đăng bài</button>
+        </div>
+    </div>
+</div> <!-- END col-md-8 panel form create -->
+
+
+<script>
+
+    $(document).ready(function () {
+
+        //CKEDITOR.replace('editor', {
+        //    height: 300
+        //});
+
+        CKEDITOR.replace('editor', {
+            height: 300,
+            disableObjectResizing: true
+        });
+
+        CKEDITOR.on('dialogDefinition', function (ev) {
+            var dialogName = ev.data.name;
+            var dialogDefinition = ev.data.definition;
+            //var editorO = ev.data.definition.dialog.getParentEditor();
+
+            if (dialogName == 'image' || dialogName == 'image2') {
+                var infoTab = dialogDefinition.getContents('info');
+
+                if (dialogName == 'image') {
+                    infoTab.remove('txtHeight');
+                    infoTab.remove('txtWidth');
+                    infoTab.remove('ratioLock');
+                }
+                else {
+                    infoTab.remove('height');
+                    infoTab.remove('width');
+                    infoTab.remove('lock');
+                }
+            }
+        });
+
+    });
+
+    function getItemNews(category) {
+        if (category == 4) {
+            $('#cbbItemNews').removeAttr('disabled');
+            $('#labelItem').css('color', '#5A5A5A');
+        }
+        else {
+            $('#cbbItemNews').attr("disabled", "disabled");
+            $('#labelItem').css('color', 'hsl(0, 0%, 85%)');
+        }
+            
+    }
+
+    $("#add_logo_place").off('click').on('click', function (e) {
+        e.preventDefault();
+        var fider = new CKFinder();
+
+        fider.selectActionFunction = function (fileUrl) {
+            $("#AddImgLogoPlace ").remove();
+            $("#AddLogoPlace").append('<img id="AddImgLogoPlace" src="' + fileUrl + '" class="col-md-12 px-0 border-dekko contentImg" alt="your image" />');
+            var url = window.location.origin + fileUrl;
+            $('#txtAddLogoPlace').val(url);
+        }
+        fider.popup();
+    });
+
+</script>
+<style>
+    .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 23px;
+    width: 23px;
+    background-color: #eee;
+}
+</style>

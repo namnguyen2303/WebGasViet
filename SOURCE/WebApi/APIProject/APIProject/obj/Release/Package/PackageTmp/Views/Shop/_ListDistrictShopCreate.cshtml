@@ -1,0 +1,12 @@
+﻿
+@using Data.DB
+
+<select class="form-control" id="slDistrictShopCreate" name="DistrictID">
+    @{
+        <option value="0">Tất cả Quận/Huyện</option>
+        foreach (var d in (List<District>)ViewBag.listDistrictShopCreate)
+        {
+            <option value="@d.Code">@d.Name</option>
+        }
+    }
+</select>

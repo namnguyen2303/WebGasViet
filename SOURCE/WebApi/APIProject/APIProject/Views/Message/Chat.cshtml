@@ -1,0 +1,98 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!--  This file has been downloaded from https://bootdey.com  -->
+    <!--  All snippets are MIT license https://bootdey.com/license -->
+    <title>Bootdey.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="~/Content/Chatstyle.css" rel="stylesheet" />
+
+</head>
+<body>*@
+    <link href="~/Content/Chatstyle.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container-fluid2 mt-3">
+        <div class="panel messages-panel">
+            <div class="contacts-list">
+                <div class="inbox-categories" style="background-color: #2da9e9; min-height: 55px;">
+                    <div data-toggle="tab" data-target="#inbox" class="active"> Hỗ trợ khách hàng </div>
+                </div>
+                <div class="tab-content">
+                    <div id="inbox" class="contacts-outter-wrapper tab-pane active">
+                        <div class="contacts-outter">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            <ul class="list-unstyled contacts">
+                                <li>
+                                    <div class="spinner-border" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <div class="tab-pane message-body active" id="inbox-message-1">
+                    <div class="message-top">
+                        <div class="col-md-12">
+                            <h4 style="margin-bottom: 0; padding-top: 5px;"><span class="text-bold" style="color: #2da9e9" id="user-name"></span></h4>
+                            <span style="color: #2da9e9; font-size: 12px;" id="user-title"></span>
+                        </div>
+                        @*<a class="btn btn btn-success new-message"> <i class="fa fa-envelope"></i> New Message </a>*@
+                    </div>
+
+                    <div class="message-chat">
+                        <div class="chat-body">
+
+                        </div>
+
+                        <div class="chat-footer">
+                            <textarea class="send-message-text" rows="3" placeholder="Soạn tin nhắn"></textarea>
+                            <label class="upload-file">
+                                <input type="file" accept="image/*" name="files[]" id="imgInp">
+                                <i class="fa fa-file-image-o cursor-pointer" title="Chọn ảnh"></i>
+                            </label>
+                            <button type="button" class="send-message-button btn-info cursor-pointer" title="Gửi"> <i class="fa fa-send"></i> </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-storage.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#config-web-app -->
+    <script src="~/Scripts/chat.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBsJ_4ZwEKatgqkf61fyy0--b42CqYe95o",
+            authDomain: "winds-12268.firebaseapp.com",
+            databaseURL: "https://winds-12268.firebaseio.com",
+            projectId: "winds-12268",
+            storageBucket: "winds-12268.appspot.com",
+            messagingSenderId: "777141683282",
+            appId: "1:777141683282:web:24f32047966cd0ee"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    @*</body>
+        </html>*@

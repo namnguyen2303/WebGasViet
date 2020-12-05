@@ -1,0 +1,354 @@
+﻿@using Data.DB
+@using Data.Model.APIWeb
+
+@{
+    Customer CusDetail = ViewBag.CusDetail;
+    Ranking MemberRank = ViewBag.MemberRank;
+    Ranking SliverRank = ViewBag.SliverRank;
+    Ranking GoldRank = ViewBag.GoldRank;
+    Ranking PlatinumRank = ViewBag.PlatinumRank;
+}
+<div class="content" id="backToIndex">
+    <div class="col-md-12">
+        <div class="breadcrumb-holder">
+            <div class="row mb-3 mt-3">
+                <div class="col-md-10 col-sm-10 col-9 text-dark px-0">
+                    <h4><i class="fa fa-fw fa-users"></i> Thông tin khách hàng</h4>
+                </div>
+                <div class="col-md-2 col-sm-2 col-3 text-right px-0">
+                    <a class="btn btn-outline-secondary" href="javascript:void(0);" onclick="backToIndexCustomer(@ViewBag.PageBefore)"><i class="fa fa-fw fa-arrow-left"></i> Trở về</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs justify-content-center" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#profile" onclick="">Thông tin cá nhân</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#BookHistory">Lịch sử đặt hàng</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div id="profile" class="tab-pane active">
+            <div class="row mx-0 mt-3 mb-3">
+                <div class="col-md-12 offset-md-0 col-sm-10 offset-sm-1 col-10 offset-1 bg-white position-relative">
+                    <h4>Thông tin khách hàng</h4>
+                    <div class="text-center">
+                        <div class="row pt-md-1 pt-sm-2 pt-2 mt-7">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="row">
+                                    <div class="col-md-2 offset-md-1 col-sm-2 col-2 text-left">
+                                        <span>Họ và tên</span>
+                                    </div>
+                                    <div class="col-md-4 col-sm-10 col-10">
+                                        <p class="text-bold">@CusDetail.Name</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="row">
+                                    <div class="col-md-2 offset-md-1 col-sm-2 col-2 text-left">
+                                        <span>Giới tính</span>
+                                    </div>
+                                    <div class="col-md-4 col-sm-10 col-10">
+                                        @{
+                                            if (CusDetail.Sex == 1) {
+                                                <p class="text-bold" style="margin-left:-40px;">Nữ</p>
+                                            } else {
+                                                <p class="text-bold" style="margin-left:-40px;">Nam</p>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 col-sm-2 col-2 text-left">
+                                        <span>Số điện thoại</span>
+                                    </div>
+                                    <div class="col-md-3 col-sm-10 col-10">
+                                        <p class="text-bold" style="margin-left:-50px;">@CusDetail.Phone</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="row">
+                                    <div class="col-md-2 offset-md-1 col-sm-2 col-2 text-left">
+                                        <span>Email</span>
+                                    </div>
+                                    <div class="col-md-4 col-sm-10 col-10">
+                                        @{
+                                            if (CusDetail.Email == "" || CusDetail.Email == null) {
+                                                <p class="text-white">.</p>
+                                            } else {
+                                                <p class="text-bold" style="margin-left:35px;">@CusDetail.Email</p>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row mt-1">
+                            
+                            <div class="col-md-6 col-sm-6">
+                                <div class="row">
+                                    <div class="col-md-2 offset-md-1 col-sm-2 col-2 text-left">
+                                        <span>Ngày sinh</span>
+                                    </div>
+                                    <div class="col-md-4 col-sm-10 col-10">
+                                        <p class="text-bold">@CusDetail.DOB.ToString("dd/MM/yyyy")</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="row">
+                                    <div class="col-md-2 offset-md-1 col-sm-2 col-2 text-left">
+                                        <span>Địa chỉ</span>
+                                    </div>
+                                    <div class="col-md-4 col-sm-10 col-10">
+                                        <p class="text-bold">@CusDetail.Address</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="row mt-1">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-2 col-2 text-center">
+                                        <i class="fa fa-smile-o"></i>
+                                    </div>
+                                    <div class="col-md-10 col-sm-10 col-10">
+                                        @{
+                                            if (CusDetail.Role == 1)
+                                            {
+                                                <p class="text-bold">Khách Hàng</p>
+                                            }
+                                            else if (CusDetail.Role == 2)
+                                            {
+                                                <p class="text-bold">Đại Lý</p>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-2 col-2 text-center">
+                                        <i class="fa fa-trophy"></i>
+                                    </div>
+                                    <div class="col-md-10 col-sm-10 col-10">
+                                        @{
+                                if (CusDetail.PointRanking >= SliverRank.MinPoint && CusDetail.PointRanking <= SliverRank.MaxPoint)
+                                {
+                                    <p class="text-bold">Bạc</p>
+                                }
+                                else if (CusDetail.PointRanking >= GoldRank.MinPoint && CusDetail.PointRanking <= GoldRank.MaxPoint)
+                                {
+                                    <p class="text-bold">Vàng</p>
+                                }
+                                else if (CusDetail.PointRanking >= PlatinumRank.MinPoint)
+                                {
+                                    <p class="text-bold">Bạch Kim</p>
+                                }
+                                else
+                                {
+                                    <p class="text-bold">Thành Viên</p>
+                                }
+                            }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                    @*<button data-toggle="modal" data-target="#EditCustomer" data-placement="top" title="Chỉnh Sửa Thông Tin." class="btn btn-outline-danger btn-delete-customer"><i class="fa fa-pencil">Sửa</i></button>*@
+                </div>
+            </div>
+        </div>
+        @*<div id="addPoint" class="tab-pane">
+                <h2>Lịch sử đặt hàng</h2>
+                <div class="row mb-6 mt-2">
+                    <div class="col-md-2 offset-md-0 col-sm-4 mt-1 text-center">
+                        <label>Từ ngày</label>
+                    </div>
+                    <div class="col-md-4 offset-md-0 col-sm-4 mt-1 ">
+                        <input type="text" id="dtpFromDate" class="form-control relative-icon-calendar date" placeholder="Từ ngày" />
+                        <i class="fa fa-calendar absolute-icon-calendar"></i>
+                    </div>
+                    <div class="col-md-2 offset-md-0 col-sm-4 mt-1 text-center">
+                        <label>Đến ngày</label>
+                    </div>
+                    <div class="col-md-4 offset-md-0 col-sm-4 mt-1">
+                        <input type="text" id="dtpTodate" class="form-control relative-icon-calendar date" placeholder="Đến ngày" />
+                        <i class="fa fa-calendar absolute-icon-calendar"></i>
+                    </div>
+                </div>
+                <div class=" mt-1 mb-1 d-flex justify-content-center">
+                    <button class="btn btn-primary" onclick="SearchHistoryOrder(@CusDetail.ID)"><i class="fa fa-search"></i> Tìm kiếm</button>
+                </div>
+                <div class="row" id="ListHistoryPoint">
+                    @{Html.RenderAction("SearchH", "Order", new { Page = 1, cusID = CusDetail.ID }); }
+                </div>
+
+            </div>*@
+        <div id="changePoint" class="tab-pane">
+
+            <div class="row mb-2 mt-2">
+                <div class="col-md-3 offset-md-0 col-sm-4 mt-1">
+                    <input type="text" id="dtpFromdateRQ" class="form-control relative-icon-calendar date" placeholder="Từ ngày" />
+                    <i class="fa fa-calendar absolute-icon-calendar"></i>
+                </div>
+                <div class="col-md-3 offset-md-0 col-sm-4 mt-1">
+                    <input type="text" id="dtpToDateRQ" class="form-control relative-icon-calendar date" placeholder="Đến ngày" />
+                    <i class="fa fa-calendar absolute-icon-calendar"></i>
+                </div>
+                <div class="col-md-2 offset-md-0 col-sm-2 offset-sm-0 mt-1 col-4 offset-4">
+                    <button class="btn btn-primary" onclick="SearchRequset(@CusDetail.ID)"><i class="fa fa-search"></i> Tìm kiếm</button>
+                </div>
+            </div>
+
+            <div class="row" id="ListRequest">
+                @{Html.RenderAction("SearchReQuest", "Customer", new { Page = 1, cusID = CusDetail.ID }); }
+            </div>
+        </div>
+
+        <div id="BookHistory" class="tab-pane">
+            <h2>Lịch sử đặt hàng</h2>
+            <div class="row mb-6 mt-2">
+                <div class="col-md-2 offset-md-0 col-sm-4 mt-1 text-center">
+                    <label>Từ ngày</label>
+                </div>
+                <div class="col-md-4 offset-md-0 col-sm-4 mt-1 ">
+                    <input type="text" id="dtpFromdateOH" class="form-control relative-icon-calendar date" placeholder="Từ ngày" />
+                    <i class="fa fa-calendar absolute-icon-calendar"></i>
+                </div>
+                <div class="col-md-2 offset-md-0 col-sm-4 mt-1 text-center">
+                    <label>Đến ngày</label>
+                </div>
+                <div class="col-md-4 offset-md-0 col-sm-4 mt-1">
+                    <input type="text" id="dtpToDateOH" class="form-control relative-icon-calendar date" placeholder="Đến ngày" />
+                    <i class="fa fa-calendar absolute-icon-calendar"></i>
+                </div>
+            </div>
+            <div class=" mt-1 mb-1 d-flex justify-content-center">
+                <button class="btn btn-primary" onclick="searchOrderHistory(@CusDetail.ID)"><i class="fa fa-search"></i> Tìm kiếm</button>
+            </div>
+            @*<div class="row mb-2 mt-2">
+                    <div class="col-md-3 offset-md-0 col-sm-4 mt-1">
+                        <input type="text" id="dtpFromdateOH" class="form-control relative-icon-calendar date" placeholder="Từ ngày" />
+                        <i class="fa fa-calendar absolute-icon-calendar"></i>
+                    </div>
+                    <div class="col-md-3 offset-md-0 col-sm-4 mt-1">
+                        <input type="text" id="dtpToDateOH" class="form-control relative-icon-calendar date" placeholder="Đến ngày" />
+                        <i class="fa fa-calendar absolute-icon-calendar"></i>
+                    </div>
+                    <div class="col-md-2 offset-md-0 col-sm-2 offset-sm-0 mt-1 col-4 offset-4">
+                        <button class="btn btn-primary" onclick="searchOrderHistory(@CusDetail.ID)"><i class="fa fa-search"></i> Tìm kiếm</button>
+                    </div>
+                </div>*@
+
+            <div class="row" id="ListOrderHistory">
+                @{
+                    Html.RenderAction("searchOrderHistory", "Customer", new { Page = 1, cusID = CusDetail.ID });
+                }
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="EditCustomer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-calendar"></i> Sửa thông tin khách hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="frmEdit_Customer" method="post">
+                    <div class="modal-body">
+                        <div class="row pb-3">
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <input type="hidden" value="@CusDetail.ID" id="data_id" />
+                                <label>Tên Khách Hàng<span class="text-danger"> *</span></label>
+                                <input type="text" class="form-control" name="cusName" id="txtCusName" value="@CusDetail.Name" placeholder="Tên Khách Hàng" />
+                            </div>
+                        </div>
+                        <div class="row pb-3">
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <label>Số Điện Thoại</label>
+                                <input type="text" class="form-control" name="cusPhone" id="txtCusPhone" value="@CusDetail.Phone" placeholder="Số Điện Thoại" />
+                            </div>
+
+                        </div>
+                        <div class="row pb-3">
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <label>Ngày Sinh</label>
+                                <input type="text" class="form-control relative-icon-calendar-warranty date" value="@CusDetail.DOB.ToString("dd/MM/yyyy")" id="dtpBirthDay" name="BirthDay" placeholder="Ngày Sinh">
+                                <i class="fa fa-calendar absolute-icon-calendar-warranty"></i>
+                            </div>
+                        </div>
+                        <div class="row pb-3">
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <label>Email</label>
+                                <input type="email" class="form-control" id="txtCusEmail" value="@CusDetail.Email" name="cusEmail" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="row pb-3">
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <label>Giới Tính</label>
+                                <select class="form-control" id="cmbSex" name="cusSex">
+                                    <option value="2">Nam</option>
+                                    <option value="1">Nữ</option>
+                                    @*<option value="0">Khách hàng chưa cập nhật</option>*@
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row pb-3">
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <label>Địa Chỉ</label>
+                                <input type="text" id="txtAddress" name="cusAdress" class="form-control" value="@CusDetail.Address" placeholder="Địa chỉ" />
+                            </div>
+                        </div>
+                        <div class="row pb-3">
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <label>Trạng thái</label>
+                                <select class="form-control" id="cbbStatusUpdate" name="cbbStatusUpdate">
+                                    <option value="1">Hoạt động</option>
+                                    <option value="0">Tạm dừng</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" id="btnSaveEdit" onclick="saveEditCustomer(@CusDetail.ID)" class="btn btn-primary px-3">Lưu</button>
+                        </div>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('.date').datepicker({
+           dateFormat: "dd/mm/yy"
+        });
+
+        $('#EditCustomer #cmbSex').val(@CusDetail.Sex);
+        $('#EditCustomer #cbbStatusUpdate').val(@CusDetail.Status);
+
+    }); //end document.ready
+</script>

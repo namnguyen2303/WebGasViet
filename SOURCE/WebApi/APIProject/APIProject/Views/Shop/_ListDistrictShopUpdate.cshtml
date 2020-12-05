@@ -1,0 +1,13 @@
+﻿
+@using Data.DB
+@using Data.Model.APIWeb
+@model ListShopOutputModel
+<select class="form-control" id="slDistrictShopUpdate" name="DistrictID">
+    @{
+        <option value="0">Tất cả Quận/Huyện</option>
+        foreach (var d in (List<District>)ViewBag.listDistrictShopUpdate)
+        {
+            <option value="@d.Code" @(Model.DistrictID == @d.Code ? Html.Raw("selected") : Html.Raw(""))>@d.Name</option>
+        }
+    }
+</select>

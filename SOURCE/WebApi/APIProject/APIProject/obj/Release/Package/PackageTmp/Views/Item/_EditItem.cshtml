@@ -1,0 +1,128 @@
+﻿@using Data.Utils;
+@using Data.Model.APIWeb;
+@model CreateItemInputModel
+<div class="modal fade" id="EditItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-fw fa-shopping-cart"></i>Sửa sản phẩm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="form_update_item" name="form_update_item">
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Danh mục</label> *</p>
+                            <select class="form-control" id="cbbCategoryUpdate" name="CategoryID">
+                                @{
+                                    foreach (var p in ViewBag.listCategory)
+                                    {
+                                        <option value="@p.CategoryID" @(Model.CategoryID == @p.CategoryID ? Html.Raw("selected") : Html.Raw(""))>@p.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Mã sản phẩm</label> *</p>
+                            <input type="text" readonly class="form-control" id="CodeEdit" name="Code" placeholder="Nhập mã sản phẩm..." value="@Model.Code">
+                            <input type="hidden" name="ID" value="@Model.ID" />
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Tên sản phẩm</label> *</p>
+                            <input type="text" class="form-control" id="NameEdit" name="Name" placeholder="Nhập tên sản phẩm..." value="@Model.Name" />
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Trạng thái</label> *</p>
+                            <select id="StatusCreate" name="Status" class="form-control">
+                                <option value="@SystemParam.ACTIVE_FALSE" @(Model.Status.Equals(SystemParam.ACTIVE_FALSE) ? Html.Raw("selected") : Html.Raw(""))>Ngừng hoạt động</option>
+                                <option value="@SystemParam.ACTIVE" @(Model.Status.Equals(SystemParam.ACTIVE) ? Html.Raw("selected") : Html.Raw(""))>Đang hoạt động</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Giá tiền</label> *</p>
+                            <input type="text" class="form-control number" id="PriceEdit" name="Price" placeholder="Nhập giá tiền..." value="@String.Format("{0:n0}", Convert.ToInt32(Model.Price))" />
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Ảnh sản phẩm</label> *</p>
+                            <div class="col-md-12 col-sm-12 col-12" id="addImage">
+                                <a href="" class="text-bold mb-3" style="width:100%;height:100%; color: #5A5A5A;">
+                                    <img id="Imgtag" src="https://cdn4.iconfinder.com/data/icons/social-communication/142/add_photo-512.png" class="col-ml-2 col-md-2 px-0" alt="Chọn" />
+                                </a>
+                                <div class="items cursor-pointer col-md-6 pl-0">
+                                    <div class="article" id="AddImage">
+                                        <div id="tagImgDiv" style="box-sizing:border-box;display:inline-block;margin-top:10px;"><img width="180" height="120" id="imgTag" src="@Model.ImageUrl" alt="your image" /></div>
+                                        <input value="@Model.ImageUrl" type="hidden" id="txt-url-image" name="ImageUrl" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Ghi chú</label> *</p>
+                            <textarea class="form-control" placeholder="Thêm ghi chú..." id="NoteEdit" name="Note"> @Model.Note</textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary px-3" onclick="SaveEditItem();">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.number').keyup(function () {
+            $val = cms_decode_currency_format($(this).val());
+            $(this).val(cms_encode_currency_format($val));
+        });
+
+        $('#form_update_item #cmbCategoryUpdate').val(@Model.CategoryID);
+
+    });
+
+    $("#addImage").off('click').on('click', function (e) {
+        e.preventDefault();
+        var fider = new CKFinder();
+
+        fider.selectActionFunction = function (fileUrl) {
+            $("#tagImgDiv ").remove();
+            $("#AddImage").append('<div id="tagImgDiv" style="box-sizing:border-box;display:inline-block;margin-top:10px;"><img width="180" height="120" id="imgTag" src="' + fileUrl + '" alt="your image" /></div>');
+            $("#txt-url-image").val(fileUrl);
+        }
+        fider.popup();
+    });
+
+    //Format money in textbox
+    function cms_encode_currency_format(num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    }
+
+    function cms_decode_currency_format(obs) {
+        if (obs == '')
+            return 0;
+        else
+            return parseInt(obs.replace(/,/g, ''));
+    }
+</script>
+@*<script type="text/javascript">
+        function DeleteImg() {
+            $("#tagImgDiv ").remove();
+            $("#txt-url-image").val("");
+        }
+    </script>*@

@@ -1,0 +1,63 @@
+﻿
+@using Data.Models.WebModels.Class
+@using PagedList.Mvc
+@model  PagedList.IPagedList<GetListClassModels>
+
+
+
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr style="background-color:#636363; color:white">
+                    <th>STT</th>
+                    <th>Tên lớp</th>
+                    <th>Giáo viên dạy</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Cơ sở</th>
+                    <th>Trang thái</th>
+                    <th>Ngày tạo</th>
+                    <th style="width:120px">Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+
+                    int i = ViewBag.STT;
+
+                    foreach (var data in Model)
+                    {
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>@data.NAME</td>
+                            <td>@data.TEACHER_NAME</td>
+                            <td>@data.GET_STRING_START_DATE()</td>
+                            <td>@data.BRANCH_NAME</td>
+                            <td>@data.GET_STRING_STATUS()</td>
+                            <td>@data.GET_STRING_CRETATE_DATE()</td>
+                            <td>
+                                <a class="btn btn-primary btn-sm" onclick="UpdateClass(@data.ID)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                <a class="btn btn-danger btn-sm" onclick="ShowDeleteClass(@data.ID)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+
+            </tbody>
+
+
+        </table>
+
+    </div>
+</div>
+
+<div class="_page offset-1 offset-md-3 mt-2">
+    @Html.PagedListPager(Model, Page => Url.Action("Seach", new { Page, NAME = ViewBag.CLASS_NAME, TEACHER_ID = ViewBag.CLASS_TEACHER_ID, BRANCH_ID = ViewBag.CLASS_BRANCH_ID, STATUS = ViewBag.CLASS_STATUS, START_DATE = ViewBag.CLASS_START_DATE, TUTOR_CLASS = ViewBag.CLASS_TUTOR_CLASS }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "Table_Class"
+}
+
+       ))
+</div>

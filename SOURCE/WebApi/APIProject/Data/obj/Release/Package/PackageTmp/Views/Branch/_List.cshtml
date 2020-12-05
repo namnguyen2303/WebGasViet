@@ -1,0 +1,60 @@
+﻿
+@using Data.Models.WebModels.Branch
+@using PagedList.Mvc
+@model  PagedList.IPagedList<GetBranchModels>
+
+
+
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead>
+                <tr style="background-color:#636363; color:white">
+                    <th>STT</th>
+                    <th>Tên cơ sở</th>
+                    <th>Địa chỉ</th>
+                    <th>Số điện thoại</th>
+                    <th>Ngày tạo</th>
+                    <th colspan="2">Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    /**/
+
+
+                    int i = ViewBag.STT;
+
+                    foreach (var data in Model)
+                    {
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>@data.NAME</td>
+                            <td>@data.ADDRESS</td>
+                            <td>@data.PHONE</td>
+                            <td>@data.GET_STRING_CREATED_DATE()</td>
+                            <td>
+                                <a title="Chỉnh sửa" class="btn btn-primary btn-sm mr-2" onclick="GetBranchById(@data.ID)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                <a title="Xóa" class="btn btn-danger ml-2 btn-sm" onclick="ShowFormDeleteBranch(@data.ID)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+
+            </tbody>
+
+
+        </table>
+        <div class="_page offset-1 offset-md-1 mt-2">
+            @Html.PagedListPager(Model, Page => Url.Action("Seach", new { Page, ID = ViewBag.ID_BRANCH }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+           {
+               HttpMethod = "GET",
+               UpdateTargetId = "Table_Branch"
+           }
+
+               ))
+        </div>
+    </div>
+</div>
+

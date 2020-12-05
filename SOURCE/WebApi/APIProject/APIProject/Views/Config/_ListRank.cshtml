@@ -1,0 +1,120 @@
+﻿
+@using Data.DB
+@using Data.Utils
+@using Data.Model.APIWeb
+@using PagedList.Mvc
+@using PagedList
+@model IPagedList<Ranking>
+
+<table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md">
+    <thead class="text-center text-white bg-thead">
+        <tr>
+            @*<th>STT</th>*@
+            <th>Cấp Độ</th>
+            <th>Xếp Hạng</th>
+            <th>Vùng Giá Trị (Điểm)</th>
+            @*<th>Trạng Thái</th>*@
+            @*<th class="widthCreatedDate">Ngày Tạo</th>*@
+            <th>Mô Tả</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @{
+            int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+            foreach (var data in Model)
+            {
+                <tr>
+                    @*<td>@stt</td>*@
+                    <td>@data.Level</td>
+                    <td>@data.RankName</td>
+                    <td>@data.MinPoint điểm - @data.MaxPoint điểm</td>
+                    @*@{
+                        if (@data.IsActive == 1)
+                        {
+                            <td>Đang Hoạt động</td>
+                        }
+                        else
+                        {
+                            <td>Ngừng Hoạt động</td>
+                        }
+                    }*@
+                    @*<td>@data.CraeteDate.ToString(SystemParam.CONVERT_DATETIME)</td>*@
+                    <td>@data.Descriptions</td>
+                    <td>
+                        <a data-toggle="modal" data-target="#editRank" data-placement="top" title="Chỉnh sửa thông tin." onclick="showEditRank(@data.ID)" class="cursor-pointer">
+                            <i class="btnEdit fa fa-fw fa-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+                stt++;
+             }
+        }
+    </tbody>
+</table>
+
+<div id="editArea">
+
+</div>
+
+<div class="modal fade" id="addRank" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-credit-card" aria-hidden="true"></i> Thêm Xếp Hạng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="frmAddRank">
+                <div class="modal-body">
+                    <div class="row mt-1">
+                        <label class="col-md-4">Cấp Độ</label>
+                        <div class="col-md-8"><input class="form-control" type="text" id="txtLevel" placeholder="Cấp Độ" /></div>
+                    </div>
+                    <div class="row mt-1">
+                        <label class="col-md-4">Xếp Hạng</label>
+                        <div class="col-md-8">
+                            <input class="form-control" id="txtRankName" type="text" placeholder="Xếp Hạng..." />
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <label class="col-md-4">Vùng Giá Trị</label>
+                    </div>
+
+                    <div class="row mt-1">
+                        <label class="col-md-4">Từ</label>
+                        <div class="col-md-8">
+                            <input class="form-control" name="MinPoint" id="txtMinPoint" type="text" placeholder="Giá trị bắt đầu..." />
+                        </div>
+                    </div>
+
+                    <div class="row mt-1">
+                        <label class="col-md-4">Đến</label>
+                        <div class="col-md-8">
+                            <input class="form-control" name="MaxPoint" id="txtMaxPoint" type="text" placeholder="Giá trị kết thúc..." />
+                        </div>
+                    </div>
+
+                    <div class="row mt-1 mb-1">
+                        <label class="col-md-4">Ghi chú</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" id="txtDes" rows="3" placeholder="Nhập ghi chú..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary px-3" onclick="addRank()">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@*@Html.PagedListPager(
+    Model,
+    page => Url.Action("LoadRank", "Config", new { Page = page }),
+    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "ListRank" })
+    )*@
+

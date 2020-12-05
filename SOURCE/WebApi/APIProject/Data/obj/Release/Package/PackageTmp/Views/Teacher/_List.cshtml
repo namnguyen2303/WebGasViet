@@ -1,0 +1,70 @@
+﻿@using Data.Models.WebModels.Teacher
+@using PagedList.Mvc
+@model  PagedList.IPagedList<GetTeacherModels>
+@*Bản dữ liệu của giáo viên*@
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr class="" style="background-color:#636363; color:white">
+                    <th>STT</th>
+                    <th>Tên giáo viên</th>
+                    <th>Ngày sinh</th>
+                    <th>Số điện thoại</th>
+                    <th>Địa chỉ</th>
+                    <th>Trạng thái</th>
+                    <th>Ngày tạo</th>
+                    <th>Ngày chính thức</th>
+                    <th>Ngày thử việc</th>
+                    <th style="width:120px">Chức năng</th>
+                    <th style="width:50px">
+                        <input type="checkbox" name="CheckBooTeacherkAll" id="CheckBooTeacherkAll" value="" />
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="ListTeacher">
+                @{
+
+                    int i = ViewBag.STT;
+
+                    foreach (var data in Model)
+                    {
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>@data.NAME</td>
+                    <td>@data.GET_STRING_BIRTHDAY()</td>
+                    <td>@data.PHONE</td>
+                    <td>@data.ADDRESS</td>
+                    <td>@data.GET_STRING_STATUST()</td>
+                    <td>@data.GET_STRING_CREATED_DATE()</td>
+                    <td>@data.GET_STRING_DATE_CONTRACT()</td>
+                    <td>@data.GET_STRING_DATE_TRIAL()</td>
+
+                    
+                    <td>
+                        <a class="btn btn-primary btn-sm" onclick="window.location='/teacher/Update?id=@data.ID&Page=@ViewBag.PAGE_LIST&Count=@ViewBag.LIST_COUNT'"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <a class="btn btn-danger btn-sm" onclick="ShowFromDeleteTeacher(@data.ID)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                    </td>
+                    <td>
+                        <input type="checkbox" class="TeacherCheckbox" value="@data.ID" name="TeacherId" />
+                    </td>
+                </tr>
+                        i++;
+                    }
+                }
+
+            </tbody>
+            </table>
+        <input type="hidden" id="txt_page_list_teacher" value="@ViewBag.PAGE_LIST" class="txt_page_list_teacher"/>
+        <div class="_page offset-1 offset-md-3 mt-2">
+            @*phân trang*@
+            @Html.PagedListPager(Model, Page => Url.Action("Seach", new { Page, Count = ViewBag.LIST_COUNT, NAME = ViewBag.TEACHER_NAME, TEACHER_BIRDTHDAY = ViewBag.TEACHER_BIRDTHDAY, TEACHER_PHONE = ViewBag.TEACHER_PHONE,TEACHER_ADDRESS=ViewBag.TEACHER_ADDRESS, CREATED_DATE = ViewBag.CREATED_DATE,CREATED_TRIAL=ViewBag.CREATED_TRIAL, STATUS = ViewBag.STATUS }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+       {
+           HttpMethod = "GET",
+           UpdateTargetId = "Table_Teacher"
+       }
+
+               ))
+        </div>
+            </div>
+    </div>

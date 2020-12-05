@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIProject", "APIProject\APIProject.csproj", "{A64825C6-D6FE-4C8E-9AF6-E44C781C69FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{A7181C06-E2D0-481A-96E1-D3BA89F63295}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A64825C6-D6FE-4C8E-9AF6-E44C781C69FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A64825C6-D6FE-4C8E-9AF6-E44C781C69FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A64825C6-D6FE-4C8E-9AF6-E44C781C69FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A64825C6-D6FE-4C8E-9AF6-E44C781C69FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7181C06-E2D0-481A-96E1-D3BA89F63295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7181C06-E2D0-481A-96E1-D3BA89F63295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7181C06-E2D0-481A-96E1-D3BA89F63295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7181C06-E2D0-481A-96E1-D3BA89F63295}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC4A7BD1-4369-4F34-844E-B57F777E031B}
+	EndGlobalSection
+EndGlobal

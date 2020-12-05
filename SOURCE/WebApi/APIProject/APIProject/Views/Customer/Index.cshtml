@@ -1,0 +1,221 @@
+﻿@using Data.DB
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="" id="View">
+    <div class="col-md-12">
+        <div class="breadcrumb-holder">
+            <div class="row mb-3 mt-3">
+                <div class="col-md-10 col-sm-9 col-8 text-dark px-0">
+                    <h4><i class="fa fa-fw fa-users"></i> Quản lý khách hàng</h4>
+                </div>
+                @*<div class="col-md-2 col-sm-3 col-4 text-right px-0">
+                        <button class="btn width-btn-create-batch btn-dekko" id="btnAddPoint" data-toggle="modal" data-target="#mdAddPoint"><i class="fa fa-fw fa-plus"></i> Thêm điểm</button>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-2 offset-md-0 col-sm-6 mt-1 text-center">
+            <label>Tên/Số điện thoại</label>
+        </div>
+        <div class="col-md-4 offset-md-0 col-sm-6 mt-1">
+            <input type="text" class="form-control" id="txtPhone" placeholder="Nhập tên hoặc số điện thoại khách hàng" />
+        </div>
+        <div class="col-md-2 offset-md-0 col-sm-6 mt-1 text-center">
+            <label>Từ ngày</label>
+        </div>
+        <div class="col-md-4 offset-md-0 col-sm-6 mt-1">
+            <input type="text" class="form-control relative-icon-calendar date" id="dtFromdateIndex" placeholder="Từ ngày" />
+            <i class="fa fa-calendar absolute-icon-calendar"></i>
+        </div>
+        @*<div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                        <input type="text" class="form-control relative-icon-calendar date" id="dtFromdateIndex" placeholder="Từ ngày" />
+                        <i class="fa fa-calendar absolute-icon-calendar"></i>
+                    </div>
+                    <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                        <input type="text" class="form-control relative-icon-calendar date" id="dtTodateIndex" placeholder="Đến ngày" />
+                        <i class="fa fa-calendar absolute-icon-calendar"></i>
+                    </div>
+                    <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                        <select class="form-control" id="slProvince" onchange="loadListDistrict(this.value)">
+                            @{
+                                <option>Tất cả Tỉnh/Thành phố</option>
+                                foreach (var p in (List<Province>)ViewBag.listCity)
+                                {
+                                    if (@p.Code.Equals(1))
+                                    {
+                                        <option value="@p.Code">@p.Name</option>
+            }
+                                    else
+                                    {
+                                        <option value="@p.Code">@p.Name</option>
+            }
+                                }
+                            }
+                        </select>
+                    </div>*@
+        @*<div class="col-md-3 offset-md-0 col-sm-6 mt-1 cursor-pointer" id="ListDistrict">
+                @{ Html.RenderAction("LoadDistrict", "Customer", new { ProvinceID = 1 });}
+            </div>*@
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-2 offset-md-0 col-sm-6 mt-1 text-center">
+            <label>Tỉnh thành</label>
+        </div>
+        <div class="col-md-4 offset-md-0 col-sm-6 mt-1">
+            <select class="form-control" id="slProvince" onchange="loadListDistrict(this.value)">
+                @{
+                    <option>Tất cả Tỉnh/Thành phố</option>
+                    foreach (var p in (List<Province>)ViewBag.listCity)
+                    {
+                        if (@p.Code.Equals(1))
+                        {
+                            <option value="@p.Code">@p.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@p.Code">@p.Name</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-2 offset-md-0 col-sm-6 mt-1 text-center">
+            <label>Đến ngày</label>
+        </div>
+        <div class="col-md-4 offset-md-0 col-sm-6 mt-1">
+            <input type="text" class="form-control relative-icon-calendar date" id="dtTodateIndex" placeholder="Đến ngày" />
+            <i class="fa fa-calendar absolute-icon-calendar"></i>
+        </div>
+
+        @*<div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                <select class="form-control" id="cmbRoleCus">
+                    <option>Tất cả đối tượng</option>
+                    <option value="2">
+                        Đại lý
+                    </option>
+                    <option value="1">
+                        Khách hàng
+                    </option>
+                </select>
+            </div>*@
+        @*<div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                <select class="form-control" id="cbbStatusCustomer">
+                    <option>Tất cả trạng thái</option>
+                    <option value="1">
+                        Hoạt động
+                    </option>
+                    <option value="0">
+                        Tạm dừng
+                    </option>
+                </select>
+            </div>*@
+        @*<div class="col-md-6 offset-md-0 col-sm-6 mt-1">
+                <input type="text" class="form-control" id="txtPhone" placeholder="Nhập tên hoặc số điện thoại khách hàng" />
+            </div>*@
+        @*<div class="col-md-2 offset-md-0 col-sm-2 offset-sm-5 mt-1 col-4 offset-4">
+                <button class="btn btn-primary" id="btnSearch" onclick="searchCustomer()"><i class="fa fa-search"></i> Tìm kiếm</button>
+            </div>*@
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-2 offset-md-0 col-sm-6 mt-1 text-center">
+            <label>Quận/huyện</label>
+        </div>
+        <div class="col-md-4 offset-md-0 col-sm-6 mt-1 cursor-pointer" id="ListDistrict">
+            @{ Html.RenderAction("LoadDistrict", "Customer", new { ProvinceID = 1 });}
+        </div>
+    </div>
+    <div class="mt-1  mb-1 d-flex justify-content-end">
+        <button class="btn btn-primary" id="btnSearch" onclick="searchCustomer()"><i class="fa fa-search"></i> Tìm kiếm</button>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" id="ListCustomer">
+            @{
+                Html.RenderAction("Search", "Customer", new { Page = 1, Phone = "" });
+            }
+        </div>
+    </div>
+
+
+    <!-- start modal -->
+    <div class="modal fade" id="mdAddPoint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cộng điểm khách hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="frmAddPoint" method="post">
+                    <div class="modal-body" id="">
+
+                        <div class="row pb-3">
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <label>SĐT Khách hàng</label>
+                                <input type="text" class="form-control" name="phoneNum" id="txtPhoneNumber" placeholder="Nhập số điện thoại" />
+                                <input type="hidden" class="form-control" name="" id="txtID" />
+                            </div>
+                        </div>
+                        <div class="row pb-3">
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <label>Số điểm</label>
+                                <input type="number" class="form-control" name="pointNum" id="txtPoint" placeholder="Nhập số điểm muốn thêm">
+                            </div>
+                        </div>
+                        <div class="row pb-3">
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <label>Lý do</label>
+                                <textarea class="form-control" id="txtNote" name="Note" placeholder="Nhập lý do thêm điểm"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer row">
+                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" id="btnSaveAdd" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $("#dtFromdateIndex").on('change', function (e) {
+            if ($("#dtFromdateIndex").val() == '')
+                $("#btnSearch").click();
+        });
+
+        $("#dtTodateIndex").on('change', function (e) {
+            if ($("#dtTodateIndex").val() == '')
+                $("#btnSearch").click();
+        });
+        $("#cmbRoleCus").on('change', function (e) {
+            $("#btnSearch").click();
+        });
+
+    })
+</script>
+<!-- end modal -->
+@*autocomplate*@
+<script>
+    $("#txtPhone").autocomplete({
+        source: function (request, response) {
+            var name = $("#txtPhone").val();
+            $.ajax({
+                type: "POST",
+                url: "/Customer/SearchCusName",
+                data: { Name: name },
+                success: response,
+                dataType: 'json'
+            });
+        }
+    });
+
+</script>

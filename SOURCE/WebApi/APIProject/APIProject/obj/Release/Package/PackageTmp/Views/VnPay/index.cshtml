@@ -1,0 +1,24 @@
+﻿@using Data.DB
+@using Data.Model
+@model VnpViewModel
+@{
+    ViewBag.Title = "index";
+    Layout = null;
+}
+
+
+<div class="col-md-12">
+    <label for="test1">Thông tin kết quả giao dich:</label>
+</div>
+<div class="col-md-12">
+    <label for="test1">+ Mã đơn hàng qua VNPAY: @Model.vnp_TxnRef</label>
+</div>
+<div class="col-md-12">
+    <label for="test1">+ Số tiền: @Model.vnp_money</label>
+</div>
+<div class="col-md-12">
+    <label for="test1">+ Thời gian: @Model.vnp_time</label>
+</div>
+<div class="col-md-12">
+    <label for="test1">+ Trạng thái thanh toán: @Model.vnp_type</label>
+</div>

@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DEKKOModelStoreContainer" CdmEntityContainer="Connect">
+    <EntitySetMapping Name="AgencyCodes">
+      <EntityTypeMapping TypeName="DEKKOModel.AgencyCode">
+        <MappingFragment StoreEntitySet="AgencyCode">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="UserCreateID" ColumnName="UserCreateID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="CraeteDate" ColumnName="CraeteDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Batches">
+      <EntityTypeMapping TypeName="DEKKOModel.Batch">
+        <MappingFragment StoreEntitySet="Batch">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BatchName" ColumnName="BatchName" />
+          <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="QTY" ColumnName="QTY" />
+          <ScalarProperty Name="Point" ColumnName="Point" />
+          <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
+          <ScalarProperty Name="CraeteDate" ColumnName="CraeteDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cards">
+      <EntityTypeMapping TypeName="DEKKOModel.Card">
+        <MappingFragment StoreEntitySet="Card">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
+          <ScalarProperty Name="CustomerActiveID" ColumnName="CustomerActiveID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Seri" ColumnName="Seri" />
+          <ScalarProperty Name="TelecomType" ColumnName="TelecomType" />
+          <ScalarProperty Name="CardType" ColumnName="CardType" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+          <ScalarProperty Name="ActiveDate" ColumnName="ActiveDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CraeteDate" ColumnName="CraeteDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CategoryNews">
+      <EntityTypeMapping TypeName="DEKKOModel.CategoryNew">
+        <MappingFragment StoreEntitySet="CategoryNews">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CraeteDate" ColumnName="CraeteDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="DEKKOModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Tocken" ColumnName="Tocken" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="AvatarUrl" ColumnName="AvatarUrl" />
+          <ScalarProperty Name="ProvinceCode" ColumnName="ProvinceCode" />
+          <ScalarProperty Name="DistrictCode" ColumnName="DistrictCode" />
+          <ScalarProperty Name="Point" ColumnName="Point" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ExpireTocken" ColumnName="ExpireTocken" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="CraeteDate" ColumnName="CraeteDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Districts">
+      <EntityTypeMapping TypeName="DEKKOModel.District">
+        <MappingFragment StoreEntitySet="District">
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="ProvinceCode" ColumnName="ProvinceCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Gifts">
+      <EntityTypeMapping TypeName="DEKKOModel.Gift">
+        <MappingFragment StoreEntitySet="Gift">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Point" ColumnName="Point" />
+          <ScalarProperty Name="UrlImage" ColumnName="UrlImage" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+          <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+          <ScalarProperty Name="CraeteDate" ColumnName="CraeteDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MembersPointHistories">
+      <EntityTypeMapping TypeName="DEKKOModel.MembersPointHistory">
+        <MappingFragment StoreEntitySet="MembersPointHistory">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="Point" ColumnName="Point" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="AddPointCode" ColumnName="AddPointCode" />
+          <ScalarProperty Name="TypeAdd" ColumnName="TypeAdd" />
+          <ScalarProperty Name="CraeteDate" ColumnName="CraeteDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Messages">
+      <EntityTypeMapping TypeName="DEKKOModel.Message">
+        <MappingFragment StoreEntitySet="Message">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="Viewed" ColumnName="Viewed" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="CraeteDate" ColumnName="CraeteDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="News">
+      <EntityTypeMapping TypeName="DEKKOModel.News">
+        <MappingFragment StoreEntitySet="News">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="UrtImage" ColumnName="UrtImage" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="TypeSend" ColumnName="TypeSend" />
+          <ScalarProperty Name="CraeteDate" ColumnName="CraeteDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Notifications">
+      <EntityTypeMapping TypeName="DEKKOModel.Notification">
+        <MappingFragment StoreEntitySet="Notification">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="Viewed" ColumnName="Viewed" />
+          <ScalarProperty Name="CraeteDate" ColumnName="CraeteDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="DEKKOModel.Product">
+        <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BatchID" ColumnName="BatchID" />
+          <ScalarProperty Name="CustomerActiveID" ColumnName="CustomerActiveID" />
+          <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+          <ScalarProperty Name="ActiveDate" ColumnName="ActiveDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CraeteDate" ColumnName="CraeteDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Provinces">
+      <EntityTypeMapping TypeName="DEKKOModel.Province">
+        <MappingFragment StoreEntitySet="Province">
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Requests">
+      <EntityTypeMapping TypeName="DEKKOModel.Request">
+        <MappingFragment StoreEntitySet="Request">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UserModifiedID" ColumnName="UserModifiedID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="GiftID" ColumnName="GiftID" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Point" ColumnName="Point" />
+          <ScalarProperty Name="CraeteDate" ColumnName="CraeteDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="DEKKOModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+          <ScalarProperty Name="Tocken" ColumnName="Tocken" />
+          <ScalarProperty Name="CraeteDate" ColumnName="CraeteDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Warranties">
+      <EntityTypeMapping TypeName="DEKKOModel.Warranty">
+        <MappingFragment StoreEntitySet="Warranty">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
+          <ScalarProperty Name="WarrantyCode" ColumnName="WarrantyCode" />
+          <ScalarProperty Name="QTY" ColumnName="QTY" />
+          <ScalarProperty Name="Point" ColumnName="Point" />
+          <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+          <ScalarProperty Name="CraeteDate" ColumnName="CraeteDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WarrantyCards">
+      <EntityTypeMapping TypeName="DEKKOModel.WarrantyCard">
+        <MappingFragment StoreEntitySet="WarrantyCard">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CustomerActiveID" ColumnName="CustomerActiveID" />
+          <ScalarProperty Name="WarrantyCardCode" ColumnName="WarrantyCardCode" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ActiveDate" ColumnName="ActiveDate" />
+          <ScalarProperty Name="CraeteDate" ColumnName="CraeteDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Configs">
+      <EntityTypeMapping TypeName="DEKKOModel.Config">
+        <MappingFragment StoreEntitySet="Config">
+          <ScalarProperty Name="MaxPointPerDay" ColumnName="MaxPointPerDay" />
+          <ScalarProperty Name="MinPointPerDay" ColumnName="MinPointPerDay" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

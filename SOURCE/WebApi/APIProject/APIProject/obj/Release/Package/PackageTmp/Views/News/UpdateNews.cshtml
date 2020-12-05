@@ -1,0 +1,183 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Data.Utils
+@using Data.Model.APIWeb
+@model ListNewsWebOutputModel
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-6 col-sm-6 col-12 text-dark px-0">
+                <h4><i class="fa fa-fw fa-newspaper-o"></i> Chỉnh sửa bài viết</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-10 offset-md-1 col-sm-10 offset-sm-1 col-12 bg-white radius-form box-shadow-form mb-5" id="formUpdateNews">
+    <!-- START col-md-8 panel form create -->
+    <div class="row pb-3">
+        <div class="col-md-2 col-sm-6 col-12 mt-3">
+            <label>Thứ tự ưu tiên</label>
+            <input type="text" class="form-control number" id="txtDisplay" value="@Model.Display" placeholder="Nhập thứ tự" />
+        </div>
+        <div class="col-md-3 col-sm-6 col-12 mt-3">
+            <label>Đối tượng</label>
+            <select class="form-control" id="cbbTypeSend" value="@Model.TypeSend">
+                <option value="@SystemParam.TYPE_SEND_ALL">Tất cả</option>
+                <option value="@SystemParam.TYPE_SEND_CUSTOMER">Khách hàng</option>
+                <option value="@SystemParam.TYPE_SEND_AGENCY">Đại lý</option>
+            </select>
+        </div>
+        <div class="col-md-3 col-sm-6 col-12 mt-3">
+            <label>Danh mục</label>
+            <select class="form-control" id="cbbType" value="@Model.Type" onchange="getItemNews(this.value)">
+                <option value="@SystemParam.TYPE_PRODUCT">@SystemParam.TYPE_PRODUCT_STRING</option>
+                <option value="@SystemParam.TYPE_NEWS">@SystemParam.TYPE_NEWS_STRING</option>
+                <option value="@SystemParam.TYPE_PROMOTION">@SystemParam.TYPE_PROMOTION_STRING</option>
+                <option value="@SystemParam.TYPE_PRICE_QUOTE">@SystemParam.TYPE_PRICE_QUOTE_STRING</option>
+            </select>
+        </div>
+        <div class="col-md-4 col-sm-6 col-12 mt-3" id="divItem">
+            <label id="labelItem">Sẩn phẩm</label>
+            <select class="form-control" id="cbbItemNews">
+                @{
+                    foreach (var p in ViewBag.itemNewsProduct)
+                    {
+                        <option value="@p.CategoryID" @(Model.CategoryID == p.CategoryID ? Html.Raw("selected") : Html.Raw(""))>@p.Name</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row pb-3">
+        <div class="col-md-12 col-sm-12 col-12">
+            <label>Tiêu đề</label>
+            <input type="text" class="form-control" id="txtTitle" value="@Model.Title" placeholder="Nhập tiêu đề bài viết" />
+        </div>
+    </div>
+    <div class="row pb-3">
+        <div class="col-md-12 col-sm-12 col-12">
+            <label>Mô tả</label>
+            <textarea class="form-control" rows="3" id="txtDescription" placeholder="Nhập nội dung mô tả">@Model.Depcription</textarea>
+        </div>
+    </div>
+
+    <div class="row pb-3">
+        <div class="col-md-3 col-sm-12 col-12">
+            <a href="" class="text-bold mb-3" style="width:100%;height:100%; color: #5A5A5A;" id="add_logo_place">
+                Chọn ảnh nổi bật
+                <div class="news">
+                    <div class="article" id="AddLogoPlace">
+                        <img id="AddImgLogoPlace" src="@Model.UrlImage" class="col-md-12 px-0 contentImg" alt="your image" />
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row pb-3">
+        <div class="col-md-12 col-sm-12 col-12">
+            <label>Nội dung</label>
+            <textarea name="editor" class="form-control mb-3" id="editor">@Model.Content</textarea>
+        </div>
+    </div>
+
+    <input type="hidden" id="txtFromDateNews" value="@ViewBag.FromDateNews" />
+    <input type="hidden" id="txtToDateNews" value="@ViewBag.ToDateNews" />
+    <input type="hidden" id="txtTitleNews" value="@ViewBag.TitleNews" />
+    <input type="hidden" id="txtCreateUserIDNews" value="@ViewBag.CreateUserIDNews" />
+    <input type="hidden" id="txtTypeNews" value="@ViewBag.TypeNews" />
+    <input type="hidden" id="txtStatusNews" value="@ViewBag.StatusNews" />
+    <input type="hidden" id="txtPageCurrentNews" value="@ViewBag.PageCurrentNews" />
+
+    @*<div class="col-md-12 border-form mt-2"></div>*@
+
+    <div class="row pb-2 pt-2 text-right">
+        <div class="col-md-12 col-sm-12 col-12 txtBeauty">
+            @*<button class="btn btn-outline-secondary" onclick="searchNewsAgain();"><i class="fa fa-fw fa-arrow-left"></i> Trở về</button>*@
+            @*<a class="btn btn-outline-secondary" href="/News/Index"><i class="fa fa-fw fa-arrow-left"></i> Trở về</a>*@
+            @{
+                if (Model.Status == SystemParam.STATUS_NEWS_ACTIVE)
+                {
+                    <button class="btn btn-info" onclick="updateNews(@Model.ID ,@SystemParam.UPDATE_NEWS_DEFAULT);"><i class="fa fa-fw fa-check"></i> Cập nhật</button>
+                }
+                else
+                {
+                    <button class="btn btn-info" onclick="updateNews(@Model.ID ,@SystemParam.UPDATE_NEWS_DEFAULT);"><i class="fa fa-fw fa-file-word-o"></i> Lưu nháp</button>
+                    <button class="btn btn-success" onclick="updateNews(@Model.ID ,@SystemParam.UPDATE_NEWS_POST);"><i class="fa fa-fw fa-check"></i> Đăng bài</button>
+                }
+            }
+        </div>
+    </div>
+</div> <!-- END col-md-8 panel form create -->
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#formUpdateNews #cbbItemNews').val(@Model.CategoryID);
+
+        var category = $('#formUpdateNews #cbbType').val();
+        if (category == 4) {
+            $('#cbbItemNews').removeAttr('disabled');
+            $('#labelItem').css('color', '#5A5A5A');
+        }
+        else {
+            $('#cbbItemNews').attr("disabled", "disabled");
+            $('#labelItem').css('color', 'hsl(0, 0%, 85%)');
+        }
+
+        CKEDITOR.replace('editor', {
+            height: 300,
+            disableObjectResizing: true
+        });
+
+        CKEDITOR.on('dialogDefinition', function (ev) {
+            var dialogName = ev.data.name;
+            var dialogDefinition = ev.data.definition;
+            //var editorO = ev.data.definition.dialog.getParentEditor();
+
+            if (dialogName == 'image' || dialogName == 'image2') {
+                var infoTab = dialogDefinition.getContents('info');
+
+                if (dialogName == 'image') {
+                    infoTab.remove('txtHeight');
+                    infoTab.remove('txtWidth');
+                    infoTab.remove('ratioLock');
+                }
+                else {
+                    infoTab.remove('height');
+                    infoTab.remove('width');
+                    infoTab.remove('lock');
+                }
+            }
+        });
+
+    });
+
+    function getItemNews(category) {
+        if (category == 4) {
+            $('#cbbItemNews').removeAttr('disabled');
+            $('#labelItem').css('color', '#5A5A5A');
+        }
+        else {
+            $('#cbbItemNews').attr("disabled", "disabled");
+            $('#labelItem').css('color', 'hsl(0, 0%, 85%)');
+        }
+    }
+
+    $("#add_logo_place").off('click').on('click', function (e) {
+        e.preventDefault();
+        var fider = new CKFinder();
+
+        fider.selectActionFunction = function (fileUrl) {
+            $("#AddImgLogoPlace ").remove();
+            $("#AddLogoPlace").append('<img id="AddImgLogoPlace" src="' + fileUrl + '" class="col-md-12 px-0 border-dekko contentImg" alt="your image" />');
+            var url = window.location.origin + fileUrl;
+            $('#txtAddLogoPlace').val(url);
+        }
+        fider.popup();
+    });
+
+</script>

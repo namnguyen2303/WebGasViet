@@ -1,0 +1,144 @@
+﻿@using Data.DB
+@using Data.Model.APIWeb
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row pb-3 pt-3">
+            <div class="text-dark">
+                <h4><i class="fa fa-fw fa-tachometer"></i> Tổng quan</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row rowCount" id="countDashboard">
+    @*<div class="col-xs-12 col-md-6 col-lg-6 col-xl-4 mb-3" id="card-i">
+            <a href="/Card/Index">
+                <div class="card-box padding-card-home" id="bg-home-card">
+                    <i class="fa fa-credit-card float-right text-white size-icon-cardbox-home"></i>
+                    <h5 class="text-white text-uppercase">Kho thẻ cào</h5>
+                    <h1 class="text-white countCard pb-4">@ViewBag.Count</h1>
+                </div>
+            </a>
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-6 col-xl-4 mb-3">
+            <a href="/Request/Index">
+                <div class="card-box padding-card-home bg-home-gift">
+                    <i class="fa fa-gift float-right text-white size-icon-cardbox-home" style="font-size: 80px"></i>
+                    <h5 class="text-white text-uppercase">Yêu cầu đổi quà</h5>
+                    <h1 class="text-white countGift pb-4">@ViewBag.CountReq</h1>
+                </div>
+            </a>
+        </div>*@
+    <div class="col-xs-12 col-md-6 col-lg-6 col-xl-4 mb-3">
+        <a href="/Customer/Index">
+            <div class="card-box padding-card-home bg-home-customer">
+                <i class="fa fa-users float-right text-white size-icon-cardbox-home"></i>
+                <h5 class="text-white text-uppercase">Khách hàng</h5>
+                <h1 class="text-white countCustomer pb-4">@ViewBag.CountCus</h1>
+            </div>
+        </a>
+    </div>
+    <div class="col-xs-12 col-md-6 col-lg-6 col-xl-4 mb-3">
+        <a href="/Item/Index">
+            <div class="card-box padding-card-home bg-home-item" id="">
+                <i class="fa fa-product-hunt float-right text-white size-icon-cardbox-home"></i>
+                <h5 class="text-white text-uppercase">Sản Phẩm</h5>
+                <h1 class="text-white countItem pb-4">@ViewBag.countItem</h1>
+            </div>
+        </a>
+    </div>
+    <div class="col-xs-12 col-md-6 col-lg-6 col-xl-4 mb-3">
+        <a href="/Order/Index">
+            <div class="card-box padding-card-home bg-home-order" id="">
+                <i class="fa fa-bitcoin float-right text-white size-icon-cardbox-home"></i>
+                <h5 class="text-white text-uppercase">Đơn Hàng</h5>
+                <h1 class="text-white countOrder pb-4">@ViewBag.countOrder</h1>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="row rowCount" id="">
+    @*<div class="col-xs-12 col-md-6 col-lg-6 col-xl-4 mb-3">
+            <a href="/Batch/Index">
+                <div class="card-box padding-card-home bg-home-batch" id="">
+                    <i class="fa fa-shopping-cart float-right text-white size-icon-cardbox-home"></i>
+                    <h5 class="text-white text-uppercase">Lô Hàng</h5>
+                    <h1 class="text-white countBatch pb-4">@ViewBag.CountBatch</h1>
+                </div>
+            </a>
+        </div>*@
+
+    @*<div class="col-xs-12 col-md-6 col-lg-6 col-xl-4 mb-3">
+            <a href="/Message/Index">
+                <div class="card-box padding-card-home bg-home-chat" id="">
+                    <i class="fa fa-wechat float-right text-white size-icon-cardbox-home"></i>
+                    <h5 class="text-white text-uppercase">Chat</h5>
+                    <h1 class="text-white countChat pb-4">0</h1>
+                </div>
+            </a>
+        </div>*@
+
+</div>
+
+
+
+<div class="row rowCount" id="">
+    @*
+
+           <div class="col-xs-12 col-md-6 col-lg-6 col-xl-4 mb-3">
+                <a href="/Message/Index">
+                    <div class="card-box padding-card-home bg-home-chat" id="">
+                        <i class="fa fa-wechat float-right text-white size-icon-cardbox-home"></i>
+                        <h5 class="text-white text-uppercase">Chat</h5>
+                        <h1 class="text-white countChat pb-4">0</h1>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-4 mb-3">
+                <a href="/StatisticPoit/Index">
+                    <div class="card-box padding-card-home bg-home-topPoint" id="">
+                        <i class="fa fa-sort-numeric-desc float-right text-white size-icon-cardbox-home"></i>
+                        <h5 class="text-white text-uppercase">Top Tích Điểm</h5>
+                        <h1 class="text-white countTopPoint pb-4">0</h1>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="row rowCount" id="">
+            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-4 mb-3">
+                <a href="/Config/Index">
+                    <div class="card-box padding-card-home bg-home-config" id="">
+                        <i class="fa fa-gears float-right text-white size-icon-cardbox-home"></i>
+                        <h5 class="text-white text-uppercase">Thiết Lập</h5>
+                        <h1 class="text-white countConfig pb-4">0</h1>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-4 mb-3">
+                <a href="/News/Index">
+                    <div class="card-box padding-card-home bg-home-news" id="">
+                        <i class="fa fa-newspaper-o float-right text-white size-icon-cardbox-home"></i>
+                        <h5 class="text-white text-uppercase">Tin Tức</h5>
+                        <h1 class="text-white countNews pb-4">0</h1>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-4 mb-3">
+                <a href="/User/Index">
+                    <div class="card-box padding-card-home bg-home-user" id="">
+                        <i class="fa fa-user-secret float-right text-white size-icon-cardbox-home"></i>
+                        <h5 class="text-white text-uppercase">Top Tích Điểm</h5>
+                        <h1 class="text-white countUser pb-4">0</h1>
+                    </div>
+                </a>
+            </div>*@
+
+</div>

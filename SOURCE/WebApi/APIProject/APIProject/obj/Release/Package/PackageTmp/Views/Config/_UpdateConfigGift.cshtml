@@ -1,0 +1,148 @@
+﻿@using Data.Model.APIWeb
+@using Data.Utils
+@model ListGiftWebOutputModel
+
+<!-- start modal sửa thiết lập đổi điểm lấy quà,voucher-->
+<div class="modal fade" id="configGiftDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-gift" aria-hidden="true"></i> Sửa thiết lập điểm lấy quà, voucher</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <label>Loại</label>
+                        <select class="form-control" id="cbbType">
+                            @{
+                                if (Model.Type == SystemParam.TYPE_GIFT_GIFT)
+                                {
+                                    <option selected value="@SystemParam.TYPE_GIFT_GIFT">Quà tặng</option>
+                                    <option value="@SystemParam.TYPE_GIFT_VOUCHER">Voucher</option>
+                                }
+                                else
+                                    if (Model.Type == SystemParam.TYPE_GIFT_VOUCHER)
+                                {
+                                    <option value="@SystemParam.TYPE_GIFT_GIFT">Quà tặng</option>
+                                    <option selected value="@SystemParam.TYPE_GIFT_VOUCHER">Voucher</option>
+                                }
+                            }
+
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Tên quà, voucher</label>
+                        <div><input class="form-control" id="txtName" value="@Model.Name" placeholder="Tên quà..." /></div>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <label>Số điểm quy đổi</label>
+                        <div><input class="form-control number" id="txtPoint" value="@String.Format("{0:n0}", Model.Point)" placeholder="Điểm quy đổi..." /></div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Giá trị quà,voucher</label>
+                        <div><input class="form-control number" id="txtPrice" value="@String.Format("{0:n0}", Model.Price)" placeholder="Giá trị quà, voucher..." /></div>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <label>Từ ngày</label>
+                        <input class="form-control relative-icon-calendar dateConfigEdit" id="txtFromDateEdit" value="@Model.FromDateStr"  placeholder="Từ ngày..." />
+                        <i class="fa fa-calendar" style="position: absolute; right: 25px; top: 30px; font-size: 20px;"></i>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Đến ngày</label>
+                        <input class="form-control relative-icon-calendar dateConfigEdit" id="txtToDateEdit" value="@Model.ToDateStr" placeholder="Đến ngày..." />
+                        <i class="fa fa-calendar" style="position: absolute; right: 25px; top: 30px; font-size: 20px;"></i>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <label>Trạng thái</label>
+                        <div>
+                            <select class="form-control" id="slStatus">
+                                <option value="1">Hoạt động</option>
+                                <option value="0">Tạm dừng</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <label>Ghi chú</label>
+                        <textarea class="form-control" rows="5" id="txtDescription" placeholder="Nhập ghi chú...">@Model.Description</textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Hình ảnh</label>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-12">
+                                <a href="" class="text-bold mb-3" style="width:100%;height:100%; color: #5A5A5A;" id="addImg2">
+                                    <div class="news">
+                                        <div class="article" id="divAddImg2">
+                                            <img id="tagImg2" src="@Model.UrlImage" class="col-md-12 px-0 contentImg" alt="your image" />
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary px-3" onclick="updateConfigGift(@Model.ID);">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.dateConfigEdit').datepicker({
+            dateFormat: "dd/mm/yy"
+        });
+
+        $("#configGiftDetail #slStatus").val(@Model.Status);
+
+        $('.number').keyup(function () {
+            $val = cms_decode_currency_format($(this).val());
+            $(this).val(cms_encode_currency_format($val));
+        });
+    });
+
+    $("#addImg2").off('click').on('click', function (e) {
+        e.preventDefault();
+        var fider = new CKFinder();
+
+        fider.selectActionFunction = function (fileUrl) {
+            $("#tagImg2").remove();
+            $("#divAddImg2").append('<img id="tagImg2" src="' + fileUrl + '" class="col-md-12 px-0 contentImg" alt="your image" />');
+        }
+        fider.popup();
+    });
+
+    //Format money in textbox
+    function cms_encode_currency_format(num) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    }
+
+    function cms_decode_currency_format(obs) {
+        if (obs == '')
+            return 0;
+        else
+            return parseInt(obs.replace(/,/g, ''));
+    }
+
+</script>

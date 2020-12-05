@@ -1,0 +1,67 @@
+﻿@using Data.Utils
+@using Data.Model.APIWeb
+@using PagedList.Mvc
+@using PagedList
+@model IPagedList<ListStaticGiftModel>
+
+
+<table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md">
+    <thead class="text-center text-white bg-thead">
+        <tr>
+            <th>STT</th>
+            <th>Tên khách hàng</th>
+            <th>Loại</th>
+            <th>Tên quà, voucher</th>
+            <th>Giá trị</th>
+            <th>Số điểm đã đổi</th>
+            <th>Ngày đổi</th>
+        </tr>
+    </thead>
+    <tbody class="text-center" id="">
+        @{
+            if (Model.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="8">Không có dữ liệu.</td>
+                </tr>
+            }
+            else
+            {
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@item.CusName</td>
+                        @{
+                            if (item.Type == SystemParam.TYPE_REQUEST_GIFT)
+                            {
+                                <td>Quà tặng</td>
+                            }
+                            else if (item.Type == SystemParam.TYPE_REQUEST_VOUCHER)
+                            {
+                                <td>Voucher</td>
+                            }
+                        }
+                        <td>@item.GiftName</td>
+                        <td>@String.Format("{0:0,0}", @item.Price)</td>
+                        <td>@String.Format("{0:n0}", item.Point)</td>
+                        <td>@item.CreateDateStr</td>
+                    </tr>
+                    stt++;
+                }
+            }
+        }
+    </tbody>
+</table>
+
+
+<div class="col-md-12">
+    <div class="row float-right">
+        @Html.PagedListPager(
+            Model,
+            page => Url.Action("SearchRequestForGift", "StatisticGift", new { Page = page, CusName = ViewBag.CusName, GiftType = ViewBag.GiftType, FromDate = ViewBag.FromDate, ToDate = ViewBag.ToDate }),
+            PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "TableRQ" })
+            )
+    </div>
+</div>

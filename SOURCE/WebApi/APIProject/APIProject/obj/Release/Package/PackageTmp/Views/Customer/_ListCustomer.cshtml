@@ -1,0 +1,221 @@
+﻿@using Data.DB
+@using Data.Model.APIWeb
+@using PagedList.Mvc
+@using PagedList
+@model IPagedList<ListCustomerOutputModel>
+
+
+<table class="table table-light table-bordered table-hover table-responsive-sm table-responsive-md">
+    <thead class="text-center text-white bg-thead">
+        <tr>
+            <th>STT</th>
+            <th>
+                Họ tên
+            </th>
+            <th class="wrap">Điện thoại</th>
+            <th class="wrap">Đối tượng</th>
+            <th class="wrap">Email</th>
+            @*<th>Đăng nhập</th>*@
+            <th>Số điểm</th>
+            @*<th>Trạng thái</th>*@
+            <th class="widthCreatedDate">Ngày tham gia</th>
+            <th></th>
+            <th><input type="checkbox" id="checkAll" /></th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @{
+            if (Model.Count <= 0)
+            {
+                <tr>
+                    <td colspan="10">Không có dữ liệu.</td>
+                </tr>
+            }
+            else
+            {
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var cus in Model)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@cus.CustomerName</td>
+                        <td class="wrap" id="colPhone">@cus.PhoneNumber</td>
+                        @{
+                            if (cus.Role == 2)
+                            {
+                                <td>Đại Lý</td>
+                            }
+                            else
+                            {
+                                <td>Khách Hàng</td>
+                            }
+                        }
+                        <td class="wrap">@cus.Email</td>
+                        @*@{
+                                if (@cus.TypeLogin == 1)
+                                {
+                                    <td>FACEBOOK</td>
+                                }
+                                else if (@cus.TypeLogin == 2)
+                                {
+                                    <td>Google</td>
+                                }
+                                else if (@cus.TypeLogin == 3)
+                                {
+                                    <td>Số Điện Thoại</td>
+                                }
+                            }*@
+                        @*@{
+                            if (cus.Status == 1)
+                            {
+                                <td>Hoạt động</td>
+                            }
+                            else if (cus.Status == 0)
+                            {
+                                <td class="text-danger">Tạm dừng</td>
+                            }
+                        }*@
+                        <td>@String.Format("{0:n0}", cus.Point)</td>
+                        <td>@cus.CreateDate.Value.ToString("dd/MM/yyyy")</td>
+                        <td class="width2btn">
+                            <a href="javascript:void(0);" onclick="GetCustomerDetail(@cus.CustomerID)" data-toggle="tooltip" data-placement="top" title="Chi tiết khách hàng." class="cursor-pointer">
+                                <i class="btnEdit fa fa-fw fa-eye"></i>
+                            </a>
+                            <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Xóa yêu cầu." class="cursor-pointer" onclick="DeleteCus(@cus.CustomerID)">
+                                <i class="btnDelete fa fa-fw fa-trash-o"></i>
+                            </a>
+                        </td>
+                        <td><input class="icheck" data-phone="@cus.PhoneNumber" data-id="@cus.CustomerID" id="txtchecked" type="checkbox" onclick="showAddPointWithChecked(this)" /></td>
+                    </tr>
+                    stt++;
+                }
+            }
+
+        }
+    </tbody>
+</table>
+
+
+<div class="col-md-12">
+    <div class="row float-right">
+        @*phân trang*@
+        @Html.PagedListPager(
+        Model,
+        page => Url.Action("Search", "Customer", new { Page = page, FromDate = ViewBag.FromDateCus, ToDate = ViewBag.ToDateCus, City = ViewBag.City, District = ViewBag.District, Phone = ViewBag.PhoneSearch, Role = ViewBag.Role }),
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "ListCustomer" })
+        )
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var strListPhone = "";
+        var strListID = "";
+        $("#checkAll").on('click', function () {
+            if ($(this).is(':checked', true)) {
+                $(".icheck").prop("checked", true);
+            }
+            else {
+                $(".icheck").prop("checked", false);
+            }
+        });
+
+        $("#btnAddPoint").on('click', function (e) {
+            var listPhone = [];
+            var listID = [];
+            $(".icheck:checked").each(function (e) {
+                if ($(this).attr('data-phone') != '') {
+                    listPhone.push($(this).attr('data-phone'));
+                }
+                else {
+                    listID.push($(this).attr('data-id'));
+                }
+            });
+            strListPhone = listPhone.join(',');
+            strListID = listID.join(',');
+            $("#mdAddPoint #txtPhoneNumber").val(strListPhone);
+        });
+
+        $("#mdAddPoint #btnSaveAdd").unbind('click');
+        
+        $("#mdAddPoint #btnSaveAdd").on('click', function (e) {
+            var listPhone = $("#mdAddPoint #txtPhoneNumber").val();
+            if (strListID.length <= 0 && listPhone == '') {
+                swal({
+                    title: "Thông báo",
+                    text: "Bạn phải nhập số điện thoại khách hàng",
+                    icon: "warning"
+                });
+                //$("#mdAddPoint").modal('hide');
+                return;
+            }
+            if (!isNumeric(listPhone)) {
+                swal({
+                    title: "Thông báo",
+                    text: "Các số điện thoại phải được ngăn cách chỉ bằng dấu "+"','",
+                    icon: "warning"
+                })
+                return;
+            }
+            $("#frmAddPoint").validate({
+                rules: {
+                    pointNum: {
+                        required: true,
+                        min: 1
+                    }
+                },
+                messages: {
+                    pointNum: {
+                        required: "Vui lòng không để trống",
+                        min: "điểm phải > 0"
+                    }
+                },
+                submitHandler: function () {
+                    var data = strListID.toString();
+                    $('#mdAddPoint').modal("hide");
+                    $('#modalLoad').modal("show");
+                    $.ajax({
+                        url: "/Customer/addPointAll",
+                        data: {
+                            listID: data,
+                            listCusPhone: listPhone,
+                            Point: $('#mdAddPoint #txtPoint').val().trim(),
+                            Note: $('#mdAddPoint #txtNote').val().trim()
+                        },
+                        cache: true,
+                        success: function (result) {
+                            if (result == 1) {
+                                swal({
+                                    title: "Thêm Điểm Thành Công",
+                                    text: "",
+                                    icon: "success"
+                                });
+                                $('#modalLoad').modal("hide");
+                                searchCustomer();
+                            }
+                            else if (result == 3) {
+                                $('#modalLoad').modal("hide");
+                                swal({
+                                    title: "Không thành công",
+                                    text: "Vui lòng kiểm tra lại số điện thoại.",
+                                    icon: "warning"
+                                });
+                                searchCustomer();
+                            }
+                            else {
+                                $('#modalLoad').modal("hide");
+                                swal({
+                                    title: "Thông Báo",
+                                    text: "Có lỗi.",
+                                    icon: "warning"
+                                });
+                                searchCustomer();
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    });
+
+</script>
